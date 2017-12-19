@@ -1,0 +1,36 @@
+version: '2'
+services:
+  code:
+    extends:
+      file: ../../docker/docker-compose.common.yml
+      service: code
+    entrypoint:
+      - sh
+      - -c
+      - sleep infinity
+    stop_signal: SIGKILL
+  fireworq:
+    extends:
+      file: ../../docker/docker-compose.common.yml
+      service: fireworq
+    environment:
+      - USER_ID
+      - GROUP_ID
+    entrypoint:
+      - sh
+      - -c
+      - wait-for-it.sh -t 60 ${MYSQL_HOST}:${MYSQL_PORT} -- ${FIREWORQ_ROOT}/script/ci/test/entrypoint.sh
+    volumes:
+      - ../../..:/workspace
+    volumes_from:
+      - code
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    # tty: true # DO NOT set this or it fails to --abort-on-container-exit
+                # See https://github.com/docker/compose/issues/4813
+  mysql:
+    extends:
+      file: ../../docker/docker-compose.common.yml
+      service: mysql

@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -xe
+
+DIR=$(cd $(dirname "$0"); pwd)
+cd "$DIR"
+
+. ./init.sh
+
+DOCKER_PROJECT_NAME="${DOCKER_PROJECT_NAME:-fireworq}"
+DOCKER_COMPOSE="$DOCKER_COMPOSE -p $DOCKER_PROJECT_NAME"
+BIN="$DIR"/$(basename "$0")
+
+case "$1" in
+build)
+    $DOCKER_COMPOSE build --force-rm
+    ;;
+up)
+    [ -n "$2" ] && [ "$2" = '-d' ] && {
+        daemonize='-d'
+    } || true
+    "$BIN" build
+    trap "" INT TERM
+    $DOCKER_COMPOSE up $daemonize || true
+    [ -z "$daemonize" ] && "$BIN" down || true
+    ;;
+down)
+    $DOCKER_COMPOSE down -v
+    docker rmi "${DOCKER_PROJECT_NAME}_code" || true
+    ;;
+clean)
+    "$BIN" down
+    docker rmi "${DOCKER_PROJECT_NAME}_fireworq" || true
+    docker rmi "${DOCKER_PROJECT_NAME}_mysql" || true
+    ;;
+*)
+    echo "$(basename "$0") {build|up [-d]|down|clean}"
+    exit 1
+    ;;
+esac

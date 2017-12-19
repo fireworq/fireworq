@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS `config_revision` (
+  `name` VARCHAR(255) NOT NULL,
+  `revision` BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=binary;

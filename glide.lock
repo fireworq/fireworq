@@ -1,0 +1,40 @@
+hash: ab144181f19ff16bfebd6708c272872e1c6bfaafb1b573fb68cc19659e2f4ed8
+updated: 2017-12-11T23:00:42.65078532+09:00
+imports:
+- name: github.com/fukata/golang-stats-api-handler
+  version: 90f0b59102629831cc109845475a8d77043412ec
+- name: github.com/go-sql-driver/mysql
+  version: 9181e3a86a19bacd63e68d43ae8b7b36320d8092
+- name: github.com/gorilla/context
+  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+- name: github.com/gorilla/mux
+  version: 7f08801859139f86dfafd1c296e2cba9a80d292e
+- name: github.com/lestrrat/go-server-starter
+  version: f9cb0b066498d26a90fd918fe265adbb0ea02bcf
+  subpackages:
+  - listener
+- name: github.com/paulbellamy/ratecounter
+  version: a803f0e4f07116687bb30965e8f7d0c32981b63c
+- name: github.com/rs/xid
+  version: 02dd45c33376f85d1064355dc790dcc4850596b1
+- name: github.com/rs/zerolog
+  version: 3ac71fc58dbd43122668a912b755b0979ba9ce1f
+  subpackages:
+  - hlog
+  - internal/json
+  - log
+- name: github.com/zenazn/goji
+  version: c05078ca81941f8e801bba3ddc0e6b86b7fdc893
+  subpackages:
+  - web/mutil
+testImports:
+- name: github.com/golang/mock
+  version: f67f7081ddcd0f92a20c1d58e7cd8b23253d15c7
+  subpackages:
+  - gomock
+- name: github.com/phayes/freeport
+  version: e27662a4a9d6b2083dfd7e7b5d0e30985daca925
+- name: golang.org/x/net
+  version: 1c05540f6879653db88113bc4a2b70aec4bd491f
+  subpackages:
+  - context

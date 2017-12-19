@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -x
+
+DIR=$(cd $(dirname "$0"); pwd)
+cd "$DIR"
+
+. ../../docker/init.sh
+export USER_ID=$(id -ur)
+export GROUP_ID=$(id -gr)
+
+DOCKER_PROJECT_NAME="${DOCKER_PROJECT_NAME:-fireworqtest}"
+DOCKER_COMPOSE="$DOCKER_COMPOSE -p $DOCKER_PROJECT_NAME"
+
+$DOCKER_COMPOSE build --force-rm || exit 1
+trap "" INT TERM
+$DOCKER_COMPOSE up --abort-on-container-exit
+status=$?
+
+$DOCKER_COMPOSE down -v
+docker rmi "${DOCKER_PROJECT_NAME}_code"
+docker rmi "${DOCKER_PROJECT_NAME}_fireworq"
+docker rmi "${DOCKER_PROJECT_NAME}_mysql"
+
+exit $status

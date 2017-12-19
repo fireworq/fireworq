@@ -1,0 +1,25 @@
+version: '2'
+services:
+  code:
+    env_file: .env
+    build:
+      context: ../..
+      args:
+        FIREWORQ_ROOT: "${FIREWORQ_ROOT}"
+      dockerfile: ./script/docker/code/Dockerfile
+  fireworq:
+    env_file: .env
+    build:
+      context: ../..
+      args:
+        FIREWORQ_ROOT: "${FIREWORQ_ROOT}"
+        FIREWORQ_DEPS: "${FIREWORQ_DEPS}"
+      dockerfile: ./script/docker/fireworq/Dockerfile
+    ports:
+      - "${FIREWORQ_PORT}:${FIREWORQ_PORT}"
+  mysql:
+    env_file: .env
+    build:
+      context: ./mysql
+    expose:
+      - "${MYSQL_PORT}"

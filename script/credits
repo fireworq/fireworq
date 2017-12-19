@@ -1,0 +1,23 @@
+#!/bin/bash
+
+shopt -s globstar
+
+DIR=$(cd $(dirname "$0"); pwd)
+ROOT=$(cd "$DIR/.."; pwd)
+cd "$ROOT"
+
+echo "Go (the standard library)"
+echo "https://golang.org/"
+echo '----------------------------------------------------------------'
+curl https://raw.githubusercontent.com/golang/go/release-branch.go1.9/LICENSE 2>/dev/null
+echo '================================================================'
+
+for repo in $(cat glide.lock | perl -ne 'exit if m!^testImports:!; print "$1\n" if m!^- name: (.*)$!'); do
+    echo "$repo"
+    echo "https://$repo/"
+    [ -r "vendor/$repo/LICENSE" ] && {
+        echo '----------------------------------------------------------------'
+        cat "vendor/$repo/LICENSE"
+    }
+    echo '================================================================'
+done

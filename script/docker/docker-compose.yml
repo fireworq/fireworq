@@ -1,0 +1,35 @@
+version: '2'
+services:
+  code:
+    extends:
+      file: docker-compose.common.yml
+      service: code
+  fireworq:
+    environment:
+      - FIREWORQ_PORT
+      - FIREWORQ_ACCESS_LOG
+      - FIREWORQ_ACCESS_LOG_TAG
+      - FIREWORQ_ERROR_LOG
+      - FIREWORQ_ERROR_LOG_LEVEL
+      - FIREWORQ_KEEP_ALIVE
+      - FIREWORQ_QUEUE_DEFAULT
+      - FIREWORQ_QUEUE_POLLING_INTERVAL
+      - FIREWORQ_QUEUE_LOG
+      - FIREWORQ_QUEUE_LOG_TAG
+      - FIREWORQ_QUEUE_LOG_LEVEL
+      - FIREWORQ_DISPATCH_USER_AGENT
+      - FIREWORQ_DISPATCH_KEEP_ALIVE
+    extends:
+      file: docker-compose.common.yml
+      service: fireworq
+    volumes_from:
+      - code
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    tty: true
+  mysql:
+    extends:
+      file: docker-compose.common.yml
+      service: mysql

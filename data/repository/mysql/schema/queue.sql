@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS `queue` (
+  `name` VARCHAR(255) NOT NULL,
+  `polling_interval` INT UNSIGNED NOT NULL,
+  `max_workers` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=binary;
