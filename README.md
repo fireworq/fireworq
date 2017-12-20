@@ -1,6 +1,8 @@
 ![Fireworq][logo]
 =================
 
+[![Build Status](https://travis-ci.org/fireworq/fireworq.svg?branch=master)](https://travis-ci.org/fireworq/fireworq) [![Coverage Status](https://coveralls.io/repos/github/fireworq/fireworq/badge.svg?branch=master)](https://coveralls.io/github/fireworq/fireworq?branch=master)
+
 Fireworq is a lightweight, high-performance job queue system with the
 following abilities.
 
