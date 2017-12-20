@@ -1,0 +1,11 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  - script/ci/test/docker-run
+
+env:
+  global:
+    secure: "C3BckSzQvkFdxYwbA5djs2VhpaocJjeBT0zhCjLwNBhEazzet/Jw+Kb3OZ7g/r0t+P6+dScQpUMCWNjSC4YPL9dh6WqXZikGBsePGyD4/vLmpM1AyCrf8jkt3gV9boq6xUe82uus7GGSo1QwbvrEetYZbkWnmRLF1mQpY+9Qa+LsXhfXdQOih5+YzrcXcj32czrc3taUS4KfOk0WI3Q3g6vx4LaUrngir10DIiprpANS6hNZKFLxtaX/horkhxwtwD1u/Z6FHn+4zzCPVjfGjGH3Gstsy7FrOXUVTnhAkrcLjHhbFC9ovOqTkX1OXQLD3GPL7gbCk2dtmT7dLaCt+LFQGClxsR9rCF4bTq+4Ai3/0ltZ+FdNH42meM/WssA4wMRnoanezBSYiDSwe7X87LbSaAA+7TvB677prj1IE9a/0n/sphyQWgFb2VrF+FmV8u7eXUxFjjndjVn8YaqcqtMamCcEkWQ79ylLeRwmC7bksBIrielfHrbWpLI8CyQ/g8aVvQiTOzjKesTq+nX/5SGrqesMrWOOfz9kLFun/4YGc7xsviMhqzO8E0vdNgewM58Yi447H7vPnHAWxcqKYNxfMM6lnWrks1AzlDk3nFhO717YKZbDUaCmqQ9rWLkE8qeRD9f+53M95G+Eex+SGHUQuEi9tp/1O5/ixLm4hzs="
