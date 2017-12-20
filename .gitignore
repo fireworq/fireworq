@@ -25,6 +25,7 @@ _testmain.go
 /profile.cov
 /coverage.html
 /coverage.xml
+status.tmp
 
 *.exe
 *.test

@@ -10,7 +10,8 @@ TEST_ARGS=-parallel 1 -timeout 60s
 all: build
 
 test: build test_deps
-	${GO} test ${TEST_ARGS} -race -v ./... | tee >(go-junit-report > ${TEST_OUTPUT}/junit_output.xml)
+	{ ${GO} test ${TEST_ARGS} -race -v ./...; echo $$? > status.tmp; } | tee >(go-junit-report > ${TEST_OUTPUT}/junit_output.xml)
+	exit $$(cat status.tmp)
 
 cover: build test_deps
 	TEST_ARGS="${TEST_ARGS}" script/cover ${TEST_OUTPUT}/profile.cov
