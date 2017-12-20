@@ -5,6 +5,8 @@ set -x
 BRANCH="${GIT_BRANCH:-${TRAVIS_BRANCH}}"
 [ "$BRANCH" = 'master' ] || exit
 
+git checkout "$BRANCH"
+
 go run script/genauthors/genauthors.go --format=markdown > AUTHORS.md
 go run script/genauthors/genauthors.go --format=plain > AUTHORS
 
