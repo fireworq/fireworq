@@ -16,6 +16,7 @@ services:
     environment:
       - USER_ID
       - GROUP_ID
+      - COVERALLS_TOKEN
     entrypoint:
       - sh
       - -c

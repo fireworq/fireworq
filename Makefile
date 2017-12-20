@@ -14,6 +14,7 @@ test: build test_deps
 
 cover: build test_deps
 	TEST_ARGS="${TEST_ARGS}" script/cover ${TEST_OUTPUT}/profile.cov
+	test -z "$$COVERALLS_TOKEN" || goveralls -coverprofile=${TEST_OUTPUT}/profile.cov -service=travis-ci
 	${GO} tool cover -html=${TEST_OUTPUT}/profile.cov -o ${TEST_OUTPUT}/coverage.html
 	gocover-cobertura < ${TEST_OUTPUT}/profile.cov > ${TEST_OUTPUT}/coverage.xml
 
@@ -44,6 +45,7 @@ test_deps:
 	${GO} get golang.org/x/tools/cmd/cover
 	${GO} get github.com/wadey/gocovmerge
 	${GO} get github.com/t-yuki/gocover-cobertura
+	${GO} get github.com/mattn/goveralls
 
 lint:
 	${GO} get github.com/golang/lint/golint
