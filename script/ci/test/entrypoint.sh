@@ -26,5 +26,5 @@ gosu docker make test TEST_OUTPUT=/workspace
 test_status=$?
 gosu docker make cover TEST_OUTPUT=/workspace
 
-[ lint_status = 0 ] || exit $lint_status
-[ test_status = 0 ] || exit $test_status
+[ $lint_status = 0 ] || exit $lint_status
+[ $test_status = 0 ] || exit $test_status
