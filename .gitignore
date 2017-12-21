@@ -36,4 +36,5 @@ assets.go
 mock_*.go
 
 /fireworq
+/AUTHORS
 /CREDITS

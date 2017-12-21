@@ -8,12 +8,11 @@ BRANCH="${GIT_BRANCH:-${TRAVIS_BRANCH}}"
 git checkout "$BRANCH"
 
 go run script/genauthors/genauthors.go --format=markdown > AUTHORS.md
-go run script/genauthors/genauthors.go --format=plain > AUTHORS
 
 git config --global user.email 'fireworq.github@gmail.com'
 git config --global user.name 'fireworq-bot'
 
-git add AUTHORS.md AUTHORS
+git add AUTHORS.md
 git commit -m "Update the list of authors."
 git remote add github "https://${GH_TOKEN}@github.com/fireworq/fireworq.git" >/dev/null 2>&1
 git push --quiet github master

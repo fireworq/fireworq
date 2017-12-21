@@ -23,4 +23,5 @@ sync
 
 gosu docker make clean
 gosu docker make release BUILD_OUTPUT=/workspace PRERELEASE=''
+gosu docker cp AUTHORS /workspace/
 gosu docker cp CREDITS /workspace/
