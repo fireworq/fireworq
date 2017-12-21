@@ -12,7 +12,6 @@ type jq >/dev/null || {
 
 LEVEL='patch'
 
-APPLICATION='fireworq'
 VERSION=$(gobump show -r)
 NEW_VERSION=$(gobump $LEVEL -v -r | head -n 1)
 
