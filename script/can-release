@@ -1,0 +1,11 @@
+#!/bin/sh
+
+DIR=$(cd $(dirname "$0")/..; pwd)
+cd "$DIR"
+
+go run script/genauthors/genauthors.go --format=markdown > AUTHORS.md
+git diff --exit-code AUTHORS.md >/dev/null || {
+    git checkout AUTHORS.md
+    echo 'The list of authors is not up to date; you should wait for @fireworq-bot to update it' >&2
+    exit 1
+}
