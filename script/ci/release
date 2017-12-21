@@ -1,0 +1,31 @@
+#!/bin/sh
+
+DIR=$(cd $(dirname "$0")/../..; pwd)
+cd "$DIR"
+
+set -x
+
+BRANCH="${GIT_BRANCH:-${TRAVIS_BRANCH}}"
+[ -z "$BRANCH" ] || git checkout "$BRANCH"
+
+type gobump >/dev/null || go get github.com/motemen/gobump/cmd/gobump
+type ghr >/dev/null    || go get github.com/tcnksm/ghr
+type ghch >/dev/null   || go get github.com/Songmu/ghch/cmd/ghch
+
+APPLICATION='fireworq'
+VERSION=$(gobump show -r)
+DIST="dist/v$VERSION"
+
+build() {
+    os="$1"
+    arch="$2"
+    GOOS="$os" GOARCH="$arch" script/docker/build
+    filename="${APPLICATION}_${os}_${arch}.zip"
+    zip "$DIST/$filename" "$APPLICATION" README.md doc/* doc/*/* AUTHORS.md AUTHORS LICENSE CREDITS
+}
+
+mkdir -p "$DIST"
+build linux amd64
+
+[ -n "$GH_TOKEN" ] && export GITHUB_TOKEN="$GH_TOKEN"
+ghr -draft -u fireworq -r "$APPLICATION" -b "$(ghch --format=markdown)" "v$VERSION" "$DIST"

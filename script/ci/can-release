@@ -1,0 +1,23 @@
+#!/bin/sh
+
+DIR=$(cd $(dirname "$0")/../..; pwd)
+cd "$DIR"
+
+[ -n "$TRAVIS_TAG" ] || {
+    echo 'No tag' >&2
+    exit 1
+}
+case "$TRAVIS_TAG" in
+v0*|v1*|v2*|v3*|v4*|v5*|v6*|v7*|v8*|v9*) ;;
+*)
+    echo 'Not a release tag' >&2
+    exit 1 ;;
+esac
+
+type gobump >/dev/null || go get github.com/motemen/gobump/cmd/gobump
+[ "$TRAVIS_TAG" = "v$(gobump show -r)" ] || {
+    echo "Invalid tag: $TRAVIS_TAG != v$(gobump show -r)" >&2
+    exit 1
+}
+
+script/can-release || exit 1

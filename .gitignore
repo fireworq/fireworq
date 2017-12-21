@@ -35,6 +35,9 @@ bindata.go
 assets.go
 mock_*.go
 
+docker-compose
+
 /fireworq
 /AUTHORS
 /CREDITS
+/dist
