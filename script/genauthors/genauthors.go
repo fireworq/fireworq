@@ -146,7 +146,8 @@ func main() {
 	}
 
 	sort.Slice(items, func(i, j int) bool {
-		return items[i].Commits > items[j].Commits
+		diff := items[i].Commits - items[j].Commits
+		return diff > 0 || (diff == 0 && items[i].Email < items[j].Email)
 	})
 
 	tmpl := plain
