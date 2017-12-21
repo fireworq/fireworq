@@ -28,4 +28,4 @@ mkdir -p "$DIST"
 build linux amd64
 
 [ -n "$GH_TOKEN" ] && export GITHUB_TOKEN="$GH_TOKEN"
-ghr -draft -u fireworq -r "$APPLICATION" -b "$(ghch --to=v$VERSION --format=markdown)" "v$VERSION" "$DIST"
+ghr -u fireworq -r "$APPLICATION" -b "$(ghch --to=v$VERSION --format=markdown)" "v$VERSION" "$DIST"
