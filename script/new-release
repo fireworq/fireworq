@@ -1,0 +1,54 @@
+#!/bin/sh
+
+DIR=$(cd $(dirname "$0")/..; pwd)
+cd "$DIR"
+
+type gobump >/dev/null || go get github.com/motemen/gobump/cmd/gobump
+type ghch >/dev/null   || go get github.com/Songmu/ghch/cmd/ghch
+type jq >/dev/null || {
+    echo 'You need `jq` command installed' >&2
+    exit 1
+}
+
+APPLICATION='fireworq'
+VERSION=$(gobump show -r)
+
+case "$1" in
+--dry-run|-n)
+    DRY_RUN=1
+    ;;
+esac
+
+run() {
+    [ -n "$DRY_RUN" ] && {
+        echo "$@"
+    } || "$@"
+}
+
+git pull >/dev/null 2>&1
+script/can-release || exit 1
+
+[ $(git tag -l "v$VERSION" | wc -l) = 0 ] || {
+    echo "There already have been a release tag of v${VERSION}; a release process is under way or you should do gobump first" >&2
+    exit 1
+}
+
+prs=$(ghch --format=json | jq '.pull_requests')
+[ $(( $(printf '%s' "$prs" | jq length) > 0 )) = 1 ] || {
+    echo 'You have nothing to release' >&2
+    exit 1
+}
+printf '%s' "$prs" | jq -r '.[] |  "#" + (.number|tostring) + " " + .title + " (" + .user.login + ")"'
+
+echo
+read -p "Tag v${VERSION} (y/n): " answer
+case "$answer" in
+y*|Y*) ;;
+*) exit 1 ;;
+esac
+
+run git tag "v$VERSION"
+run git push --tags
+run gobump patch -w
+run git add version.go
+run git commit -m "Bump version to $VERSION."
