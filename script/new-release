@@ -10,8 +10,11 @@ type jq >/dev/null || {
     exit 1
 }
 
+LEVEL='patch'
+
 APPLICATION='fireworq'
 VERSION=$(gobump show -r)
+NEW_VERSION=$(gobump $LEVEL -v -r | head -n 1)
 
 case "$1" in
 --dry-run|-n)
@@ -49,6 +52,6 @@ esac
 
 run git tag "v$VERSION"
 run git push --tags
-run gobump patch -w
+run gobump $LEVEL -w
 run git add version.go
-run git commit -m "Bump version to $VERSION."
+run git commit -m "Bump version to ${NEW_VERSION}."
