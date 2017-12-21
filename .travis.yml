@@ -8,10 +8,14 @@ go:
 services:
   - docker
 
+before_install:
+  - go get github.com/mattn/goveralls
+
 script:
   - script/ci/test/docker-run
 
 after_script:
+  - $HOME/gopath/bin/goveralls -coverprofile=profile.cov -service=travis-ci
   - script/ci/genauthors
 
 env:
