@@ -23,8 +23,8 @@ following abilities.
 - **Scalability** - It always works with a single dispatcher per queue
   which can concurrently dispatch jobs to workers via HTTP.
   Scalability of workers themselves should be maintained by a load
-  balancer in the ordinary way.  This means that adding a worker never
-  harm performance of grabbing jobs from a queue.
+  balancer in the ordinary way.  This means that adding a worker will
+  never harm performance of grabbing jobs from a queue.
 
 - **Flexibility** - It supports the following features.
 
