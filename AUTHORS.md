@@ -8,11 +8,13 @@ This is the official list of Fireworq authors for copyright purposes.
 
 |Name |E-mail  |GitHub|Commits |
 |:----|:-------|:-----|-------:|
-|INA Lintaro|<tarao.gnn@gmail.com>|[@tarao](https://github.com/tarao)|588|
+|INA Lintaro|<tarao.gnn@gmail.com>|[@tarao](https://github.com/tarao)|590|
 |SHIBAZAKI Yuki|<shibayu36@gmail.com>|[@shibayu36](https://github.com/shibayu36)|31|
 |FUSHII Yohei|<hakobe@gmail.com>|[@hakobe](https://github.com/hakobe)|28|
 |TSUBOUCHI Yuuki|<yuki.tsubo@gmail.com>||25|
 |SHIBAHATA Tsugihito|<fly.me.to.the.moon1204@gmail.com>|[@hatz48](https://github.com/hatz48)|17|
+|Sai Warang|<cyprusad@gmail.com>||1|
+|Davor Kapsa|<davor.kapsa@gmail.com>||1|
 |MURATA Satoshi|<rw.satoshi.murata@gmail.com>||1|
 
 Items are automatically added by `git shortlog -sne`.  Please add rules to [`.mailmap`](.mailmap) to keep it canonical (see "MAPPING AUTHORS" section of `git help shortlog` for the notation of the rules).  E-mail field must match your public E-mail setting on your GitHub account if you wish to show your GitHub account name.
