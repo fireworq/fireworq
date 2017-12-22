@@ -33,7 +33,7 @@ func HTTPInit() {
 	defaultUserAgent = config.Get("dispatch_user_agent")
 }
 
-// HTTPWorker is a worker wich handles a job as an HTTP POST request
+// HTTPWorker is a worker which handles a job as an HTTP POST request
 // to the URL specified by the job.
 type HTTPWorker struct {
 	UserAgent string
