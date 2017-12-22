@@ -1,6 +1,6 @@
 package kicker
 
-// Kicker is an interface to controll frequency of kicking a Kickable
+// Kicker is an interface to control frequency of kicking a Kickable
 // object.
 type Kicker interface {
 	Start(kickable Kickable)
