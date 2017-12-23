@@ -20,24 +20,24 @@ cover: build test_deps
 
 build: deps generate
 	${GO} build -race -ldflags "-X main.Build=$(BUILD) -X main.Prerelease=DEBUG" -o ${BUILD_OUTPUT}/$(BIN) .
-	${GO} run script/gendoc/gendoc.go config > doc/config.md
+	GOOS= GOARCH= ${GO} run script/gendoc/gendoc.go config > doc/config.md
 
 release: clean deps credits generate
 	CGO_ENABLED=0 ${GO} build -ldflags "-X main.Build=$(BUILD) -X main.Prerelease=$(PRERELEASE)" -o ${BUILD_OUTPUT}/$(BIN) .
 
 credits:
-	${GO} run script/genauthors/genauthors.go > AUTHORS
+	GOOS= GOARCH= ${GO} run script/genauthors/genauthors.go > AUTHORS
 	script/credits > CREDITS
 
 generate:
 	touch AUTHORS
 	touch CREDITS
-	${GO} generate -x ./...
+	GOOS= GOARCH= ${GO} generate -x ./...
 
 deps:
-	glide install
-	${GO} get github.com/jteeuwen/go-bindata/...
-	${GO} get github.com/golang/mock/mockgen
+	GOOS= GOARCH= glide install
+	GOOS= GOARCH= ${GO} get github.com/jteeuwen/go-bindata/...
+	GOOS= GOARCH= ${GO} get github.com/golang/mock/mockgen
 
 test_deps:
 	${GO} get github.com/jpillora/go-tcp-proxy/cmd/tcp-proxy
