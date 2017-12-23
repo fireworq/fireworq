@@ -159,7 +159,7 @@ other variables.
 
 - `FIREWORQ_MYSQL_DSN`
 
-  Specifies a data source name for the job queue and the repoisotry
+  Specifies a data source name for the job queue and the repository
   database in a form
   <code><var>user</var>:<var>password</var>@tcp(<var>mysql_host</var>:<var>mysql_port</var>)/<var>database</var>?<var>options</var></code>.
   This is for a manual setup and is mandatory for it.
