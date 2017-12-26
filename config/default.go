@@ -60,7 +60,7 @@ Specifies the value of ` + "`" + `tag` + "`" + ` field in a access log item.
 		description: `
 Specifies a file where error logs are written to.  It defaults to standard error output.
 
-If this value is specified, each line in the file is a JSON string corresponds to a single log item.  Otherwise, each line of the output is is prettified log item.
+If this value is specified, each line in the file is a JSON string corresponds to a single log item.  Otherwise, each line of the output is a prettified log item.
 `,
 	},
 	"error_log_level": {
