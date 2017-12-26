@@ -62,7 +62,7 @@ Specifies the value of `User-Agent` header field used for an HTTP request to a w
 
 Specifies a file where error logs are written to.  It defaults to standard error output.
 
-If this value is specified, each line in the file is a JSON string corresponds to a single log item.  Otherwise, each line of the output is is prettified log item.
+If this value is specified, each line in the file is a JSON string corresponds to a single log item.  Otherwise, each line of the output is a prettified log item.
 
 ### <a name="env-error-log-level">`FIREWORQ_ERROR_LOG_LEVEL`, `--error-log-level`</a>
 
