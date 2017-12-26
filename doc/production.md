@@ -9,12 +9,16 @@ Make It Production-Ready
 
 ## <a name="manual-setup">Using a Release Build (Manual Setup)</a>
 
-A release build is available on [the releases page][releases].  You
-will get `./fireworq` by the following commands.
+A release build is available on [the releases page][releases].
+
+For example, the following commands download and extract the Fireworq
+binary for Linux AMD64 (x86-64) platform.
 
 ```
-$ curl -L  $(curl -sL  https://api.github.com/repos/fireworq/fireworq/releases/latest | jq -r '.assets[].browser_download_url' | grep '_linux_amd64.zip') > fireworq_linux_amd64.zip
-$ unzip fireworq_linux_amd64.zip fireworq
+$ OS=linux
+$ ARCH=amd64
+$ curl -L  $(curl -sL  https://api.github.com/repos/fireworq/fireworq/releases/latest | jq -r '.assets[].browser_download_url' | grep "_${OS}_${ARCH}.zip") > fireworq_${OS}_${ARCH}.zip
+$ unzip fireworq_${OS}_${ARCH}.zip fireworq
 ```
 
 Before running Fireworq, make sure that you have
