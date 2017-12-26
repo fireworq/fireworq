@@ -237,7 +237,7 @@ other variables.
 [page-developing]: ./CONTRIBUTING.md
 
 [api-put-queue]: ./doc/api.md#api-put-queue
-[api-put-routing]: #api-put-routing
+[api-put-routing]: ./doc/api.md#api-put-routing
 
 [logo]: ./doc/images/logo.png "Fireworq"
 [license]: ./LICENSE
