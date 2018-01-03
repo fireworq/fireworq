@@ -1,5 +1,5 @@
 BIN=fireworq
-SHELL=/bin/bash -O globstar
+SHELL=/bin/bash
 BUILD_OUTPUT=.
 TEST_OUTPUT=.
 GO=go
@@ -57,7 +57,8 @@ lint:
 	done
 
 clean:
-	rm -f **/bindata.go **/mock_*.go assets.go
+	find . -name bindata.go -delete -or -name 'mock_*.go' -delete
+	rm -f assets.go
 	rm -f junit_output.xml profile.cov coverage.html coverage.xml
 	rm -f $(BIN)
 	${GO} clean
