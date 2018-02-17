@@ -1,10 +1,11 @@
-//go:generate go-bindata -pkg main -o assets.go LICENSE AUTHORS CREDITS
+//go:generate go-assets-builder -p main -o assets.go LICENSE AUTHORS CREDITS
 package main
 
 import (
 	"flag"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -227,8 +228,22 @@ func versionString(sep string) string {
 	return strings.Join([]string{Name, sep, Version, prerelease, build}, "")
 }
 
+func mustAssetString(path string) string {
+	f, err := Assets.Open(path)
+	if err != nil {
+		panic(err)
+	}
+
+	buf, err := ioutil.ReadAll(f)
+	if err != nil {
+		panic(err)
+	}
+
+	return string(buf)
+}
+
 var (
-	licenseText = string(MustAsset("LICENSE")) + `
+	licenseText = mustAssetString("/LICENSE") + `
    Copyright (c) 2017 The Fireworq Authors. All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -242,8 +257,9 @@ var (
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-` + string(MustAsset("AUTHORS"))
-	creditsText = string(MustAsset("CREDITS"))
+
+` + mustAssetString("/AUTHORS")
+	creditsText = mustAssetString("/CREDITS")
 
 	helpText = `Usage: fireworq [options]
 

@@ -31,7 +31,6 @@ status.tmp
 *.test
 
 vendor/
-bindata.go
 assets.go
 mock_*.go
 

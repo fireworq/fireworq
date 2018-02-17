@@ -1,10 +1,11 @@
-//go:generate go-bindata -pkg mysql -prefix ../.. ../../data/jobqueue/mysql/...
+//go:generate go-assets-builder -p mysql -o assets.go ../../data/jobqueue/mysql
 
 package mysql
 
 import (
 	"bytes"
 	"fmt"
+	"io/ioutil"
 	"regexp"
 	"strings"
 	"text/template"
@@ -97,8 +98,17 @@ var (
 )
 
 func mustLoadTemplate(name string) *template.Template {
-	str := string(MustAsset(fmt.Sprintf("data/jobqueue/mysql/%s.sql", name)))
-	tmpl, err := template.New(name).Parse(str)
+	f, err := Assets.Open(fmt.Sprintf("/data/jobqueue/mysql/%s.sql", name))
+	if err != nil {
+		panic("Cannot load template (" + name + "): " + err.Error())
+	}
+
+	buf, err := ioutil.ReadAll(f)
+	if err != nil {
+		panic("Cannot load template (" + name + "): " + err.Error())
+	}
+
+	tmpl, err := template.New(name).Parse(string(buf))
 	if err != nil {
 		panic("Cannot load template (" + name + "): " + err.Error())
 	}
