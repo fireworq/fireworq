@@ -9,7 +9,7 @@ cd "$ROOT"
 echo "Go (the standard library)"
 echo "https://golang.org/"
 echo '----------------------------------------------------------------'
-curl https://raw.githubusercontent.com/golang/go/release-branch.go1.9/LICENSE 2>/dev/null
+curl https://raw.githubusercontent.com/golang/go/release-branch.go1.10/LICENSE 2>/dev/null
 echo '================================================================'
 
 for repo in $(cat glide.lock | perl -ne 'exit if m!^testImports:!; print "$1\n" if m!^- name: (.*)$!'); do

@@ -32,8 +32,8 @@ setup).  Command line arguments precede the values of environment
 variables.
 
 The following variables/arguments are available.  Some of them are
-applicable only to a [manual setup][section-manual-setup].
-`)
+applicable only to a [manual setup][section-manual-setup].`)
+	fmt.Println("")
 
 	categorized := make(map[string]configItems)
 	for _, d := range config.Descriptions() {
