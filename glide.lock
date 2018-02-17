@@ -1,14 +1,16 @@
-hash: ab144181f19ff16bfebd6708c272872e1c6bfaafb1b573fb68cc19659e2f4ed8
-updated: 2017-12-11T23:00:42.65078532+09:00
+hash: 9bd57ba91cc6db9686d637b8193641e6dc3850dcaeab9f89f2740078b38239bc
+updated: 2018-02-17T19:36:49.538359803+09:00
 imports:
 - name: github.com/fukata/golang-stats-api-handler
   version: 90f0b59102629831cc109845475a8d77043412ec
 - name: github.com/go-sql-driver/mysql
-  version: 9181e3a86a19bacd63e68d43ae8b7b36320d8092
+  version: bc14601d1bd56421dd60f561e6052c9ed77f9daf
 - name: github.com/gorilla/context
   version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/mux
-  version: 7f08801859139f86dfafd1c296e2cba9a80d292e
+  version: 53c1911da2b537f792e7cafcb446b05ffe33b996
+- name: github.com/jessevdk/go-assets
+  version: 4f4301a06e153ff90e17793577ab6bf79f8dc5c5
 - name: github.com/lestrrat/go-server-starter
   version: f9cb0b066498d26a90fd918fe265adbb0ea02bcf
   subpackages:
@@ -18,7 +20,7 @@ imports:
 - name: github.com/rs/xid
   version: 02dd45c33376f85d1064355dc790dcc4850596b1
 - name: github.com/rs/zerolog
-  version: 3ac71fc58dbd43122668a912b755b0979ba9ce1f
+  version: 56a970de510213e50dbaa39ad73ac07c9ec75606
   subpackages:
   - hlog
   - internal/json
@@ -29,7 +31,7 @@ imports:
   - web/mutil
 testImports:
 - name: github.com/golang/mock
-  version: f67f7081ddcd0f92a20c1d58e7cd8b23253d15c7
+  version: 58cd061d09382b6011f84c1291ebe50ef2e25bab
   subpackages:
   - gomock
 - name: github.com/phayes/freeport

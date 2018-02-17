@@ -8,5 +8,5 @@ set -e
 profile=${1:-.profile.cov}
 
 go list -f '{{if gt (len .TestGoFiles) 0}}"go test '"${TEST_ARGS}"' -covermode count -coverprofile $(echo '''{{.ImportPath}}''' | tr / _).cov.tmp -coverpkg ./... {{.ImportPath}}"{{end}}' ./... | xargs -I {} sh -c {}
-gocovmerge $(ls *.cov.tmp) | grep -v '/assets.go:' | grep -v '/bindata.go:' | grep -v '/script/' | grep -v '/test/' > "$profile"
+gocovmerge $(ls *.cov.tmp) | grep -v '/assets.go:' | grep -v '/script/' | grep -v '/test/' > "$profile"
 rm -f *.cov.tmp

@@ -1,9 +1,10 @@
-//go:generate go-bindata -pkg mysql -prefix ../.. ../../data/repository/...
+//go:generate go-assets-builder -p mysql -o assets.go ../../data/repository
 
 package mysql
 
 import (
 	"database/sql"
+	"io/ioutil"
 	"time"
 
 	"github.com/fireworq/fireworq/config"
@@ -16,9 +17,9 @@ var schema []string
 
 func init() {
 	schema = []string{
-		string(MustAsset("data/repository/mysql/schema/queue.sql")),
-		string(MustAsset("data/repository/mysql/schema/routing.sql")),
-		string(MustAsset("data/repository/mysql/schema/config_revision.sql")),
+		"/data/repository/mysql/schema/queue.sql",
+		"/data/repository/mysql/schema/routing.sql",
+		"/data/repository/mysql/schema/config_revision.sql",
 	}
 }
 
@@ -56,8 +57,19 @@ func NewDB() (*sql.DB, error) {
 		db.SetConnMaxLifetime(time.Duration(t) * time.Second)
 	}()
 
-	for _, query := range schema {
-		_, err = db.Exec(query)
+	for _, path := range schema {
+		f, err := Assets.Open(path)
+		if err != nil {
+			log.Panic().Msg(err.Error())
+		}
+
+		query, err := ioutil.ReadAll(f)
+		f.Close()
+		if err != nil {
+			log.Panic().Msg(err.Error())
+		}
+
+		_, err = db.Exec(string(query))
 		if err != nil {
 			return nil, err
 		}

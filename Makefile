@@ -36,7 +36,7 @@ generate:
 
 deps:
 	GOOS= GOARCH= glide install
-	GOOS= GOARCH= ${GO} get github.com/jteeuwen/go-bindata/...
+	GOOS= GOARCH= ${GO} get github.com/jessevdk/go-assets-builder
 	GOOS= GOARCH= ${GO} get github.com/golang/mock/mockgen
 
 test_deps:
@@ -57,7 +57,7 @@ lint:
 	done
 
 clean:
-	find . -name bindata.go -delete -or -name 'mock_*.go' -delete
+	find . -name assets.go -delete -or -name 'mock_*.go' -delete
 	rm -f assets.go
 	rm -f junit_output.xml profile.cov coverage.html coverage.xml
 	rm -f $(BIN)
