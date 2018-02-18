@@ -8,6 +8,7 @@ BRANCH="${GIT_BRANCH:-${TRAVIS_BRANCH}}"
 git checkout "$BRANCH"
 
 go run script/genauthors/genauthors.go --format=markdown > AUTHORS.md
+[ "$?" = 0 ] || git checkout AUTHORS.md
 
 git config --global user.email 'fireworq.github@gmail.com'
 git config --global user.name 'fireworq-bot'
