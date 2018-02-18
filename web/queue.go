@@ -321,12 +321,15 @@ func (app *Application) serveQueueFailedJob(w http.ResponseWriter, req *http.Req
 	return nil
 }
 
-type jobqueueStats = *jobqueue.Stats
-type dispatcherStats = *dispatcher.Stats
+// JobqueueStats is an alias to pointer type of jobqueue.Stats.
+type JobqueueStats = *jobqueue.Stats
+
+// DispatcherStats is an alias to pointer type of dispatcher.Stats.
+type DispatcherStats = *dispatcher.Stats
 
 // Stats contains queue statistics and worker statistics.
 type Stats struct {
-	jobqueueStats
-	dispatcherStats
+	JobqueueStats
+	DispatcherStats
 	ActiveNodes int64 `json:"active_nodes"`
 }

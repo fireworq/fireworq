@@ -14,7 +14,7 @@ import (
 var (
 	// Writer is a log writer which logger.Info() or logger.Debug()
 	// writes to.
-	Writer logwriter.Writer = logwriter.New(os.Stdout)
+	Writer = logwriter.New(os.Stdout)
 
 	tag    string
 	logger *zerolog.Logger = func() *zerolog.Logger {
