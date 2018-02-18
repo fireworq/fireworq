@@ -870,23 +870,26 @@ func TestGetQueueGrabbed(t *testing.T) {
 		s, mockApp := newMockServer(ctrl)
 		defer s.Close()
 
-		jobs := &jobqueue.InspectedJobs{[]jobqueue.InspectedJob{
-			{
-				ID:       3,
-				Category: "test_job",
-				URL:      "http://example.com/",
+		jobs := &jobqueue.InspectedJobs{
+			Jobs: []jobqueue.InspectedJob{
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
 			},
-			{
-				ID:       2,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       1,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-		}, ""}
+			NextCursor: "",
+		}
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
@@ -934,23 +937,26 @@ func TestGetQueueGrabbed(t *testing.T) {
 		s, mockApp := newMockServer(ctrl)
 		defer s.Close()
 
-		jobs := &jobqueue.InspectedJobs{[]jobqueue.InspectedJob{
-			{
-				ID:       3,
-				Category: "test_job",
-				URL:      "http://example.com/",
+		jobs := &jobqueue.InspectedJobs{
+			Jobs: []jobqueue.InspectedJob{
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
 			},
-			{
-				ID:       2,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       1,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-		}, ""}
+			NextCursor: "",
+		}
 
 		limit := uint(123)
 		cursor := "foo"
@@ -1075,23 +1081,26 @@ func TestGetQueueWaiting(t *testing.T) {
 		s, mockApp := newMockServer(ctrl)
 		defer s.Close()
 
-		jobs := &jobqueue.InspectedJobs{[]jobqueue.InspectedJob{
-			{
-				ID:       3,
-				Category: "test_job",
-				URL:      "http://example.com/",
+		jobs := &jobqueue.InspectedJobs{
+			Jobs: []jobqueue.InspectedJob{
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
 			},
-			{
-				ID:       2,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       1,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-		}, ""}
+			NextCursor: "",
+		}
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
@@ -1139,23 +1148,26 @@ func TestGetQueueWaiting(t *testing.T) {
 		s, mockApp := newMockServer(ctrl)
 		defer s.Close()
 
-		jobs := &jobqueue.InspectedJobs{[]jobqueue.InspectedJob{
-			{
-				ID:       3,
-				Category: "test_job",
-				URL:      "http://example.com/",
+		jobs := &jobqueue.InspectedJobs{
+			Jobs: []jobqueue.InspectedJob{
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
 			},
-			{
-				ID:       2,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       1,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-		}, ""}
+			NextCursor: "",
+		}
 
 		limit := uint(123)
 		cursor := "foo"
@@ -1280,23 +1292,25 @@ func TestGetQueueDeferred(t *testing.T) {
 		s, mockApp := newMockServer(ctrl)
 		defer s.Close()
 
-		jobs := &jobqueue.InspectedJobs{[]jobqueue.InspectedJob{
-			{
-				ID:       3,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       2,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       1,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-		}, ""}
+		jobs := &jobqueue.InspectedJobs{
+			Jobs: []jobqueue.InspectedJob{
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+			}, NextCursor: "",
+		}
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
@@ -1344,23 +1358,26 @@ func TestGetQueueDeferred(t *testing.T) {
 		s, mockApp := newMockServer(ctrl)
 		defer s.Close()
 
-		jobs := &jobqueue.InspectedJobs{[]jobqueue.InspectedJob{
-			{
-				ID:       3,
-				Category: "test_job",
-				URL:      "http://example.com/",
+		jobs := &jobqueue.InspectedJobs{
+			Jobs: []jobqueue.InspectedJob{
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
 			},
-			{
-				ID:       2,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       1,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-		}, ""}
+			NextCursor: "",
+		}
 
 		limit := uint(123)
 		cursor := "foo"
@@ -1856,23 +1873,26 @@ func TestGetQueueFailed(t *testing.T) {
 		s, mockApp := newMockServer(ctrl)
 		defer s.Close()
 
-		failedJobs := &jobqueue.FailedJobs{[]jobqueue.FailedJob{
-			{
-				ID:       3,
-				Category: "test_job",
-				URL:      "http://example.com/",
+		failedJobs := &jobqueue.FailedJobs{
+			FailedJobs: []jobqueue.FailedJob{
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
 			},
-			{
-				ID:       2,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       1,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-		}, ""}
+			NextCursor: "",
+		}
 
 		mockFailureLog := NewMockFailureLog(ctrl)
 		mockFailureLog.EXPECT().
@@ -1920,24 +1940,27 @@ func TestGetQueueFailed(t *testing.T) {
 		s, mockApp := newMockServer(ctrl)
 		defer s.Close()
 
-		failedJobs := &jobqueue.FailedJobs{[]jobqueue.FailedJob{
-			{
-				ID:       3,
-				Category: "test_job",
-				URL:      "http://example.com/",
-				Payload:  json.RawMessage(`{"foo":1}`),
+		failedJobs := &jobqueue.FailedJobs{
+			FailedJobs: []jobqueue.FailedJob{
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+					Payload:  json.RawMessage(`{"foo":1}`),
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
 			},
-			{
-				ID:       2,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       1,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-		}, ""}
+			NextCursor: "",
+		}
 
 		limit := uint(123)
 		cursor := "foo"
@@ -2017,23 +2040,26 @@ func TestGetQueueFailed(t *testing.T) {
 		s, mockApp := newMockServer(ctrl)
 		defer s.Close()
 
-		failedJobs := &jobqueue.FailedJobs{[]jobqueue.FailedJob{
-			{
-				ID:       3,
-				Category: "test_job",
-				URL:      "http://example.com/",
+		failedJobs := &jobqueue.FailedJobs{
+			FailedJobs: []jobqueue.FailedJob{
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
 			},
-			{
-				ID:       2,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       1,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-		}, ""}
+			NextCursor: "",
+		}
 
 		mockFailureLog := NewMockFailureLog(ctrl)
 		mockFailureLog.EXPECT().
@@ -2081,23 +2107,26 @@ func TestGetQueueFailed(t *testing.T) {
 		s, mockApp := newMockServer(ctrl)
 		defer s.Close()
 
-		failedJobs := &jobqueue.FailedJobs{[]jobqueue.FailedJob{
-			{
-				ID:       3,
-				Category: "test_job",
-				URL:      "http://example.com/",
+		failedJobs := &jobqueue.FailedJobs{
+			FailedJobs: []jobqueue.FailedJob{
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
 			},
-			{
-				ID:       2,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-			{
-				ID:       1,
-				Category: "test_job",
-				URL:      "http://example.com/",
-			},
-		}, ""}
+			NextCursor: "",
+		}
 
 		limit := uint(123)
 		cursor := "foo"

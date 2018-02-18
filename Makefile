@@ -46,13 +46,14 @@ test_deps:
 	${GO} get github.com/wadey/gocovmerge
 	${GO} get github.com/t-yuki/gocover-cobertura
 
-lint:
+lint: generate
 	${GO} get github.com/golang/lint/golint
 	${GO} vet ./...
 	for d in $$(${GO} list ./...); do \
 	  golint --set_exit_status "$$d" || exit $$? ; \
 	done
 	for f in $$(${GO} list -f '{{$$p := .}}{{range $$f := .GoFiles}}{{$$p.Dir}}/{{$$f}} {{end}} {{range $$f := .TestGoFiles}}{{$$p.Dir}}/{{$$f}} {{end}}' ./... | xargs); do \
+	  [ $$(basename "$$f") = 'assets.go' ] && continue ; \
 	  test -z "$$(gofmt -d -s "$$f" | tee /dev/stderr)" || exit $$? ; \
 	done
 

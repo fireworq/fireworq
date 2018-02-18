@@ -321,7 +321,7 @@ func (app *Application) serveQueueFailedJob(w http.ResponseWriter, req *http.Req
 	return nil
 }
 
-// JobQueueStats is an alias to pointer type of jobqueue.Stats.
+// JobqueueStats is an alias to pointer type of jobqueue.Stats.
 type JobqueueStats = *jobqueue.Stats
 
 // DispatcherStats is an alias to pointer type of dispatcher.Stats.
