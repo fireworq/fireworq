@@ -1,9 +1,7 @@
 //go:generate mockgen -source application.go -destination mock_web_test.go -package web
 //go:generate mockgen -source ../repository/repository.go -destination mock_web_repository_test.go -package web
-
-// Use this if https://github.com/golang/mock/pull/38 is merged :
-// //go:generate mockgen -source ../jobqueue/jobqueue.go -destination mock_jobqueue_test.go -package web -source_package jobqueue
-// //go:generate mockgen -source ../jobqueue/inspector.go -destination mock_inspector_test.go -package web -source_package jobqueue
+//go:generate mockgen -source ../jobqueue/jobqueue.go -destination mock_jobqueue_test.go -package web -self_package github.com/fireworq/fireworq/web
+//go:generate mockgen -source ../jobqueue/inspector.go -destination mock_inspector_test.go -package web -self_package github.com/fireworq/fireworq/web
 
 package web
 
