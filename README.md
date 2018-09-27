@@ -74,6 +74,21 @@ $ FIREWORQ_PORT=1234 script/docker/compose up
 
 Pressing `Ctrl+C` will gracefully shut it down.
 
+### Behind HTTP proxy
+
+If you are behind HTTP proxy, `script/docker/compose up` will fail.
+Add following configuration to `script/docker/docker-compose.yml`:
+
+```
+ services:
+   fireworq:
++    build:
++      args:
++        - http_proxy=http://.../
++        - https_proxy=http://.../
+     environment:
+```
+
 ## <a name="api">Using the API</a>
 
 ### Preparing a Worker
