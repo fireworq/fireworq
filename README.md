@@ -79,7 +79,7 @@ Pressing `Ctrl+C` will gracefully shut it down.
 If you are behind HTTP proxy, `script/docker/compose up` will fail.
 Add following configuration to `script/docker/docker-compose.yml`:
 
-```
+```diff
  services:
    fireworq:
 +    build:
