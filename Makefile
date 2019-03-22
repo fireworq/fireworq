@@ -32,12 +32,12 @@ credits:
 generate:
 	touch AUTHORS
 	touch CREDITS
-	GOOS= GOARCH= ${GO} generate -x ./...
+	cd vendor/github.com/golang/mock/mockgen && go build
+	PATH=$(PWD)/vendor/github.com/golang/mock/mockgen:${PATH} GOOS= GOARCH= ${GO} generate -x ./...
 
 deps:
 	GOOS= GOARCH= glide install
 	GOOS= GOARCH= ${GO} get github.com/jessevdk/go-assets-builder
-	GOOS= GOARCH= ${GO} get github.com/golang/mock/mockgen
 
 test_deps:
 	${GO} get github.com/jpillora/go-tcp-proxy/cmd/tcp-proxy

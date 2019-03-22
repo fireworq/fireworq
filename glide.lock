@@ -1,18 +1,16 @@
-hash: 9bd57ba91cc6db9686d637b8193641e6dc3850dcaeab9f89f2740078b38239bc
-updated: 2018-02-17T19:36:49.538359803+09:00
+hash: 06d2ef601219fa2a333c851a51b4cca8490046658904b32446dbafaa16d3d024
+updated: 2019-03-22T17:55:38.942162+09:00
 imports:
 - name: github.com/fukata/golang-stats-api-handler
   version: 90f0b59102629831cc109845475a8d77043412ec
 - name: github.com/go-sql-driver/mysql
-  version: bc14601d1bd56421dd60f561e6052c9ed77f9daf
-- name: github.com/gorilla/context
-  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+  version: 1fbca2aabb09915d4f1006d01b271ad7778eec4f
 - name: github.com/gorilla/mux
-  version: 53c1911da2b537f792e7cafcb446b05ffe33b996
+  version: a7962380ca08b5a188038c69871b8d3fbdf31e89
 - name: github.com/jessevdk/go-assets
   version: 4f4301a06e153ff90e17793577ab6bf79f8dc5c5
 - name: github.com/lestrrat/go-server-starter
-  version: f9cb0b066498d26a90fd918fe265adbb0ea02bcf
+  version: 6ac0b358431b798d3db8933ef547464e4ce74d9d
   subpackages:
   - listener
 - name: github.com/paulbellamy/ratecounter
@@ -20,23 +18,24 @@ imports:
 - name: github.com/rs/xid
   version: 02dd45c33376f85d1064355dc790dcc4850596b1
 - name: github.com/rs/zerolog
-  version: 56a970de510213e50dbaa39ad73ac07c9ec75606
+  version: 651d361cfeb9d0f5b9f1d14b162c66c82509ef6d
   subpackages:
   - hlog
+  - internal/cbor
   - internal/json
   - log
 - name: github.com/zenazn/goji
   version: c05078ca81941f8e801bba3ddc0e6b86b7fdc893
   subpackages:
   - web/mutil
+- name: google.golang.org/appengine
+  version: 54a98f90d1c46b7731eb8fb305d2a321c30ef610
+  subpackages:
+  - cloudsql
 testImports:
 - name: github.com/golang/mock
-  version: 58cd061d09382b6011f84c1291ebe50ef2e25bab
+  version: 51421b967af1f557f93a59e0057aaf15ca02e29c
   subpackages:
   - gomock
 - name: github.com/phayes/freeport
-  version: e27662a4a9d6b2083dfd7e7b5d0e30985daca925
-- name: golang.org/x/net
-  version: 1c05540f6879653db88113bc4a2b70aec4bd491f
-  subpackages:
-  - context
+  version: 95f893ade6f232a5f1511d61735d89b1ae2df543
