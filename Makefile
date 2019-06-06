@@ -47,7 +47,7 @@ test_deps:
 	${GO} get github.com/t-yuki/gocover-cobertura
 
 lint: generate
-	${GO} get github.com/golang/lint/golint
+	${GO} get golang.org/x/lint/golint
 	${GO} vet ./...
 	for d in $$(${GO} list ./...); do \
 	  golint --set_exit_status "$$d" || exit $$? ; \

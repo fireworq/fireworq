@@ -28,6 +28,11 @@ func (rslt *Result) IsFailure() bool {
 	return rslt.Status != ResultStatusSuccess
 }
 
+// IsPermanentFailure returns if the job is permanently failed.
+func (rslt *Result) IsPermanentFailure() bool {
+	return rslt.Status == ResultStatusPermanentFailure
+}
+
 // IsFinished returns if the job can be retried or not.
 func (rslt *Result) IsFinished() bool {
 	switch rslt.Status {

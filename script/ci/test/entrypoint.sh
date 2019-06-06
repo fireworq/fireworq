@@ -13,6 +13,9 @@ echo "Starting with UID: ${USER_ID}, GID: ${GROUP_ID}" >&2
 groupadd -g $GROUP_ID --non-unique docker
 useradd -u $USER_ID -g $GROUP_ID --non-unique docker
 
+# Workaround for writing to /dev/stderr
+chmod o+w /dev/stderr
+
 export HOME=/home/docker
 mkdir -p $HOME
 chown -R $USER_ID:$GROUP_ID $HOME
