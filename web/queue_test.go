@@ -200,28 +200,31 @@ func TestGetQueueListStats(t *testing.T) {
 
 		stats := map[string]*jobqueue.Stats{
 			"queue1": {
-				TotalPushes:     10,
-				TotalPops:       8,
-				TotalCompletes:  5,
-				TotalFailures:   2,
-				PushesPerSecond: 2,
-				PopsPerSecond:   1,
+				TotalPushes:            10,
+				TotalPops:              8,
+				TotalCompletes:         5,
+				TotalFailures:          2,
+				TotalPermanentFailures: 1,
+				PushesPerSecond:        2,
+				PopsPerSecond:          1,
 			},
 			"queue2": {
-				TotalPushes:     100,
-				TotalPops:       100,
-				TotalCompletes:  32,
-				TotalFailures:   0,
-				PushesPerSecond: 10,
-				PopsPerSecond:   10,
+				TotalPushes:            100,
+				TotalPops:              100,
+				TotalCompletes:         32,
+				TotalFailures:          0,
+				TotalPermanentFailures: 0,
+				PushesPerSecond:        10,
+				PopsPerSecond:          10,
 			},
 			"queue3": {
-				TotalPushes:     1,
-				TotalPops:       0,
-				TotalCompletes:  0,
-				TotalFailures:   0,
-				PushesPerSecond: 0,
-				PopsPerSecond:   0,
+				TotalPushes:            1,
+				TotalPops:              0,
+				TotalCompletes:         0,
+				TotalFailures:          0,
+				TotalPermanentFailures: 0,
+				PushesPerSecond:        0,
+				PopsPerSecond:          0,
 			},
 		}
 		lchrStats := map[string]*dispatcher.Stats{
@@ -296,7 +299,7 @@ func TestGetQueueListStats(t *testing.T) {
 			t.Error("GET /queues/stats should return stats of defined queues")
 		}
 		for k, s := range m {
-			if s.TotalPushes != stats[k].TotalPushes || s.TotalPops != stats[k].TotalPops || s.TotalCompletes != stats[k].TotalCompletes || s.TotalFailures != stats[k].TotalFailures || s.PushesPerSecond != stats[k].PushesPerSecond || s.PopsPerSecond != stats[k].PopsPerSecond {
+			if s.TotalPushes != stats[k].TotalPushes || s.TotalPops != stats[k].TotalPops || s.TotalCompletes != stats[k].TotalCompletes || s.TotalFailures != stats[k].TotalFailures || s.TotalPermanentFailures != stats[k].TotalPermanentFailures || s.PushesPerSecond != stats[k].PushesPerSecond || s.PopsPerSecond != stats[k].PopsPerSecond {
 				t.Error("GET /queues/stats should return stats of defined queues")
 			}
 		}
@@ -745,12 +748,13 @@ func TestGetQueueStats(t *testing.T) {
 		defer s.Close()
 
 		stats := &jobqueue.Stats{
-			TotalPushes:     10,
-			TotalPops:       8,
-			TotalCompletes:  5,
-			TotalFailures:   2,
-			PushesPerSecond: 2,
-			PopsPerSecond:   1,
+			TotalPushes:            10,
+			TotalPops:              8,
+			TotalCompletes:         5,
+			TotalFailures:          2,
+			TotalPermanentFailures: 1,
+			PushesPerSecond:        2,
+			PopsPerSecond:          1,
 		}
 		lchrStats := &dispatcher.Stats{
 			TotalWorkers: 10,
@@ -786,7 +790,7 @@ func TestGetQueueStats(t *testing.T) {
 		if err := json.Unmarshal(buf, &result); err != nil {
 			t.Error("GET /queue/queue1/stats should return a stats")
 		}
-		if result.TotalPushes != stats.TotalPushes || result.TotalPops != stats.TotalPops || result.TotalCompletes != stats.TotalCompletes || result.TotalFailures != stats.TotalFailures || result.PushesPerSecond != stats.PushesPerSecond || result.PopsPerSecond != stats.PopsPerSecond || result.ActiveNodes != 1 {
+		if result.TotalPushes != stats.TotalPushes || result.TotalPops != stats.TotalPops || result.TotalCompletes != stats.TotalCompletes || result.TotalFailures != stats.TotalFailures || result.TotalPermanentFailures != stats.TotalPermanentFailures || result.PushesPerSecond != stats.PushesPerSecond || result.PopsPerSecond != stats.PopsPerSecond || result.ActiveNodes != 1 {
 			t.Error("GET /queue/queue1/stats should return stats of the queue")
 		}
 	}()

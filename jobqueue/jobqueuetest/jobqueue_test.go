@@ -349,7 +349,7 @@ func TestStats(t *testing.T) {
 	time.Sleep(100 * time.Millisecond) // wait for up
 
 	qStats := jq.Stats()
-	if qStats.TotalPushes != 0 || qStats.TotalPops != 0 || qStats.TotalCompletes != 0 || qStats.TotalFailures != 0 || qStats.PushesPerSecond != 0 || qStats.PopsPerSecond != 0 {
+	if qStats.TotalPushes != 0 || qStats.TotalPops != 0 || qStats.TotalCompletes != 0 || qStats.TotalFailures != 0 || qStats.TotalPermanentFailures != 0 || qStats.PushesPerSecond != 0 || qStats.PopsPerSecond != 0 {
 		t.Error("Stats values must be zero before doing nothing")
 	}
 
@@ -375,7 +375,7 @@ func TestStats(t *testing.T) {
 	if qStats.TotalPops != 6 {
 		t.Error("Stats should report the number of poped jobs")
 	}
-	if qStats.TotalCompletes != 0 || qStats.TotalFailures != 0 {
+	if qStats.TotalCompletes != 0 || qStats.TotalFailures != 0 || qStats.TotalPermanentFailures != 0 {
 		t.Error("Stats values must be zero before doing nothing")
 	}
 
@@ -407,6 +407,9 @@ func TestStats(t *testing.T) {
 	}
 	if qStats.TotalFailures != 2 {
 		t.Error("Stats should report the number of failed jobs")
+	}
+	if qStats.TotalPermanentFailures != 1 {
+		t.Error("Stats should report the number of permanently failed jobs")
 	}
 }
 
