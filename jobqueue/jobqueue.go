@@ -98,6 +98,11 @@ func (q *jobQueue) Complete(job Job, res *Result) {
 	} else {
 		q.stats.succeed(1)
 	}
+
+	if res.IsPermanentFailure() {
+		q.stats.permanentlyFail(1)
+	}
+
 	loggable := j.ToLoggable()
 	logger.Info(q.name, "complete", loggable, res.Message)
 
