@@ -1,12 +1,12 @@
 hash: 06d2ef601219fa2a333c851a51b4cca8490046658904b32446dbafaa16d3d024
-updated: 2019-03-22T17:55:38.942162+09:00
+updated: 2019-06-06T18:29:55.621797+09:00
 imports:
 - name: github.com/fukata/golang-stats-api-handler
   version: 90f0b59102629831cc109845475a8d77043412ec
 - name: github.com/go-sql-driver/mysql
-  version: 1fbca2aabb09915d4f1006d01b271ad7778eec4f
+  version: 877a9775f06853f611fb2d4e817d92479242d1cd
 - name: github.com/gorilla/mux
-  version: a7962380ca08b5a188038c69871b8d3fbdf31e89
+  version: ed099d42384823742bba0bf9a72b53b55c9e2e38
 - name: github.com/jessevdk/go-assets
   version: 4f4301a06e153ff90e17793577ab6bf79f8dc5c5
 - name: github.com/lestrrat/go-server-starter
@@ -18,7 +18,7 @@ imports:
 - name: github.com/rs/xid
   version: 02dd45c33376f85d1064355dc790dcc4850596b1
 - name: github.com/rs/zerolog
-  version: 651d361cfeb9d0f5b9f1d14b162c66c82509ef6d
+  version: acf3980132bfcdc48638724e6e3d9e5749b85999
   subpackages:
   - hlog
   - internal/cbor
