@@ -4,11 +4,6 @@ services:
     extends:
       file: docker-compose.common.yml
       service: code
-    entrypoint:
-      - sh
-      - -c
-      - sleep infinity
-    stop_signal: SIGKILL
   fireworq:
     environment:
       - GOOS
