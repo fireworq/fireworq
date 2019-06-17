@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -xe
+set -x
 
 DIR=$(cd $(dirname "$0"); pwd)
 cd "$DIR"
@@ -14,7 +14,7 @@ DOCKER_COMPOSE="$DOCKER_COMPOSE -p $DOCKER_PROJECT_NAME -f docker-compose.build.
 
 $DOCKER_COMPOSE build --force-rm
 trap "" INT TERM
-$DOCKER_COMPOSE up --abort-on-container-exit
+$DOCKER_COMPOSE run fireworq
 status=$?
 
 $DOCKER_COMPOSE down -v

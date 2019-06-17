@@ -4,11 +4,6 @@ services:
     extends:
       file: docker-compose.common.yml
       service: code
-    entrypoint:
-      - sh
-      - -c
-      - sleep infinity
-    stop_signal: SIGKILL
   fireworq:
     environment:
       - GOOS
@@ -18,8 +13,6 @@ services:
     extends:
       file: docker-compose.common.yml
       service: fireworq
-    volumes_from:
-      - code
     entrypoint: ${FIREWORQ_ROOT}/script/docker/entrypoint.build.sh
     volumes:
       - ../..:/workspace

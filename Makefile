@@ -32,7 +32,7 @@ credits:
 generate:
 	touch AUTHORS
 	touch CREDITS
-	cd vendor/github.com/golang/mock/mockgen && go build
+	cd vendor/github.com/golang/mock/mockgen && GOOS= GOARCH= ${GO} build
 	PATH=$(PWD)/vendor/github.com/golang/mock/mockgen:${PATH} GOOS= GOARCH= ${GO} generate -x ./...
 
 deps:
