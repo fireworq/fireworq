@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -xe
+set -x
 
 DIR=$(cd $(dirname "$0"); pwd)
 cd "$DIR"
