@@ -28,10 +28,6 @@ imports:
   version: c05078ca81941f8e801bba3ddc0e6b86b7fdc893
   subpackages:
   - web/mutil
-- name: google.golang.org/appengine
-  version: 54a98f90d1c46b7731eb8fb305d2a321c30ef610
-  subpackages:
-  - cloudsql
 testImports:
 - name: github.com/golang/mock
   version: 51421b967af1f557f93a59e0057aaf15ca02e29c
