@@ -92,6 +92,10 @@ func (q *jobQueue) Pop(limit uint) ([]Job, error) {
 
 func (q *jobQueue) Complete(job Job, res *Result) {
 	j := &completedJob{job, 0}
+	if res.IsFailure() && !j.canRetry() {
+		res.Status = ResultStatusPermanentFailure
+	}
+
 	if res.IsFailure() {
 		q.stats.fail(1)
 		j.failed = 1
@@ -106,10 +110,10 @@ func (q *jobQueue) Complete(job Job, res *Result) {
 	loggable := j.ToLoggable()
 	logger.Info(q.name, "complete", loggable, res.Message)
 
-	if res.IsFinished() || !j.canRetry() {
+	if res.IsFinished() {
 		q.stats.complete(1)
 		q.stats.elapsed(logger.Elapsed(loggable))
-		if res.IsFailure() {
+		if res.IsPermanentFailure() {
 			if failureLog, ok := q.FailureLog(); ok {
 				err := failureLog.Add(job, res)
 				if err != nil {
@@ -119,6 +123,7 @@ func (q *jobQueue) Complete(job Job, res *Result) {
 		}
 		q.impl.Delete(job)
 	} else {
+		// retry the job
 		q.impl.Update(job, &nextJob{j})
 	}
 }
