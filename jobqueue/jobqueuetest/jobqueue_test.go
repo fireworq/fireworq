@@ -357,13 +357,17 @@ func TestStats(t *testing.T) {
 	jobs[2].nextDelay = 500000
 	jobs[5].nextDelay = 600000
 	jobs[8].nextDelay = 500000
+	jobs[4].retryCount = 4
+	jobs[7].retryCount = 0
+
 	for i, j := range jobs {
 		j.url = fmt.Sprintf("job%d", i)
 		jq.Push(&j)
 		time.Sleep(10 * time.Millisecond)
 	}
 
-	launched, err := jq.Pop(6)
+	launched, err := jq.Pop(7)
+
 	if err != nil {
 		t.Error(err)
 	}
@@ -372,43 +376,52 @@ func TestStats(t *testing.T) {
 	if qStats.TotalPushes != 10 {
 		t.Error("Stats should report the number of pushed jobs")
 	}
-	if qStats.TotalPops != 6 {
+	if qStats.TotalPops != 7 {
 		t.Error("Stats should report the number of poped jobs")
 	}
 	if qStats.TotalCompletes != 0 || qStats.TotalFailures != 0 || qStats.TotalPermanentFailures != 0 {
 		t.Error("Stats values must be zero before doing nothing")
 	}
 
+	// job0: Success
 	jq.Complete(launched[0], &jobqueue.Result{
 		Status: jobqueue.ResultStatusSuccess,
 	})
+	// job1: Permanent failure
 	jq.Complete(launched[1], &jobqueue.Result{
 		Status: jobqueue.ResultStatusPermanentFailure,
 	})
+	// job3: Success
 	jq.Complete(launched[2], &jobqueue.Result{
 		Status: jobqueue.ResultStatusSuccess,
 	})
+	// job4: Retry (incomplete)
 	jq.Complete(launched[3], &jobqueue.Result{
 		Status: jobqueue.ResultStatusFailure,
 	})
+	// job6: Success
 	jq.Complete(launched[4], &jobqueue.Result{
 		Status: jobqueue.ResultStatusSuccess,
+	})
+	// job7: Permanent failure due to retry limit
+	jq.Complete(launched[5], &jobqueue.Result{
+		Status: jobqueue.ResultStatusFailure,
 	})
 
 	qStats = jq.Stats()
 	if qStats.TotalPushes != 10 {
 		t.Error("Stats should report the number of pushed jobs")
 	}
-	if qStats.TotalPops != 6 {
+	if qStats.TotalPops != 7 {
 		t.Error("Stats should report the number of poped jobs")
 	}
 	if qStats.TotalCompletes != 5 {
 		t.Error("Stats should report the number of completed jobs")
 	}
-	if qStats.TotalFailures != 2 {
+	if qStats.TotalFailures != 3 {
 		t.Error("Stats should report the number of failed jobs")
 	}
-	if qStats.TotalPermanentFailures != 1 {
+	if qStats.TotalPermanentFailures != 2 {
 		t.Error("Stats should report the number of permanently failed jobs")
 	}
 }
