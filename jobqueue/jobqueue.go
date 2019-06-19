@@ -99,14 +99,15 @@ func (q *jobQueue) Complete(job Job, res *Result) {
 	}
 
 	loggable := j.ToLoggable()
-	logger.Info(q.name, "complete", loggable, res.Message)
 
 	if res.IsSuccess() {
+		logger.Info(q.name, "complete", loggable, res.Message)
 		q.stats.succeed(1)
 		q.stats.complete(1)
 		q.stats.elapsed(logger.Elapsed(loggable))
 		q.impl.Delete(job)
 	} else if res.IsPermanentFailure() || !j.canRetry() {
+		logger.Info(q.name, "complete", loggable, res.Message)
 		q.stats.fail(1)
 		q.stats.permanentlyFail(1)
 		q.stats.complete(1)
@@ -119,7 +120,7 @@ func (q *jobQueue) Complete(job Job, res *Result) {
 		}
 		q.impl.Delete(job)
 	} else {
-		// retry the job
+		logger.Info(q.name, "retry", loggable, res.Message)
 		q.stats.fail(1)
 		q.impl.Update(job, &nextJob{j})
 	}
