@@ -91,39 +91,36 @@ func (q *jobQueue) Pop(limit uint) ([]Job, error) {
 }
 
 func (q *jobQueue) Complete(job Job, res *Result) {
-	j := &completedJob{job, 0}
-	if res.IsFailure() && !j.canRetry() {
-		res.Status = ResultStatusPermanentFailure
-	}
-
-	if res.IsFailure() {
-		q.stats.fail(1)
-		j.failed = 1
+	var j *completedJob
+	if res.Status == ResultStatusSuccess {
+		j = &completedJob{job, 0}
 	} else {
-		q.stats.succeed(1)
-	}
-
-	if res.IsPermanentFailure() {
-		q.stats.permanentlyFail(1)
+		j = &completedJob{job, 1}
 	}
 
 	loggable := j.ToLoggable()
 	logger.Info(q.name, "complete", loggable, res.Message)
 
-	if res.IsFinished() {
+	if res.Status == ResultStatusSuccess {
+		q.stats.succeed(1)
 		q.stats.complete(1)
 		q.stats.elapsed(logger.Elapsed(loggable))
-		if res.IsPermanentFailure() {
-			if failureLog, ok := q.FailureLog(); ok {
-				err := failureLog.Add(job, res)
-				if err != nil {
-					log.Warn().Msg(err.Error())
-				}
+		q.impl.Delete(job)
+	} else if res.Status == ResultStatusPermanentFailure || !j.canRetry() {
+		q.stats.fail(1)
+		q.stats.permanentlyFail(1)
+		q.stats.complete(1)
+		q.stats.elapsed(logger.Elapsed(loggable))
+		if failureLog, ok := q.FailureLog(); ok {
+			err := failureLog.Add(job, res)
+			if err != nil {
+				log.Warn().Msg(err.Error())
 			}
 		}
 		q.impl.Delete(job)
 	} else {
 		// retry the job
+		q.stats.fail(1)
 		q.impl.Update(job, &nextJob{j})
 	}
 }
