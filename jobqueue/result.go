@@ -23,9 +23,19 @@ type Result struct {
 	Message string `json:"message"`
 }
 
+// IsSuccess returns if the job succeeded
+func (rslt *Result) IsSuccess() bool {
+	return rslt.Status == ResultStatusSuccess
+}
+
 // IsFailure returns if the job is successfully processed or not.
 func (rslt *Result) IsFailure() bool {
 	return rslt.Status != ResultStatusSuccess
+}
+
+// IsPermanentFailure returns if the job is permanently failed.
+func (rslt *Result) IsPermanentFailure() bool {
+	return rslt.Status == ResultStatusPermanentFailure
 }
 
 // IsFinished returns if the job can be retried or not.
