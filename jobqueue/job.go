@@ -44,11 +44,13 @@ func (j *completedJob) FailCount() uint {
 }
 
 func (j *completedJob) Status() string {
+	var s string
 	if j.failed == 0 {
-		return "completed"
+		s = "completed"
 	} else {
-		return "failed"
+		s = "failed"
 	}
+	return s
 }
 
 func (j *completedJob) ToLoggable() logger.LoggableJob {
