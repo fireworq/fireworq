@@ -6,6 +6,7 @@ GO=go
 PRERELEASE=SNAPSHOT
 BUILD=$$(git describe --always)
 TEST_ARGS=-parallel 1 -timeout 60s
+export GO111MODULE=on
 
 all: build
 
@@ -32,22 +33,21 @@ credits:
 generate:
 	touch AUTHORS
 	touch CREDITS
-	cd vendor/github.com/golang/mock/mockgen && GOOS= GOARCH= ${GO} build
-	PATH=$(PWD)/vendor/github.com/golang/mock/mockgen:${PATH} GOOS= GOARCH= ${GO} generate -x ./...
+	GOOS= GOARCH= ${GO} generate -x ./...
 
 deps:
-	GOOS= GOARCH= glide install
-	GOOS= GOARCH= ${GO} get github.com/jessevdk/go-assets-builder
+	GO111MODULE=off GOOS= GOARCH= ${GO} get github.com/jessevdk/go-assets-builder
+	GO111MODULE=off GOOS= GOARCH= ${GO} get github.com/golang/mock/mockgen
 
 test_deps:
-	${GO} get github.com/jpillora/go-tcp-proxy/cmd/tcp-proxy
-	${GO} get github.com/jstemmer/go-junit-report
-	${GO} get golang.org/x/tools/cmd/cover
-	${GO} get github.com/wadey/gocovmerge
-	${GO} get github.com/t-yuki/gocover-cobertura
+	GO111MODULE=off ${GO} get github.com/jpillora/go-tcp-proxy/cmd/tcp-proxy
+	GO111MODULE=off ${GO} get github.com/jstemmer/go-junit-report
+	GO111MODULE=off ${GO} get golang.org/x/tools/cmd/cover
+	GO111MODULE=off ${GO} get github.com/wadey/gocovmerge
+	GO111MODULE=off ${GO} get github.com/t-yuki/gocover-cobertura
 
 lint: generate
-	${GO} get golang.org/x/lint/golint
+	GO111MODULE=off ${GO} get golang.org/x/lint/golint
 	${GO} vet ./...
 	for d in $$(${GO} list ./...); do \
 	  golint --set_exit_status "$$d" || exit $$? ; \

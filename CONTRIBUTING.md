@@ -20,7 +20,6 @@ This command always clean up all the docker images used for the tests.  If you a
 First make sure that you have
 
 - [Golang][] environment,
-- [Glide][] installed, and,
 - [MySQL][] installed and prepared [as described in the manual setup guide][manual-setup-mysql].
 
 Now you can start developing with the following commands.
@@ -39,7 +38,6 @@ Now you can start developing with the following commands.
 
 [Docker]: https://www.docker.com/
 [Golang]: https://golang.org/
-[Glide]: https://github.com/Masterminds/glide
 [MySQL]: https://www.mysql.com/
 [golint]: https://github.com/golang/lint
 [govet]: https://golang.org/cmd/vet/
