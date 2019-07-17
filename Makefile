@@ -28,7 +28,8 @@ release: clean deps credits generate
 
 credits:
 	GOOS= GOARCH= ${GO} run script/genauthors/genauthors.go > AUTHORS
-	script/credits > CREDITS
+	GO111MODULE=off GOOS= GOARCH= ${GO} get github.com/Songmu/gocredits/cmd/gocredits
+	gocredits -w .
 
 generate:
 	touch AUTHORS
