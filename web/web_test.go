@@ -1,7 +1,7 @@
-//go:generate mockgen -source application.go -destination mock_web_test.go -package web
-//go:generate mockgen -source ../repository/repository.go -destination mock_web_repository_test.go -package web
-//go:generate mockgen -source ../jobqueue/jobqueue.go -destination mock_jobqueue_test.go -package web -self_package github.com/fireworq/fireworq/web
-//go:generate mockgen -source ../jobqueue/inspector.go -destination mock_inspector_test.go -package web -self_package github.com/fireworq/fireworq/web
+//go:generate mockgen -package web -destination mock_web_test.go github.com/fireworq/fireworq/web Service
+//go:generate mockgen -package web -destination mock_web_repository_test.go github.com/fireworq/fireworq/repository QueueRepository,RoutingRepository
+//go:generate mockgen -package web -destination mock_jobqueue_test.go github.com/fireworq/fireworq/jobqueue JobQueue
+//go:generate mockgen -package web -destination mock_inspector_test.go github.com/fireworq/fireworq/jobqueue Inspector,FailureLog
 
 package web
 
