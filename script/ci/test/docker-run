@@ -5,8 +5,9 @@ set -x
 DIR=$(cd $(dirname "$0"); pwd)
 cd "$DIR"
 
-BRANCH="${GIT_BRANCH:-${TRAVIS_BRANCH}}"
-[ -n "$BRANCH" ] && git checkout "$BRANCH"
+if [ "$TRAVIS" != "true" ]; then
+  [ -n "$GIT_BRANCH" ] && git checkout "$GIT_BRANCH"
+fi
 
 . ../../docker/init.sh
 export USER_ID=$(id -ur)
