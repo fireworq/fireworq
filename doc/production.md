@@ -148,7 +148,21 @@ tool.
 ### Queue Stats
 
 Statistics of job queue metrics are provided by `/queues/stats` or
-<code>/queue/<var>{queue_name}</var>/stats</code>.
+<code>/queue/<var>{queue_name}</var>/stats</code>.  You can easily
+monitor these metrics by using plugins for your monitoring tool.
+
+|Tool    |Plugin                                                  |
+|--------|--------------------------------------------------------|
+|Mackerel|[mackerel-plugin-fireworq][]                            |
+
+### Alerts
+
+You can get alerts when a job permanently failed by using plugins for
+your monitoring tool.
+
+|Tool    |Plugin                                                  |
+|--------|--------------------------------------------------------|
+|Mackerel|[mackerel-check-fireworq][]                             |
 
 [section-manual-setup]: #manual-setup
 [section-backup]: #backup
@@ -179,3 +193,5 @@ Statistics of job queue metrics are provided by `/queues/stats` or
 [fukata/golang-stats-api-handler-zabbix-userparameter]: https://github.com/fukata/golang-stats-api-handler-zabbix-userparameter
 [sensu-plugins-golang]: https://github.com/sensu-plugins/sensu-plugins-golang/blob/master/bin/metrics-golang-stats-api.rb
 [fukata/golang-stats-api-handler-munin-plugin]: https://github.com/fukata/golang-stats-api-handler-munin-plugin
+[mackerel-plugin-fireworq]: https://github.com/fireworq/mackerel-plugin-fireworq
+[mackerel-check-fireworq]: https://github.com/fireworq/mackerel-check-fireworq
