@@ -77,7 +77,7 @@ func TestRecovering(t *testing.T) {
 		if !ok {
 			t.Error("Cannot get the inspector")
 		}
-		r, err := ins.FindAllGrabbed(10, "")
+		r, err := ins.FindAllGrabbed(10, "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -119,7 +119,7 @@ func TestInspecting(t *testing.T) {
 	}
 
 	func() {
-		r, err := ins.FindAllWaiting(2, "")
+		r, err := ins.FindAllWaiting(2, "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -134,7 +134,7 @@ func TestInspecting(t *testing.T) {
 			t.Errorf("Invalid order of jobs: %v", jobs)
 		}
 
-		r, err = ins.FindAllWaiting(2, r.NextCursor)
+		r, err = ins.FindAllWaiting(2, r.NextCursor, jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -164,7 +164,7 @@ func TestInspecting(t *testing.T) {
 	}()
 
 	func() {
-		r, err := ins.FindAllGrabbed(3, "")
+		r, err := ins.FindAllGrabbed(3, "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -182,7 +182,7 @@ func TestInspecting(t *testing.T) {
 			t.Errorf("Invalid order of jobs: %v", jobs)
 		}
 
-		r, err = ins.FindAllGrabbed(3, r.NextCursor)
+		r, err = ins.FindAllGrabbed(3, r.NextCursor, jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -212,7 +212,7 @@ func TestInspecting(t *testing.T) {
 	}()
 
 	func() {
-		r, err := ins.FindAllDeferred(2, "")
+		r, err := ins.FindAllDeferred(2, "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -227,7 +227,7 @@ func TestInspecting(t *testing.T) {
 			t.Errorf("Invalid order of jobs: %v", jobs)
 		}
 
-		r, err = ins.FindAllDeferred(2, r.NextCursor)
+		r, err = ins.FindAllDeferred(2, r.NextCursor, jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -257,7 +257,7 @@ func TestInspecting(t *testing.T) {
 	}()
 
 	func() {
-		r, err := ins.FindAllWaiting(10, "")
+		r, err := ins.FindAllWaiting(10, "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -277,7 +277,7 @@ func TestInspecting(t *testing.T) {
 	}()
 
 	func() {
-		r, err := ins.FindAllGrabbed(10, "")
+		r, err := ins.FindAllGrabbed(10, "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -297,7 +297,7 @@ func TestInspecting(t *testing.T) {
 	}()
 
 	func() {
-		r, err := ins.FindAllDeferred(10, "")
+		r, err := ins.FindAllDeferred(10, "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}

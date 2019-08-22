@@ -36,17 +36,17 @@ func (i *inspector) Find(jobID uint64) (*jobqueue.InspectedJob, error) {
 	return j, nil
 }
 
-func (i *inspector) FindAllGrabbed(limit uint, cursor string) (*jobqueue.InspectedJobs, error) {
+func (i *inspector) FindAllGrabbed(limit uint, cursor string, order jobqueue.SortOrder) (*jobqueue.InspectedJobs, error) {
 	var maxTime = time.Now().UnixNano() / int64(time.Millisecond)
 	return i.findAll("grabbed", 0, maxTime, limit, cursor)
 }
 
-func (i *inspector) FindAllWaiting(limit uint, cursor string) (*jobqueue.InspectedJobs, error) {
+func (i *inspector) FindAllWaiting(limit uint, cursor string, order jobqueue.SortOrder) (*jobqueue.InspectedJobs, error) {
 	var maxTime = time.Now().UnixNano() / int64(time.Millisecond)
 	return i.findAll("claimed", 0, maxTime, limit, cursor)
 }
 
-func (i *inspector) FindAllDeferred(limit uint, cursor string) (*jobqueue.InspectedJobs, error) {
+func (i *inspector) FindAllDeferred(limit uint, cursor string, order jobqueue.SortOrder) (*jobqueue.InspectedJobs, error) {
 	var minTime = time.Now().UnixNano() / int64(time.Millisecond)
 	return i.findAll("claimed", minTime, 0, limit, cursor)
 }

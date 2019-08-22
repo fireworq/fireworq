@@ -149,24 +149,24 @@ func (app *Application) serveQueueStats(w http.ResponseWriter, req *http.Request
 }
 
 func (app *Application) serveQueueGrabbed(w http.ResponseWriter, req *http.Request) error {
-	return app.serveQueueJobs(func(i jobqueue.Inspector, l uint, c string) (*jobqueue.InspectedJobs, error) {
-		return i.FindAllGrabbed(l, c)
+	return app.serveQueueJobs(func(i jobqueue.Inspector, l uint, c string, o jobqueue.SortOrder) (*jobqueue.InspectedJobs, error) {
+		return i.FindAllGrabbed(l, c, o)
 	}, w, req)
 }
 
 func (app *Application) serveQueueWaiting(w http.ResponseWriter, req *http.Request) error {
-	return app.serveQueueJobs(func(i jobqueue.Inspector, l uint, c string) (*jobqueue.InspectedJobs, error) {
-		return i.FindAllWaiting(l, c)
+	return app.serveQueueJobs(func(i jobqueue.Inspector, l uint, c string, o jobqueue.SortOrder) (*jobqueue.InspectedJobs, error) {
+		return i.FindAllWaiting(l, c, o)
 	}, w, req)
 }
 
 func (app *Application) serveQueueDeferred(w http.ResponseWriter, req *http.Request) error {
-	return app.serveQueueJobs(func(i jobqueue.Inspector, l uint, c string) (*jobqueue.InspectedJobs, error) {
-		return i.FindAllDeferred(l, c)
+	return app.serveQueueJobs(func(i jobqueue.Inspector, l uint, c string, o jobqueue.SortOrder) (*jobqueue.InspectedJobs, error) {
+		return i.FindAllDeferred(l, c, o)
 	}, w, req)
 }
 
-func (app *Application) serveQueueJobs(find func(jobqueue.Inspector, uint, string) (*jobqueue.InspectedJobs, error), w http.ResponseWriter, req *http.Request) error {
+func (app *Application) serveQueueJobs(find func(jobqueue.Inspector, uint, string, jobqueue.SortOrder) (*jobqueue.InspectedJobs, error), w http.ResponseWriter, req *http.Request) error {
 	vars := mux.Vars(req)
 	query := req.URL.Query()
 
@@ -185,7 +185,7 @@ func (app *Application) serveQueueJobs(find func(jobqueue.Inspector, uint, strin
 		limit = uint(l)
 	}
 
-	jobs, err := find(inspector, limit, query.Get("cursor"))
+	jobs, err := find(inspector, limit, query.Get("cursor"), jobqueue.Desc)
 	if err != nil {
 		return err
 	}

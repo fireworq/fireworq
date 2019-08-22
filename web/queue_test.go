@@ -847,7 +847,7 @@ func TestGetQueueGrabbed(t *testing.T) {
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
-			FindAllGrabbed(gomock.Any(), "").
+			FindAllGrabbed(gomock.Any(), "", jobqueue.Desc).
 			Return(nil, errors.New("FindAllGrabbed() failure"))
 
 		mockJobQueue := NewMockJobQueue(ctrl)
@@ -897,7 +897,7 @@ func TestGetQueueGrabbed(t *testing.T) {
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
-			FindAllGrabbed(gomock.Any(), "").
+			FindAllGrabbed(gomock.Any(), "", jobqueue.Desc).
 			Return(jobs, nil)
 
 		mockJobQueue := NewMockJobQueue(ctrl)
@@ -967,7 +967,7 @@ func TestGetQueueGrabbed(t *testing.T) {
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
-			FindAllGrabbed(limit, cursor).
+			FindAllGrabbed(limit, cursor, jobqueue.Desc).
 			Return(jobs, nil)
 
 		mockJobQueue := NewMockJobQueue(ctrl)
@@ -1058,7 +1058,7 @@ func TestGetQueueWaiting(t *testing.T) {
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
-			FindAllWaiting(gomock.Any(), "").
+			FindAllWaiting(gomock.Any(), "", jobqueue.Desc).
 			Return(nil, errors.New("FindAllWating() failure"))
 
 		mockJobQueue := NewMockJobQueue(ctrl)
@@ -1108,7 +1108,7 @@ func TestGetQueueWaiting(t *testing.T) {
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
-			FindAllWaiting(gomock.Any(), "").
+			FindAllWaiting(gomock.Any(), "", jobqueue.Desc).
 			Return(jobs, nil)
 
 		mockJobQueue := NewMockJobQueue(ctrl)
@@ -1178,7 +1178,7 @@ func TestGetQueueWaiting(t *testing.T) {
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
-			FindAllWaiting(limit, cursor).
+			FindAllWaiting(limit, cursor, jobqueue.Desc).
 			Return(jobs, nil)
 
 		mockJobQueue := NewMockJobQueue(ctrl)
@@ -1269,7 +1269,7 @@ func TestGetQueueDeferred(t *testing.T) {
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
-			FindAllDeferred(gomock.Any(), "").
+			FindAllDeferred(gomock.Any(), "", jobqueue.Desc).
 			Return(nil, errors.New("FindAllDeferred() failure"))
 
 		mockJobQueue := NewMockJobQueue(ctrl)
@@ -1318,7 +1318,7 @@ func TestGetQueueDeferred(t *testing.T) {
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
-			FindAllDeferred(gomock.Any(), "").
+			FindAllDeferred(gomock.Any(), "", jobqueue.Desc).
 			Return(jobs, nil)
 
 		mockJobQueue := NewMockJobQueue(ctrl)
@@ -1388,7 +1388,7 @@ func TestGetQueueDeferred(t *testing.T) {
 
 		mockInspector := NewMockInspector(ctrl)
 		mockInspector.EXPECT().
-			FindAllDeferred(limit, cursor).
+			FindAllDeferred(limit, cursor, jobqueue.Desc).
 			Return(jobs, nil)
 
 		mockJobQueue := NewMockJobQueue(ctrl)

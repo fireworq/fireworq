@@ -250,7 +250,7 @@ func subtestDelete1(t *testing.T, jq jobqueue.Impl) {
 	if hasInspector, ok := jq.(jobqueue.HasInspector); ok {
 		i := hasInspector.Inspector()
 
-		r1, err := i.FindAllGrabbed(uint(100), "")
+		r1, err := i.FindAllGrabbed(uint(100), "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -258,12 +258,12 @@ func subtestDelete1(t *testing.T, jq jobqueue.Impl) {
 			t.Error("There must be no grabbed job in the queue")
 		}
 
-		r2, err := i.FindAllWaiting(uint(100), "")
+		r2, err := i.FindAllWaiting(uint(100), "", jobqueue.Desc)
 		if len(r2.Jobs) != 0 {
 			t.Error("There must be no waiting job in the queue")
 		}
 
-		r3, err := i.FindAllDeferred(uint(100), "")
+		r3, err := i.FindAllDeferred(uint(100), "", jobqueue.Desc)
 		if len(r3.Jobs) != 0 {
 			t.Error("There must be no deferred job in the queue")
 		}
@@ -291,7 +291,7 @@ func subtestDeletePartially(t *testing.T, jq jobqueue.Impl) {
 	if hasInspector, ok := jq.(jobqueue.HasInspector); ok {
 		i := hasInspector.Inspector()
 
-		r1, err := i.FindAllGrabbed(uint(100), "")
+		r1, err := i.FindAllGrabbed(uint(100), "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -299,12 +299,12 @@ func subtestDeletePartially(t *testing.T, jq jobqueue.Impl) {
 			t.Error("There must be only one grabbed job in the queue")
 		}
 
-		r2, err := i.FindAllWaiting(uint(100), "")
+		r2, err := i.FindAllWaiting(uint(100), "", jobqueue.Desc)
 		if len(r2.Jobs) != 1 {
 			t.Error("There must be one waiting job in the queue")
 		}
 
-		r3, err := i.FindAllDeferred(uint(100), "")
+		r3, err := i.FindAllDeferred(uint(100), "", jobqueue.Desc)
 		if len(r3.Jobs) != 0 {
 			t.Error("There must be no deferred job in the queue")
 		}
@@ -333,7 +333,7 @@ func subtestDeleteMulti(t *testing.T, jq jobqueue.Impl) {
 	if hasInspector, ok := jq.(jobqueue.HasInspector); ok {
 		i := hasInspector.Inspector()
 
-		r1, err := i.FindAllGrabbed(uint(100), "")
+		r1, err := i.FindAllGrabbed(uint(100), "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -341,12 +341,12 @@ func subtestDeleteMulti(t *testing.T, jq jobqueue.Impl) {
 			t.Error("There must be only one grabbed job in the queue")
 		}
 
-		r2, err := i.FindAllWaiting(uint(100), "")
+		r2, err := i.FindAllWaiting(uint(100), "", jobqueue.Desc)
 		if len(r2.Jobs) != 2 {
 			t.Error("There must be two waiting jobs in the queue")
 		}
 
-		r3, err := i.FindAllDeferred(uint(100), "")
+		r3, err := i.FindAllDeferred(uint(100), "", jobqueue.Desc)
 		if len(r3.Jobs) != 0 {
 			t.Error("There must be no deferred jobs in the queue")
 		}
@@ -366,7 +366,7 @@ func subtestDeleteMulti(t *testing.T, jq jobqueue.Impl) {
 	if hasInspector, ok := jq.(jobqueue.HasInspector); ok {
 		i := hasInspector.Inspector()
 
-		r1, err := i.FindAllGrabbed(uint(100), "")
+		r1, err := i.FindAllGrabbed(uint(100), "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -374,12 +374,12 @@ func subtestDeleteMulti(t *testing.T, jq jobqueue.Impl) {
 			t.Error("There must be only one grabbed job in the queue")
 		}
 
-		r2, err := i.FindAllWaiting(uint(100), "")
+		r2, err := i.FindAllWaiting(uint(100), "", jobqueue.Desc)
 		if len(r2.Jobs) != 0 {
 			t.Error("There must be no waiting job in the queue")
 		}
 
-		r3, err := i.FindAllDeferred(uint(100), "")
+		r3, err := i.FindAllDeferred(uint(100), "", jobqueue.Desc)
 		if len(r3.Jobs) != 0 {
 			t.Error("There must be no deferred job in the queue")
 		}
@@ -582,7 +582,7 @@ func subtestAsyncDelete1(t *testing.T, jq jobqueue.Impl) {
 	if hasInspector, ok := jq.(jobqueue.HasInspector); ok {
 		i := hasInspector.Inspector()
 
-		r1, err := i.FindAllGrabbed(uint(100), "")
+		r1, err := i.FindAllGrabbed(uint(100), "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -590,12 +590,12 @@ func subtestAsyncDelete1(t *testing.T, jq jobqueue.Impl) {
 			t.Error("There must be no grabbed job in the queue")
 		}
 
-		r2, err := i.FindAllWaiting(uint(100), "")
+		r2, err := i.FindAllWaiting(uint(100), "", jobqueue.Desc)
 		if len(r2.Jobs) != 0 {
 			t.Error("There must be no waiting job in the queue")
 		}
 
-		r3, err := i.FindAllDeferred(uint(100), "")
+		r3, err := i.FindAllDeferred(uint(100), "", jobqueue.Desc)
 		if len(r3.Jobs) != 0 {
 			t.Error("There must be no deferred job in the queue")
 		}
