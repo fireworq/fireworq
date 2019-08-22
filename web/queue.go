@@ -185,7 +185,15 @@ func (app *Application) serveQueueJobs(find func(jobqueue.Inspector, uint, strin
 		limit = uint(l)
 	}
 
-	jobs, err := find(inspector, limit, query.Get("cursor"), jobqueue.Desc)
+	order := jobqueue.Desc
+	switch o := query.Get("order"); o {
+	case "asc":
+		order = jobqueue.Asc
+	case "desc":
+		order = jobqueue.Desc
+	}
+
+	jobs, err := find(inspector, limit, query.Get("cursor"), order)
 	if err != nil {
 		return err
 	}

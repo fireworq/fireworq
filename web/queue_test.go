@@ -1005,6 +1005,76 @@ func TestGetQueueGrabbed(t *testing.T) {
 			}
 		}
 	}()
+
+	func() {
+		ctrl := gomock.NewController(t)
+		s, mockApp := newMockServer(ctrl)
+		defer s.Close()
+
+		jobs := &jobqueue.InspectedJobs{
+			Jobs: []jobqueue.InspectedJob{
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+			},
+			NextCursor: "",
+		}
+
+		limit := uint(123)
+		cursor := "bar"
+
+		mockInspector := NewMockInspector(ctrl)
+		mockInspector.EXPECT().
+			FindAllGrabbed(limit, cursor, jobqueue.Asc).
+			Return(jobs, nil)
+
+		mockJobQueue := NewMockJobQueue(ctrl)
+		mockJobQueue.EXPECT().
+			Inspector().
+			Return(mockInspector, true)
+
+		mockApp.Service.EXPECT().
+			GetJobQueue(gomock.Any()).
+			Return(newMockRunningQueue(mockJobQueue, nil), true)
+
+		resp, err := http.Get(s.URL + "/queue/queue1/grabbed?order=asc&cursor=" + cursor + "&limit=" + strconv.Itoa(int(limit)))
+		if err != nil {
+			t.Error(err)
+		}
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			t.Error("GET /queue/$name/grabbed should succeed")
+		}
+
+		var result jobqueue.InspectedJobs
+		buf, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			t.Error(err)
+		}
+		if err := json.Unmarshal(buf, &result); err != nil {
+			t.Error(err)
+		}
+		if len(result.Jobs) != len(jobs.Jobs) {
+			t.Errorf("GET /queue/$name/grabbed should return grabbed jobs: %v", result)
+		}
+		for i, f := range result.Jobs {
+			if f.ID != jobs.Jobs[i].ID {
+				t.Errorf("GET /queue/$name/grabbed should return grabbed jobs: %v", f)
+			}
+		}
+	}()
 }
 
 func TestGetQueueWaiting(t *testing.T) {
@@ -1216,6 +1286,76 @@ func TestGetQueueWaiting(t *testing.T) {
 			}
 		}
 	}()
+
+	func() {
+		ctrl := gomock.NewController(t)
+		s, mockApp := newMockServer(ctrl)
+		defer s.Close()
+
+		jobs := &jobqueue.InspectedJobs{
+			Jobs: []jobqueue.InspectedJob{
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+			},
+			NextCursor: "",
+		}
+
+		limit := uint(123)
+		cursor := "bar"
+
+		mockInspector := NewMockInspector(ctrl)
+		mockInspector.EXPECT().
+			FindAllWaiting(limit, cursor, jobqueue.Asc).
+			Return(jobs, nil)
+
+		mockJobQueue := NewMockJobQueue(ctrl)
+		mockJobQueue.EXPECT().
+			Inspector().
+			Return(mockInspector, true)
+
+		mockApp.Service.EXPECT().
+			GetJobQueue(gomock.Any()).
+			Return(newMockRunningQueue(mockJobQueue, nil), true)
+
+		resp, err := http.Get(s.URL + "/queue/queue1/waiting?order=asc&cursor=" + cursor + "&limit=" + strconv.Itoa(int(limit)))
+		if err != nil {
+			t.Error(err)
+		}
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			t.Error("GET /queue/$name/waiting should succeed")
+		}
+
+		var result jobqueue.InspectedJobs
+		buf, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			t.Error(err)
+		}
+		if err := json.Unmarshal(buf, &result); err != nil {
+			t.Error(err)
+		}
+		if len(result.Jobs) != len(jobs.Jobs) {
+			t.Errorf("GET /queue/$name/waiting should return waiting jobs: %v", result)
+		}
+		for i, f := range result.Jobs {
+			if f.ID != jobs.Jobs[i].ID {
+				t.Errorf("GET /queue/$name/waiting should return waiting jobs: %v", f)
+			}
+		}
+	}()
 }
 
 func TestGetQueueDeferred(t *testing.T) {
@@ -1401,6 +1541,76 @@ func TestGetQueueDeferred(t *testing.T) {
 			Return(newMockRunningQueue(mockJobQueue, nil), true)
 
 		resp, err := http.Get(s.URL + "/queue/queue1/deferred?cursor=" + cursor + "&limit=" + strconv.Itoa(int(limit)))
+		if err != nil {
+			t.Error(err)
+		}
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			t.Error("GET /queue/$name/deferred should succeed")
+		}
+
+		var result jobqueue.InspectedJobs
+		buf, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			t.Error(err)
+		}
+		if err := json.Unmarshal(buf, &result); err != nil {
+			t.Error(err)
+		}
+		if len(result.Jobs) != len(jobs.Jobs) {
+			t.Errorf("GET /queue/$name/deferred should return deferred jobs: %v", result)
+		}
+		for i, f := range result.Jobs {
+			if f.ID != jobs.Jobs[i].ID {
+				t.Errorf("GET /queue/$name/deferred should return deferred jobs: %v", f)
+			}
+		}
+	}()
+
+	func() {
+		ctrl := gomock.NewController(t)
+		s, mockApp := newMockServer(ctrl)
+		defer s.Close()
+
+		jobs := &jobqueue.InspectedJobs{
+			Jobs: []jobqueue.InspectedJob{
+				{
+					ID:       1,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       2,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+				{
+					ID:       3,
+					Category: "test_job",
+					URL:      "http://example.com/",
+				},
+			},
+			NextCursor: "",
+		}
+
+		limit := uint(123)
+		cursor := "bar"
+
+		mockInspector := NewMockInspector(ctrl)
+		mockInspector.EXPECT().
+			FindAllDeferred(limit, cursor, jobqueue.Asc).
+			Return(jobs, nil)
+
+		mockJobQueue := NewMockJobQueue(ctrl)
+		mockJobQueue.EXPECT().
+			Inspector().
+			Return(mockInspector, true)
+
+		mockApp.Service.EXPECT().
+			GetJobQueue(gomock.Any()).
+			Return(newMockRunningQueue(mockJobQueue, nil), true)
+
+		resp, err := http.Get(s.URL + "/queue/queue1/deferred?order=asc&cursor=" + cursor + "&limit=" + strconv.Itoa(int(limit)))
 		if err != nil {
 			t.Error(err)
 		}
