@@ -26,6 +26,15 @@ type InspectedJobs struct {
 	NextCursor string         `json:"next_cursor"`
 }
 
+// SortOrder describes sort order at inspecting jobs.
+type SortOrder int
+
+// Sort orders
+const (
+	Asc SortOrder = iota
+	Desc
+)
+
 // Inspector is an interface to inspect jobs in a queue.
 type Inspector interface {
 	Delete(jobID uint64) error
