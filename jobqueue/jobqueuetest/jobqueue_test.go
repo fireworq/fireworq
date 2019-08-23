@@ -179,7 +179,7 @@ func TestInspecting(t *testing.T) {
 			t.Errorf("Invalid order of jobs: %v", jobs)
 		}
 
-		r, err = ins.FindAllWaiting(2, r.NextCursor, jobqueue.Desc)
+		r, err = ins.FindAllWaiting(2, r.NextCursor, jobqueue.Asc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -275,7 +275,7 @@ func TestInspecting(t *testing.T) {
 			t.Errorf("Invalid order of jobs: %v", jobs)
 		}
 
-		r, err = ins.FindAllGrabbed(3, r.NextCursor, jobqueue.Desc)
+		r, err = ins.FindAllGrabbed(3, r.NextCursor, jobqueue.Asc)
 		if err != nil {
 			t.Error(err)
 		}
@@ -365,7 +365,7 @@ func TestInspecting(t *testing.T) {
 			t.Errorf("Invalid order of jobs: %v", jobs)
 		}
 
-		r, err = ins.FindAllDeferred(2, r.NextCursor, jobqueue.Desc)
+		r, err = ins.FindAllDeferred(2, r.NextCursor, jobqueue.Asc)
 		if err != nil {
 			t.Error(err)
 		}
