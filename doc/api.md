@@ -381,7 +381,7 @@ Returns a list of grabbed jobs in a queue.  Grabbed jobs are running
 or be prepared to run.
 
 ```http
-GET /queue/test_queue1/grabbed?limit=10&cursor=MTQ5NzUxMDc4NiwxMw%3D%3D HTTP/1.1
+GET /queue/test_queue1/grabbed?limit=10&cursor=MTQ5NzUxMDc4NiwxMw%3D%3D&order=desc HTTP/1.1
 ```
 
 ```http
@@ -431,6 +431,7 @@ HTTP/1.1 200 OK
 |`queue_name`             |The name of the target queue.        |mandatory     |
 |`limit`                  |The maximum number of the jobs.      |default: `100`|
 |`cursor`                 |A cursor to retrieve next items since the previous request.  Specify the value of `next_cursor` field in the previous response.|optional|
+|`order`                  |Sort order of the jobs.              |default:`desc`|
 
 |Response code            |Meaning                              |
 |:------------------------|:------------------------------------|
@@ -444,7 +445,7 @@ but not grabbed yet just because there is not enough space or time to
 grab them.
 
 ```http
-GET /queue/test_queue1/waiting?limit=10&cursor=MTQ5NzUxMDc4NiwxMw%3D%3D HTTP/1.1
+GET /queue/test_queue1/waiting?limit=10&cursor=MTQ5NzUxMDc4NiwxMw%3D%3D&order=desc HTTP/1.1
 ```
 
 ```http
@@ -494,6 +495,7 @@ HTTP/1.1 200 OK
 |`queue_name`             |The name of the target queue.        |mandatory     |
 |`limit`                  |The maximum number of the jobs.      |default: `100`|
 |`cursor`                 |A cursor to retrieve next items since the previous request.  Specify the value of `next_cursor` field in the previous response.|optional|
+|`order`                  |Sort order of the jobs.              |default:`desc`|
 
 |Response code            |Meaning                              |
 |:------------------------|:------------------------------------|
@@ -506,7 +508,7 @@ Returns a list of deferred jobs in a queue.  Deferred jobs are not
 going to run for now because of specified delays.
 
 ```http
-GET /queue/test_queue1/deferred?limit=10&cursor=MTQ5NzUxMDc4NiwxMw%3D%3D HTTP/1.1
+GET /queue/test_queue1/deferred?limit=10&cursor=MTQ5NzUxMDc4NiwxMw%3D%3D&order=desc HTTP/1.1
 ```
 
 ```http
@@ -556,6 +558,7 @@ HTTP/1.1 200 OK
 |`queue_name`             |The name of the target queue.        |mandatory     |
 |`limit`                  |The maximum number of the jobs.      |default: `100`|
 |`cursor`                 |A cursor to retrieve next items since the previous request.  Specify the value of `next_cursor` field in the previous response.|optional|
+|`order`                  |Sort order of the jobs.              |default:`desc`|
 
 |Response code            |Meaning                              |
 |:------------------------|:------------------------------------|
