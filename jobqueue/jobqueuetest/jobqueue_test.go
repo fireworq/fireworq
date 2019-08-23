@@ -164,6 +164,51 @@ func TestInspecting(t *testing.T) {
 	}()
 
 	func() {
+		r, err := ins.FindAllWaiting(2, "", jobqueue.Asc)
+		if err != nil {
+			t.Error(err)
+		}
+		jobs := r.Jobs
+		if len(jobs) != 2 {
+			t.Errorf("The number of jobs is incorrect: %d", len(jobs))
+		}
+		if jobs[0].URL != "job6" {
+			t.Errorf("Invalid order of jobs: %v", jobs)
+		}
+		if jobs[1].URL != "job7" {
+			t.Errorf("Invalid order of jobs: %v", jobs)
+		}
+
+		r, err = ins.FindAllWaiting(2, r.NextCursor, jobqueue.Desc)
+		if err != nil {
+			t.Error(err)
+		}
+		if r.NextCursor != "" {
+			t.Error("Cursor should be empty when there is no more jobs")
+		}
+		jobs = append(jobs, r.Jobs...)
+		if len(jobs) != 3 {
+			t.Errorf("The number of jobs is incorrect: %d", len(jobs))
+		}
+		if jobs[2].URL != "job9" {
+			t.Errorf("Invalid order of jobs: %v", jobs)
+		}
+		if _, err := json.Marshal(r); err != nil {
+			t.Error(err)
+		}
+
+		for _, j := range jobs {
+			job, err := ins.Find(j.ID)
+			if err != nil {
+				t.Error(err)
+			}
+			if job.URL != j.URL {
+				t.Errorf("Wrong job: %v", job)
+			}
+		}
+	}()
+
+	func() {
 		r, err := ins.FindAllGrabbed(3, "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
@@ -212,6 +257,54 @@ func TestInspecting(t *testing.T) {
 	}()
 
 	func() {
+		r, err := ins.FindAllGrabbed(3, "", jobqueue.Asc)
+		if err != nil {
+			t.Error(err)
+		}
+		jobs := r.Jobs
+		if len(jobs) != 3 {
+			t.Errorf("The number of jobs is incorrect: %d", len(jobs))
+		}
+		if jobs[0].URL != "job0" {
+			t.Errorf("Invalid order of jobs: %v", jobs)
+		}
+		if jobs[1].URL != "job1" {
+			t.Errorf("Invalid order of jobs: %v", jobs)
+		}
+		if jobs[2].URL != "job3" {
+			t.Errorf("Invalid order of jobs: %v", jobs)
+		}
+
+		r, err = ins.FindAllGrabbed(3, r.NextCursor, jobqueue.Desc)
+		if err != nil {
+			t.Error(err)
+		}
+		if r.NextCursor != "" {
+			t.Error("Cursor should be empty when there is no more jobs")
+		}
+		jobs = append(jobs, r.Jobs...)
+		if len(jobs) != 4 {
+			t.Errorf("The number of jobs is incorrect: %d", len(jobs))
+		}
+		if jobs[3].URL != "job4" {
+			t.Errorf("Invalid order of jobs: %v", jobs)
+		}
+		if _, err := json.Marshal(r); err != nil {
+			t.Error(err)
+		}
+
+		for _, j := range jobs {
+			job, err := ins.Find(j.ID)
+			if err != nil {
+				t.Error(err)
+			}
+			if job.URL != j.URL {
+				t.Errorf("Wrong job: %v", job)
+			}
+		}
+	}()
+
+	func() {
 		r, err := ins.FindAllDeferred(2, "", jobqueue.Desc)
 		if err != nil {
 			t.Error(err)
@@ -239,6 +332,51 @@ func TestInspecting(t *testing.T) {
 			t.Errorf("The number of jobs is incorrect: %d", len(jobs))
 		}
 		if jobs[2].URL != "job2" {
+			t.Errorf("Invalid order of jobs: %v", jobs)
+		}
+		if _, err := json.Marshal(r); err != nil {
+			t.Error(err)
+		}
+
+		for _, j := range jobs {
+			job, err := ins.Find(j.ID)
+			if err != nil {
+				t.Error(err)
+			}
+			if job.URL != j.URL {
+				t.Errorf("Wrong job: %v", job)
+			}
+		}
+	}()
+
+	func() {
+		r, err := ins.FindAllDeferred(2, "", jobqueue.Asc)
+		if err != nil {
+			t.Error(err)
+		}
+		jobs := r.Jobs
+		if len(jobs) != 2 {
+			t.Errorf("The number of jobs is incorrect: %d", len(jobs))
+		}
+		if jobs[0].URL != "job2" {
+			t.Errorf("Invalid order of jobs: %v", jobs)
+		}
+		if jobs[1].URL != "job5" {
+			t.Errorf("Invalid order of jobs: %v", jobs)
+		}
+
+		r, err = ins.FindAllDeferred(2, r.NextCursor, jobqueue.Desc)
+		if err != nil {
+			t.Error(err)
+		}
+		if r.NextCursor != "" {
+			t.Error("Cursor should be empty when there is no more jobs")
+		}
+		jobs = append(jobs, r.Jobs...)
+		if len(jobs) != 3 {
+			t.Errorf("The number of jobs is incorrect: %d", len(jobs))
+		}
+		if jobs[2].URL != "job8" {
 			t.Errorf("Invalid order of jobs: %v", jobs)
 		}
 		if _, err := json.Marshal(r); err != nil {
