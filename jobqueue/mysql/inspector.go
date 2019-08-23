@@ -60,25 +60,21 @@ func (i *inspector) FindAllDeferred(limit uint, cursor string, order jobqueue.So
 	return i.findAllDesc("claimed", minTime, 0, limit, cursor)
 }
 
-func decodeCursor(cursor string, time *int64, jobID *uint64) {
-	if decoded, err := base64.StdEncoding.DecodeString(cursor); err == nil {
-		if pair := strings.SplitN(string(decoded), ",", 2); len(pair) == 2 {
-			t, err1 := strconv.Atoi(pair[0])
-			j, err2 := strconv.Atoi(pair[1])
-			if err1 == nil && err2 == nil {
-				*time = int64(t)
-				*jobID = uint64(j)
-			}
-		}
-	}
-}
-
 func (i *inspector) findAllAsc(status string, minTime int64, maxTime int64, limit uint, cursor string) (*jobqueue.InspectedJobs, error) {
 	if minTime >= math.MaxInt64 {
 		minTime = 0
 	}
 	var minJobID uint64
-	decodeCursor(cursor, &minTime, &minJobID)
+	if decoded, err := base64.StdEncoding.DecodeString(cursor); err == nil {
+		if pair := strings.SplitN(string(decoded), ",", 2); len(pair) == 2 {
+			t, err1 := strconv.Atoi(pair[0])
+			j, err2 := strconv.Atoi(pair[1])
+			if err1 == nil && err2 == nil {
+				minTime = int64(t)
+				minJobID = uint64(j)
+			}
+		}
+	}
 
 	ids := make([]interface{}, 0, limit+1)
 	placeholders := make([]string, 0, limit+1)
@@ -170,7 +166,16 @@ func (i *inspector) findAllDesc(status string, minTime int64, maxTime int64, lim
 	}
 
 	var maxJobID uint64 = math.MaxUint64
-	decodeCursor(cursor, &maxTime, &maxJobID)
+	if decoded, err := base64.StdEncoding.DecodeString(cursor); err == nil {
+		if pair := strings.SplitN(string(decoded), ",", 2); len(pair) == 2 {
+			t, err1 := strconv.Atoi(pair[0])
+			j, err2 := strconv.Atoi(pair[1])
+			if err1 == nil && err2 == nil {
+				maxTime = int64(t)
+				maxJobID = uint64(j)
+			}
+		}
+	}
 
 	ids := make([]interface{}, 0, limit+1)
 	placeholders := make([]string, 0, limit+1)
