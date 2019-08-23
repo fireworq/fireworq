@@ -361,7 +361,7 @@ func TestInspecting(t *testing.T) {
 		if jobs[0].URL != "job2" {
 			t.Errorf("Invalid order of jobs: %v", jobs)
 		}
-		if jobs[1].URL != "job5" {
+		if jobs[1].URL != "job8" {
 			t.Errorf("Invalid order of jobs: %v", jobs)
 		}
 
@@ -376,7 +376,7 @@ func TestInspecting(t *testing.T) {
 		if len(jobs) != 3 {
 			t.Errorf("The number of jobs is incorrect: %d", len(jobs))
 		}
-		if jobs[2].URL != "job8" {
+		if jobs[2].URL != "job5" {
 			t.Errorf("Invalid order of jobs: %v", jobs)
 		}
 		if _, err := json.Marshal(r); err != nil {
