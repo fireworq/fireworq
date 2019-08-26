@@ -14,7 +14,7 @@ This is the official list of Fireworq authors for copyright purposes.
 |TSUBOUCHI Yuuki|<yuki.tsubo@gmail.com>||25|
 |SHIBAHATA Tsugihito|<fly.me.to.the.moon1204@gmail.com>|[@grassedge](https://github.com/grassedge)|17|
 |yigarashi|<yigarashi@hatena.ne.jp>||17|
-|Tomohiro Nishimura|<tomohiro68@gmail.com>|[@Sixeight](https://github.com/Sixeight)|15|
+|Tomohiro Nishimura|<tomohiro68@gmail.com>|[@Sixeight](https://github.com/Sixeight)|16|
 |itchyny|<itchyny@hatena.ne.jp>||3|
 |Thomas Broadley|<buriedunderbooks@hotmail.com>|[@tbroadley](https://github.com/tbroadley)|1|
 |Sai Warang|<cyprusad@gmail.com>||1|
