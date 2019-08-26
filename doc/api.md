@@ -431,7 +431,7 @@ HTTP/1.1 200 OK
 |`queue_name`             |The name of the target queue.        |mandatory     |
 |`limit`                  |The maximum number of the jobs.      |default: `100`|
 |`cursor`                 |A cursor to retrieve next items since the previous request.  Specify the value of `next_cursor` field in the previous response.|optional|
-|`order`                  |Sort order of the jobs.              |default:`desc`|
+|`order`                  |Sort order of the jobs. `asc` or `desc` |default:`desc`|
 
 |Response code            |Meaning                              |
 |:------------------------|:------------------------------------|
@@ -495,7 +495,7 @@ HTTP/1.1 200 OK
 |`queue_name`             |The name of the target queue.        |mandatory     |
 |`limit`                  |The maximum number of the jobs.      |default: `100`|
 |`cursor`                 |A cursor to retrieve next items since the previous request.  Specify the value of `next_cursor` field in the previous response.|optional|
-|`order`                  |Sort order of the jobs.              |default:`desc`|
+|`order`                  |Sort order of the jobs. `asc` or `desc` |default:`desc`|
 
 |Response code            |Meaning                              |
 |:------------------------|:------------------------------------|
@@ -558,7 +558,7 @@ HTTP/1.1 200 OK
 |`queue_name`             |The name of the target queue.        |mandatory     |
 |`limit`                  |The maximum number of the jobs.      |default: `100`|
 |`cursor`                 |A cursor to retrieve next items since the previous request.  Specify the value of `next_cursor` field in the previous response.|optional|
-|`order`                  |Sort order of the jobs.              |default:`desc`|
+|`order`                  |Sort order of the jobs. `asc` or `desc` |default:`desc`|
 
 |Response code            |Meaning                              |
 |:------------------------|:------------------------------------|
