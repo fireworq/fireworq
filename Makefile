@@ -29,7 +29,7 @@ release: clean deps credits generate
 credits:
 	GOOS= GOARCH= ${GO} run script/genauthors/genauthors.go > AUTHORS
 	GO111MODULE=off GOOS= GOARCH= ${GO} get github.com/Songmu/gocredits/cmd/gocredits
-	go mod tidy # not `go get` to get all the dependencies regardress of OS, architecture and build tags
+	${GO} mod tidy # not `go get` to get all the dependencies regardress of OS, architecture and build tags
 	gocredits -w .
 
 generate:
