@@ -15,6 +15,7 @@ applicable only to a [manual setup][section-manual-setup].
 - [Common Variables/Arguments][section-config-common]
   - [`FIREWORQ_ACCESS_LOG`, `--access-log`](#env-access-log)
   - [`FIREWORQ_ACCESS_LOG_TAG`, `--access-log-tag`](#env-access-log-tag)
+  - [`FIREWORQ_DISPATCH_IDLE_CONN_TIMEOUT`, `--dispatch-idle-conn-timeout`](#env-dispatch-idle-conn-timeout)
   - [`FIREWORQ_DISPATCH_KEEP_ALIVE`, `--dispatch-keep-alive`](#env-dispatch-keep-alive)
   - [`FIREWORQ_DISPATCH_MAX_CONNS_PER_HOST`, `--dispatch-max-conns-per-host`](#env-dispatch-max-conns-per-host)
   - [`FIREWORQ_DISPATCH_USER_AGENT`, `--dispatch-user-agent`](#env-dispatch-user-agent)
@@ -50,6 +51,11 @@ Each line in the file is a JSON string corresponds to a single log item.
 Default: `fireworq.access`
 
 Specifies the value of `tag` field in a access log item.
+
+### <a name="env-dispatch-idle-conn-timeout">`FIREWORQ_DISPATCH_IDLE_CONN_TIMEOUT`, `--dispatch-idle-conn-timeout`</a>
+Default: `0`
+
+Specifies the maximum time of an idle (keep-alive) connections. If zero, an idle connections will not be closed. 
 
 ### <a name="env-dispatch-keep-alive">`FIREWORQ_DISPATCH_KEEP_ALIVE`, `--dispatch-keep-alive`</a>
 

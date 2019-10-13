@@ -37,6 +37,12 @@ func HTTPInit() {
 	}
 	transport.MaxIdleConnsPerHost = int(v)
 
+	v, err = strconv.ParseInt(config.Get("dispatch_idle_conn_timeout"), 10, 32)
+	if err != nil {
+		v, _ = strconv.ParseInt(config.GetDefault("dispatch_idle_conn_timeout"), 10, 32)
+	}
+	transport.IdleConnTimeout = time.Duration(v) * time.Second
+
 	defaultUserAgent = config.Get("dispatch_user_agent")
 }
 

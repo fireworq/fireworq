@@ -206,4 +206,12 @@ Specifies whether a connection to a worker should be reused.  This overrides [th
 Specifies maximum idle connections to keep per-host.
 `,
 	},
+	"dispatch_idle_conn_timeout": {
+		category:     "common",
+		defaultValue: "0",
+		label:        "<seconds>",
+		description: `
+Specifies the maximum time of an idle (keep-alive) connections. If zero, an idle connections will not be closed. 
+`,
+	},
 }
