@@ -16,6 +16,7 @@ applicable only to a [manual setup][section-manual-setup].
   - [`FIREWORQ_ACCESS_LOG`, `--access-log`](#env-access-log)
   - [`FIREWORQ_ACCESS_LOG_TAG`, `--access-log-tag`](#env-access-log-tag)
   - [`FIREWORQ_DISPATCH_KEEP_ALIVE`, `--dispatch-keep-alive`](#env-dispatch-keep-alive)
+  - [`FIREWORQ_DISPATCH_MAX_CONNS_PER_HOST`, `--dispatch-max-conns-per-host`](#env-dispatch-max-conns-per-host)
   - [`FIREWORQ_DISPATCH_USER_AGENT`, `--dispatch-user-agent`](#env-dispatch-user-agent)
   - [`FIREWORQ_ERROR_LOG`, `--error-log`](#env-error-log)
   - [`FIREWORQ_ERROR_LOG_LEVEL`, `--error-log-level`](#env-error-log-level)
@@ -53,6 +54,11 @@ Specifies the value of `tag` field in a access log item.
 ### <a name="env-dispatch-keep-alive">`FIREWORQ_DISPATCH_KEEP_ALIVE`, `--dispatch-keep-alive`</a>
 
 Specifies whether a connection to a worker should be reused.  This overrides [the default keep-alive setting](#env-keep-alive).
+
+### <a name="env-dispatch-max-conns-per-host">`FIREWORQ_DISPATCH_MAX_CONNS_PER_HOST`, `--dispatch-max-conns-per-host`</a>
+Default: `10`
+
+Specifies maximum idle connections to keep per-host.
 
 ### <a name="env-dispatch-user-agent">`FIREWORQ_DISPATCH_USER_AGENT`, `--dispatch-user-agent`</a>
 

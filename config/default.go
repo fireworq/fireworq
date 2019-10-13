@@ -198,4 +198,12 @@ Specifies the value of ` + "`" + `User-Agent` + "`" + ` header field used for an
 Specifies whether a connection to a worker should be reused.  This overrides [the default keep-alive setting](#env-keep-alive).
 `,
 	},
+	"dispatch_max_conns_per_host": {
+		category:     "common",
+		defaultValue: "10",
+		label:        "<number>",
+		description: `
+Specifies maximum idle connections to keep per-host.
+`,
+	},
 }
