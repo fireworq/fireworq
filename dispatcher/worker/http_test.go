@@ -18,6 +18,44 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+func TestHTTPInit(t *testing.T) {
+	config.Locally("dispatch_max_conns_per_host", "foo", func() {
+		HTTPInit()
+
+		transport := http.DefaultTransport.(*http.Transport)
+		if transport.MaxIdleConnsPerHost != 10 {
+			t.Error("Not set a default value to MaxIdleConnsPerHost")
+		}
+	})
+
+	config.Locally("dispatch_max_conns_per_host", "1000", func() {
+		HTTPInit()
+
+		transport := http.DefaultTransport.(*http.Transport)
+		if transport.MaxIdleConnsPerHost != 1000 {
+			t.Error("Not set to MaxIdleConnsPerHost")
+		}
+	})
+
+	config.Locally("dispatch_idle_conn_timeout", "foo", func() {
+		HTTPInit()
+
+		transport := http.DefaultTransport.(*http.Transport)
+		if transport.IdleConnTimeout != 0 {
+			t.Error("Not set a default value to IdleConnTimeout")
+		}
+	})
+
+	config.Locally("dispatch_idle_conn_timeout", "10", func() {
+		HTTPInit()
+
+		transport := http.DefaultTransport.(*http.Transport)
+		if transport.IdleConnTimeout != 10*time.Second {
+			t.Error("Not set to IdleConnTimeout")
+		}
+	})
+}
+
 func TestNewWorker(t *testing.T) {
 	func() {
 		w0 := &HTTPWorker{}

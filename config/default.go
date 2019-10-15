@@ -198,4 +198,20 @@ Specifies the value of ` + "`" + `User-Agent` + "`" + ` header field used for an
 Specifies whether a connection to a worker should be reused.  This overrides [the default keep-alive setting](#env-keep-alive).
 `,
 	},
+	"dispatch_max_conns_per_host": {
+		category:     "common",
+		defaultValue: "10",
+		label:        "<number>",
+		description: `
+Specifies maximum idle connections to keep per-host. This value works only when [connections of the dispatcher are reused](#env-dispatch-keep-alive).
+`,
+	},
+	"dispatch_idle_conn_timeout": {
+		category:     "common",
+		defaultValue: "0",
+		label:        "<seconds>",
+		description: `
+Specifies the maximum amount of time of an idle (keep-alive) connection will remain idle before closing itself. If zero, an idle connections will not be closed. 
+`,
+	},
 }

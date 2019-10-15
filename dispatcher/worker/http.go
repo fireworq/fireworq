@@ -23,12 +23,25 @@ var defaultUserAgent string
 // Configuration keys prefixed by "dispatch_" are considered.
 func HTTPInit() {
 	transport := http.DefaultTransport.(*http.Transport)
+	transport.MaxIdleConns = 0
 
 	b, err := strconv.ParseBool(config.Get("dispatch_keep_alive"))
 	if err != nil {
 		b, _ = strconv.ParseBool(config.GetDefault("dispatch_keep_alive"))
 	}
 	transport.DisableKeepAlives = !b
+
+	v, err := strconv.ParseInt(config.Get("dispatch_max_conns_per_host"), 10, 32)
+	if err != nil {
+		v, _ = strconv.ParseInt(config.GetDefault("dispatch_max_conns_per_host"), 10, 32)
+	}
+	transport.MaxIdleConnsPerHost = int(v)
+
+	v, err = strconv.ParseInt(config.Get("dispatch_idle_conn_timeout"), 10, 32)
+	if err != nil {
+		v, _ = strconv.ParseInt(config.GetDefault("dispatch_idle_conn_timeout"), 10, 32)
+	}
+	transport.IdleConnTimeout = time.Duration(v) * time.Second
 
 	defaultUserAgent = config.Get("dispatch_user_agent")
 }
