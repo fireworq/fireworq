@@ -55,7 +55,7 @@ Specifies the value of `tag` field in a access log item.
 ### <a name="env-dispatch-idle-conn-timeout">`FIREWORQ_DISPATCH_IDLE_CONN_TIMEOUT`, `--dispatch-idle-conn-timeout`</a>
 Default: `0`
 
-Specifies the maximum time of an idle (keep-alive) connections. If zero, an idle connections will not be closed. 
+Specifies the maximum amount of time of an idle (keep-alive) connection will remain idle before closing itself. If zero, an idle connections will not be closed. 
 
 ### <a name="env-dispatch-keep-alive">`FIREWORQ_DISPATCH_KEEP_ALIVE`, `--dispatch-keep-alive`</a>
 
@@ -64,7 +64,7 @@ Specifies whether a connection to a worker should be reused.  This overrides [th
 ### <a name="env-dispatch-max-conns-per-host">`FIREWORQ_DISPATCH_MAX_CONNS_PER_HOST`, `--dispatch-max-conns-per-host`</a>
 Default: `10`
 
-Specifies maximum idle connections to keep per-host.
+Specifies maximum idle connections to keep per-host. This value work only when [connections of the dispatcher are reused](#env-dispatch-keep-alive).
 
 ### <a name="env-dispatch-user-agent">`FIREWORQ_DISPATCH_USER_AGENT`, `--dispatch-user-agent`</a>
 
