@@ -203,7 +203,7 @@ Specifies whether a connection to a worker should be reused.  This overrides [th
 		defaultValue: "10",
 		label:        "<number>",
 		description: `
-Specifies maximum idle connections to keep per-host. This value work only when [connections of the dispatcher are reused](#env-dispatch-keep-alive).
+Specifies maximum idle connections to keep per-host. This value works only when [connections of the dispatcher are reused](#env-dispatch-keep-alive).
 `,
 	},
 	"dispatch_idle_conn_timeout": {

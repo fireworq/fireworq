@@ -64,7 +64,7 @@ Specifies whether a connection to a worker should be reused.  This overrides [th
 ### <a name="env-dispatch-max-conns-per-host">`FIREWORQ_DISPATCH_MAX_CONNS_PER_HOST`, `--dispatch-max-conns-per-host`</a>
 Default: `10`
 
-Specifies maximum idle connections to keep per-host. This value work only when [connections of the dispatcher are reused](#env-dispatch-keep-alive).
+Specifies maximum idle connections to keep per-host. This value works only when [connections of the dispatcher are reused](#env-dispatch-keep-alive).
 
 ### <a name="env-dispatch-user-agent">`FIREWORQ_DISPATCH_USER_AGENT`, `--dispatch-user-agent`</a>
 
