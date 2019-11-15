@@ -52,7 +52,7 @@ func (item Item) Argument() string {
 }
 
 // Describe returns a string representation of the description of
-// configuration key as a command line descripiton, wrapped in the
+// configuration key as a command line description, wrapped in the
 // width with indented lines.
 func (item Item) Describe(indent, width int) string {
 	argument := fmt.Sprintf(
