@@ -2786,3 +2786,11 @@ func (q *mockRunningQueue) MaxWorkers() uint {
 func (q *mockRunningQueue) WorkerStats() *dispatcher.Stats {
 	return q.stats
 }
+
+func (q *mockRunningQueue) Deactivate() <-chan struct{} {
+	deactivated := make(chan struct{})
+	go func() {
+		deactivated <- struct{}{}
+	}()
+	return deactivated
+}

@@ -27,7 +27,8 @@ type Service struct {
 	queue            repository.QueueRepository
 	routing          repository.RoutingRepository
 	runningQueues    map[string]RunningQueue
-	mu               sync.RWMutex
+	mu               sync.Mutex
+	muJob            sync.RWMutex
 	queueW           *configWatcher
 	routingW         *configWatcher
 }
@@ -52,6 +53,9 @@ func NewService(repos *repository.Repositories) *Service {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
+	s.muJob.Lock()
+	defer s.muJob.Unlock()
+
 	s.startup()
 	s.queueW.start(configRefreshInterval())
 	s.routingW.start(configRefreshInterval())
@@ -72,6 +76,11 @@ func (s *Service) Stop() <-chan struct{} {
 		s.mu.Lock()
 		defer s.mu.Unlock()
 
+		s.deactivateQueues()
+
+		s.muJob.Lock()
+		defer s.muJob.Unlock()
+
 		s.destroyQueues()
 
 		stopped <- struct{}{}
@@ -84,8 +93,8 @@ func (s *Service) Stop() <-chan struct{} {
 //
 // This method is goroutine safe.
 func (s *Service) GetJobQueue(qn string) (RunningQueue, bool) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
+	s.muJob.RLock()
+	defer s.muJob.RUnlock()
 
 	q, ok := s.getJobQueue(qn)
 	return q, ok
@@ -104,11 +113,15 @@ func (s *Service) DeleteJobQueue(qn string) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
+	s.muJob.Lock()
+	defer s.muJob.Unlock()
+
 	if err := s.queue.DeleteByName(qn); err != nil {
 		return err
 	}
 
 	if jq, ok := s.runningQueues[qn]; ok {
+		<-jq.Deactivate()
 		<-jq.Stop()
 		delete(s.runningQueues, qn)
 	}
@@ -122,6 +135,9 @@ func (s *Service) DeleteJobQueue(qn string) error {
 func (s *Service) AddJobQueue(q *model.Queue) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+
+	s.muJob.Lock()
+	defer s.muJob.Unlock()
 
 	return s.addJobQueue(q)
 }
@@ -159,8 +175,8 @@ func (s *Service) Push(job jobqueue.IncomingJob) (*PushResult, error) {
 	}
 
 	ok, id, err := func() (bool, uint64, error) {
-		s.mu.RLock()
-		defer s.mu.RUnlock()
+		s.muJob.RLock()
+		defer s.muJob.RUnlock()
 
 		jq, ok := s.getJobQueue(qn)
 		if !ok {
@@ -181,6 +197,9 @@ func (s *Service) Push(job jobqueue.IncomingJob) (*PushResult, error) {
 
 		s.mu.Lock()
 		defer s.mu.Unlock()
+
+		s.muJob.Lock()
+		defer s.muJob.Unlock()
 
 		q, err := s.queue.FindByName(qn)
 		if err != nil {
@@ -221,6 +240,12 @@ func (s *Service) reloadQueues() {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
+	log.Info().Msg("Deactivating queues...")
+	s.deactivateQueues()
+
+	s.muJob.Lock()
+	defer s.muJob.Unlock()
+
 	log.Info().Msg("Reloading queue definitions...")
 	s.destroyQueues()
 	s.startup()
@@ -245,6 +270,7 @@ func (s *Service) initDefaultQueue(queueName string) error {
 
 func (s *Service) putJobQueue(q *model.Queue) RunningQueue {
 	if jq, ok := s.runningQueues[q.Name]; ok {
+		<-jq.Deactivate()
 		<-jq.Stop()
 		delete(s.runningQueues, q.Name)
 	}
@@ -252,6 +278,21 @@ func (s *Service) putJobQueue(q *model.Queue) RunningQueue {
 	jq := startJobQueue(q)
 	s.runningQueues[q.Name] = jq
 	return jq
+}
+
+func (s *Service) deactivateQueues() {
+	n := len(s.runningQueues)
+	ch := make(chan struct{}, n)
+	for _, q := range s.runningQueues {
+		go func(q RunningQueue) {
+			<-q.Deactivate()
+			ch <- struct{}{}
+		}(q)
+	}
+	for n > 0 {
+		<-ch
+		n--
+	}
 }
 
 func (s *Service) destroyQueues() {

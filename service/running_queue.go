@@ -14,6 +14,7 @@ type RunningQueue interface {
 	PollingInterval() uint
 	MaxWorkers() uint
 	WorkerStats() *dispatcher.Stats
+	Deactivate() <-chan struct{}
 }
 
 type runningQueue struct {
@@ -27,10 +28,18 @@ func startJobQueue(q *model.Queue) *runningQueue {
 	return &runningQueue{jq, d}
 }
 
+func (q *runningQueue) Deactivate() <-chan struct{} {
+	deactivated := make(chan struct{})
+	go func() {
+		<-q.dispatcher.Stop()
+		deactivated <- struct{}{}
+	}()
+	return deactivated
+}
+
 func (q *runningQueue) Stop() <-chan struct{} {
 	stopped := make(chan struct{})
 	go func() {
-		<-q.dispatcher.Stop()
 		<-q.JobQueue.Stop()
 		stopped <- struct{}{}
 	}()
