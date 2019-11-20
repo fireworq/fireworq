@@ -8,7 +8,7 @@ This is the official list of Fireworq authors for copyright purposes.
 
 |Name |E-mail  |GitHub|Commits |
 |:----|:-------|:-----|-------:|
-|INA Lintaro|<tarao.gnn@gmail.com>|[@tarao](https://github.com/tarao)|630|
+|INA Lintaro|<tarao.gnn@gmail.com>|[@tarao](https://github.com/tarao)|631|
 |SHIBAZAKI Yuki|<shibayu36@gmail.com>|[@shibayu36](https://github.com/shibayu36)|31|
 |FUSHII Yohei|<hakobe@gmail.com>|[@hakobe](https://github.com/hakobe)|28|
 |TSUBOUCHI Yuuki|<yuki.tsubo@gmail.com>|[@yuuki](https://github.com/yuuki)|25|
@@ -17,11 +17,11 @@ This is the official list of Fireworq authors for copyright purposes.
 |yigarashi|<yigarashi@hatena.ne.jp>||17|
 |Fumihiro Itoh|<fmhrit@gmail.com>|[@f110](https://github.com/f110)|5|
 |itchyny|<itchyny@hatena.ne.jp>||3|
+|kanozec|<kanozec@gmail.com>||2|
 |Thomas Broadley|<buriedunderbooks@hotmail.com>|[@tbroadley](https://github.com/tbroadley)|1|
 |Sai Warang|<cyprusad@gmail.com>||1|
 |Davor Kapsa|<davor.kapsa@gmail.com>||1|
 |Edward Betts|<edward@4angle.com>|[@EdwardBetts](https://github.com/EdwardBetts)|1|
-|kanozec|<kanozec@gmail.com>||1|
 |MURATA Satoshi|<rw.satoshi.murata@gmail.com>||1|
 |Sho Ikeda|<suicaicoca@gmail.com>|[@ikesyo](https://github.com/ikesyo)|1|
 |uchan-nos|<uchan0@gmail.com>|[@uchan-nos](https://github.com/uchan-nos)|1|
