@@ -121,7 +121,7 @@ func (a *activator) activate(onActivating func()) (shouldRetry bool) {
 			// 	a.logger.Debug().Msg(err.Error())
 
 		} else {
-			// Connecation failed (maybe DB server down).
+			// Connection failed (maybe DB server down).
 			// Try to reconnect later.
 			a.disconnect()
 			a.logger.Error().Msgf("(activator) %s", err)
