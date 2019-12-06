@@ -13,7 +13,7 @@ import (
 	"github.com/fireworq/fireworq/config"
 
 	"github.com/gorilla/mux"
-	serverstarter "github.com/lestrrat/go-server-starter/listener"
+	serverstarter "github.com/lestrrat-go/server-starter/listener"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/hlog"
 	"github.com/rs/zerolog/log"
