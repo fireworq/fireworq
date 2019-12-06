@@ -28,7 +28,11 @@ var (
 	regexMailmap      = regexp.MustCompile("^()([^<]*) +<([^>]*)>$")
 	regexContribution = regexp.MustCompile("^([0-9]+)\\t([^<]*) +<([^>]*)>$")
 
-	bot = "fireworq.github@gmail.com"
+	bots = []string{
+		"fireworq.github@gmail.com",
+		"bot@renovateapp.com",
+		"@users.noreply.github.com",
+	}
 
 	// These are commits before the OSS release.
 	initial = map[string]int{
@@ -172,8 +176,10 @@ func parseContribution(regex *regexp.Regexp, line string) *Contribution {
 	}
 
 	email := m[3]
-	if email == bot {
-		return nil
+	for _, pat := range bots {
+		if strings.Contains(email, pat) {
+			return nil
+		}
 	}
 
 	var commits int
