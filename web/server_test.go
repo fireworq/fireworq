@@ -12,7 +12,7 @@ import (
 
 	"github.com/fireworq/fireworq/config"
 
-	serverstarter "github.com/lestrrat/go-server-starter/listener"
+	serverstarter "github.com/lestrrat-go/server-starter/listener"
 )
 
 func testServer(t *testing.T, addr string) {
