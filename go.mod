@@ -11,6 +11,6 @@ require (
 	github.com/lestrrat-go/server-starter v0.0.0-20181210024821-8564cc80d990
 	github.com/paulbellamy/ratecounter v0.2.0
 	github.com/phayes/freeport v0.0.0-20180830031419-95f893ade6f2
-	github.com/rs/zerolog v1.14.3
+	github.com/rs/zerolog v1.17.2
 	google.golang.org/appengine v1.6.5 // indirect
 )
