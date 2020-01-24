@@ -8,7 +8,7 @@ set -x
 BRANCH="${GIT_BRANCH:-${TRAVIS_BRANCH}}"
 [ -z "$BRANCH" ] || git checkout "$BRANCH"
 
-type gobump >/dev/null || go get github.com/motemen/gobump/cmd/gobump
+type gobump >/dev/null || go get github.com/x-motemen/gobump/cmd/gobump
 type ghr >/dev/null    || go get github.com/tcnksm/ghr
 type ghch >/dev/null   || go get github.com/Songmu/ghch/cmd/ghch
 

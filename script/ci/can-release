@@ -14,7 +14,7 @@ v0*|v1*|v2*|v3*|v4*|v5*|v6*|v7*|v8*|v9*) ;;
     exit 1 ;;
 esac
 
-type gobump >/dev/null || go get github.com/motemen/gobump/cmd/gobump
+type gobump >/dev/null || go get github.com/x-motemen/gobump/cmd/gobump
 [ "$TRAVIS_TAG" = "v$(gobump show -r)" ] || {
     echo "Invalid tag: $TRAVIS_TAG != v$(gobump show -r)" >&2
     exit 1
