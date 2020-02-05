@@ -1,13 +1,14 @@
 github.com/coreos/go-systemd v0.0.0-20190321100706-95778dfbb74e/go.mod h1:F5haX7vjVVG0kc13fIWeqUViNPyEJxv/OmvnBo0Yme4=
 github.com/fukata/golang-stats-api-handler v1.0.0 h1:N6M25vhs1yAvwGBpFY6oBmMOZeJdcWnvA+wej8pKeko=
 github.com/fukata/golang-stats-api-handler v1.0.0/go.mod h1:1sIi4/rHq6s/ednWMZqTmRq3765qTUSs/c3xF6lj8J8=
+github.com/go-sql-driver/mysql v1.5.0 h1:ozyZYNQW3x3HtqT1jira07DN2PArx2v7/mN66gGcHOs=
 github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/golang/mock v1.4.0 h1:Rd1kQnQu0Hq3qvJppYSG0HtP+f5LPPUiDswTLiEegLg=
 github.com/golang/mock v1.4.0/go.mod h1:UOMv5ysSaYNkG+OFQykRIcU/QvvxJf3p21QfJ2Bt3cw=
 github.com/gorilla/mux v1.7.3 h1:gnP5JzjVOuiZD07fKKToCAOjS0yOpj/qPETTXCCS6hw=
 github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
-github.com/lestrrat-go/server-starter v0.0.0-20181210024821-8564cc80d990 h1:I/xDHYf06Z00f4smMbtiRP9P++9sTV3MGpN/txx/oGw=
-github.com/lestrrat-go/server-starter v0.0.0-20181210024821-8564cc80d990/go.mod h1:xG1VLzrCB2+uP91eXVCs5FteV/JJOjw0tr+hAM/aL/8=
+github.com/lestrrat-go/server-starter v0.0.0-20200204225643-53093363107d h1:ucGZoJ4osnrBg0AO0ZwJRG8j1+Pb0egnABfR/L722Wo=
+github.com/lestrrat-go/server-starter v0.0.0-20200204225643-53093363107d/go.mod h1:zVTSXkrsQxHVyFnrT/R3DX+WWN/T4pRmNXc/l7NC7bI=
 github.com/paulbellamy/ratecounter v0.2.0 h1:2L/RhJq+HA8gBQImDXtLPrDXK5qAj6ozWVK/zFXVJGs=
 github.com/paulbellamy/ratecounter v0.2.0/go.mod h1:Hfx1hDpSGoqxkVVpBi/IlYD7kChlfo5C6hzIHwPqfFE=
 github.com/phayes/freeport v0.0.0-20180830031419-95f893ade6f2 h1:JhzVVoYvbOACxoUmOs6V/G4D5nPVUW73rKvXxP4XUJc=
