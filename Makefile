@@ -54,6 +54,8 @@ lint: generate
 	for d in $$(${GO} list ./...); do \
 	  golint --set_exit_status "$$d" || exit $$? ; \
 	done
+	GO111MODULE=off ${GO} get github.com/kyoh86/scopelint
+	scopelint --set-exit-status --no-test ./...
 	for f in $$(${GO} list -f '{{$$p := .}}{{range $$f := .GoFiles}}{{$$p.Dir}}/{{$$f}} {{end}} {{range $$f := .TestGoFiles}}{{$$p.Dir}}/{{$$f}} {{end}}' ./... | xargs); do \
 	  [ $$(basename "$$f") = 'assets.go' ] && continue ; \
 	  test -z "$$(gofmt -d -s "$$f" | tee /dev/stderr)" || exit $$? ; \
