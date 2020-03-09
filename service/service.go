@@ -222,6 +222,7 @@ func (s *Service) startup() {
 		log.Panic().Msg(err.Error())
 	}
 	for _, q := range qs {
+		q := q
 		s.putJobQueue(&q)
 	}
 
