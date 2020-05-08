@@ -30,7 +30,6 @@ status.tmp
 *.exe
 *.test
 
-vendor/
 assets.go
 mock_*.go
 
