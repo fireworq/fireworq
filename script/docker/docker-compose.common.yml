@@ -13,7 +13,6 @@ services:
       context: ../..
       args:
         FIREWORQ_ROOT: "${FIREWORQ_ROOT}"
-        FIREWORQ_DEPS: "${FIREWORQ_DEPS}"
       dockerfile: ./script/docker/fireworq/Dockerfile
     ports:
       - "${FIREWORQ_PORT}:${FIREWORQ_PORT}"

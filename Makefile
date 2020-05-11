@@ -19,11 +19,11 @@ cover: build test_deps
 	${GO} tool cover -html=${TEST_OUTPUT}/profile.cov -o ${TEST_OUTPUT}/coverage.html
 	gocover-cobertura < ${TEST_OUTPUT}/profile.cov > ${TEST_OUTPUT}/coverage.xml
 
-build: deps generate
+build: generate
 	${GO} build -race -ldflags "-X main.Build=$(BUILD) -X main.Prerelease=DEBUG" -o ${BUILD_OUTPUT}/$(BIN) .
 	GOOS= GOARCH= ${GO} run script/gendoc/gendoc.go config > doc/config.md
 
-release: clean deps credits generate
+release: clean credits generate
 	CGO_ENABLED=0 ${GO} build -ldflags "-X main.Build=$(BUILD) -X main.Prerelease=$(PRERELEASE)" -o ${BUILD_OUTPUT}/$(BIN) .
 
 credits:
@@ -32,12 +32,12 @@ credits:
 	${GO} mod tidy # not `go get` to get all the dependencies regardress of OS, architecture and build tags
 	gocredits -w .
 
-generate:
+generate: generate_deps
 	touch AUTHORS
 	touch CREDITS
 	GOOS= GOARCH= ${GO} generate -x ./...
 
-deps:
+generate_deps:
 	GO111MODULE=off GOOS= GOARCH= ${GO} get github.com/jessevdk/go-assets-builder
 	GO111MODULE=off GOOS= GOARCH= ${GO} get github.com/golang/mock/mockgen
 
@@ -68,5 +68,5 @@ clean:
 	rm -f $(BIN)
 	${GO} clean
 
-.PHONY: all test cover build release credits generate deps test_deps lint clean
+.PHONY: all test cover build release credits generate generate_deps test_deps lint clean
 
