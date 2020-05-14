@@ -15,7 +15,7 @@ This is the official list of Fireworq authors for copyright purposes.
 |Tomohiro Nishimura|<tomohiro68@gmail.com>|[@Sixeight](https://github.com/Sixeight)|21|
 |SHIBAHATA Tsugihito|<fly.me.to.the.moon1204@gmail.com>||17|
 |yigarashi|<yigarashi@hatena.ne.jp>||17|
-|itchyny|<itchyny@hatena.ne.jp>||13|
+|itchyny|<itchyny@hatena.ne.jp>||15|
 |Fumihiro Itoh|<fmhrit@gmail.com>|[@f110](https://github.com/f110)|5|
 |kanozec|<kanozec@gmail.com>||2|
 |Thomas Broadley|<buriedunderbooks@hotmail.com>|[@tbroadley](https://github.com/tbroadley)|1|
