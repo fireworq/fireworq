@@ -47,7 +47,7 @@ applicable only to a [manual setup][section-manual-setup].`)
 	fmt.Println(`- [Variables/Arguments only Applicable to Manual Setup][section-config-manual-setup]`)
 	categorized["manual"].printTableOfContents()
 
-	fmt.Println(`- [Variables only Applicable to a Docker-composed Instance][section-config-docker]
+	fmt.Println(`- [Variables only Applicable to a Docker-composed Instance][section-config-docker-compose]
   - [` + "`" + `FIREWORQ_PORT` + "`" + `](#env-port)`)
 
 	fmt.Println(`
@@ -59,7 +59,7 @@ applicable only to a [manual setup][section-manual-setup].`)
 	categorized["manual"].printDescriptions()
 
 	fmt.Println(`
-## <a name="config-docker">Variables only Applicable to a Docker-composed Instance</a>
+## <a name="config-docker-compose">Variables only Applicable to a Docker-composed Instance</a>
 
 ### <a name="env-port">` + "`" + `FIREWORQ_PORT` + "`" + `</a>
 
@@ -70,7 +70,7 @@ Specifies the port number of a daemon.`)
 	fmt.Print(`
 [section-config-common]: #config-common
 [section-config-manual-setup]: #config-manual-setup
-[section-config-docker]: #config-docker
+[section-config-docker-compose]: #config-docker-compose
 [section-manual-setup]: ./production.md#manual-setup
 [section-graceful-restart]: ./production.md#graceful-restart
 

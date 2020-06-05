@@ -213,7 +213,7 @@ other variables.
 - [Full List of Configurations][page-configuration]
   - [Common Variables/Arguments][section-config-common]
   - [Variables/Arguments only Applicable to Manual Setup][section-config-manual-setup]
-  - [Variables only Applicable to a Docker-composed Instance][section-config-docker]
+  - [Variables only Applicable to a Docker-composed Instance][section-config-docker-compose]
 - [Make It Production-Ready][page-production-ready]
   - [Using a Release Build (Manual setup)][section-manual-setup]
   - [Preparing a Backup Instance][section-backup]
@@ -238,7 +238,7 @@ other variables.
 [page-configuration]: ./doc/config.md
 [section-config-common]: ./doc/config.md#config-common
 [section-config-manual-setup]: ./doc/config.md#config-manual-setup
-[section-config-docker]: ./doc/config.md#config-docker
+[section-config-docker-compose]: ./doc/config.md#config-docker
 [page-api]: ./doc/api.md
 [section-api-queue]: ./doc/api.md#api-queue
 [section-api-routing]: ./doc/api.md#api-routing
