@@ -29,6 +29,7 @@ status.tmp
 
 *.exe
 *.test
+*.log
 
 assets.go
 mock_*.go
