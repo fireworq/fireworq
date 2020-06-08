@@ -32,6 +32,11 @@ func initTestMain() {
 	})
 }
 
+func cleanTestMain() {
+	os.Remove(testAccessLog)
+	os.Remove(testErrorLog)
+}
+
 func TestInitLogging(t *testing.T) {
 	config.Locally("access_log", testAccessLog, func() {
 		config.Locally("error_log", testErrorLog, func() {
