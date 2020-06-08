@@ -37,7 +37,7 @@ applicable only to a [manual setup][section-manual-setup].
   - [`FIREWORQ_QUEUE_MYSQL_DSN`, `--queue-mysql-dsn`](#env-queue-mysql-dsn)
   - [`FIREWORQ_REPOSITORY_MYSQL_DSN`, `--repository-mysql-dsn`](#env-repository-mysql-dsn)
   - [`FIREWORQ_SHUTDOWN_TIMEOUT`, `--shutdown-timeout`](#env-shutdown-timeout)
-- [Variables only Applicable to a Docker-composed Instance][section-config-docker]
+- [Variables only Applicable to a Docker-composed Instance][section-config-docker-compose]
   - [`FIREWORQ_PORT`](#env-port)
 
 ## <a name="config-common">Common Variables/Arguments</a>
@@ -178,7 +178,7 @@ Default: `30`
 Specifies a timeout, in seconds, which the daemon waits on [gracefully shutting down or restarting][section-graceful-restart].
 
 
-## <a name="config-docker">Variables only Applicable to a Docker-composed Instance</a>
+## <a name="config-docker-compose">Variables only Applicable to a Docker-composed Instance</a>
 
 ### <a name="env-port">`FIREWORQ_PORT`</a>
 
@@ -188,7 +188,7 @@ Specifies the port number of a daemon.
 
 [section-config-common]: #config-common
 [section-config-manual-setup]: #config-manual-setup
-[section-config-docker]: #config-docker
+[section-config-docker-compose]: #config-docker-compose
 [section-manual-setup]: ./production.md#manual-setup
 [section-graceful-restart]: ./production.md#graceful-restart
 

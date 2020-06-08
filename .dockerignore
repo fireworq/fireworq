@@ -1,0 +1,12 @@
+/.git/
+/.github/
+/dist/
+
+/junit_output.xml
+/profile.cov
+/coverage.html
+/coverage.xml
+status.tmp
+
+docker-compose
+/fireworq
