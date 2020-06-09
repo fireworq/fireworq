@@ -15,6 +15,7 @@ import (
 
 func TestMain(m *testing.M) {
 	initTestMain()
+	defer cleanTestMain()
 
 	status, err := test.Run(m)
 	if err != nil {
