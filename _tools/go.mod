@@ -14,5 +14,5 @@ require (
 	github.com/t-yuki/gocover-cobertura v0.0.0-20180217150009-aaee18c8195c
 	github.com/wadey/gocovmerge v0.0.0-20160331181800-b5bfa59ec0ad
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b
-	golang.org/x/tools v0.0.0-20200611032120-1fdcbd130028
+	golang.org/x/tools v0.0.0-20200612022331-742c5eb664c2
 )
