@@ -1,0 +1,30 @@
+name: Release Docker Image
+
+on:
+  release:
+    types: [published]
+
+jobs:
+
+  release:
+    runs-on: ubuntu-18.04
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@master
+
+    - name: Set variables
+      id: variables
+      run: |
+        git_tag_name="${{ github.event.release.tag_name }}"
+        git_tag_name="${git_tag_name#v}"
+        echo "::set-output name=release_tag_patch::${git_tag_name}"
+        echo "::set-output name=release_tag_minor::${git_tag_name%.*}"
+
+    - name: Build and Release
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: fireworq/fireworq
+        tags: latest, ${{ steps.variables.outputs.release_tag_patch }}, ${{ steps.variables.outputs.release_tag_minor }}
