@@ -3,7 +3,7 @@ ENV APP_DIR /go/src/github.com/fireworq/fireworq
 
 WORKDIR ${APP_DIR}
 COPY . .
-RUN make release
+RUN make release PRERELEASE=
 
 FROM alpine:3.12.0
 ENV APP_DIR /go/src/github.com/fireworq/fireworq
