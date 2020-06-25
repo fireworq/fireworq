@@ -28,7 +28,6 @@ func Descriptions() []Item {
 
 // Item describes a configuration key and its default value.
 type Item struct {
-	Category     string
 	Name         string
 	DefaultValue string
 	Label        string
@@ -38,7 +37,6 @@ type Item struct {
 func (item *configItem) export(name string) Item {
 	return Item{
 		Name:         name,
-		Category:     item.category,
 		DefaultValue: item.defaultValue,
 		Label:        item.label,
 		Description:  item.description,

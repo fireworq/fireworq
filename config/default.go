@@ -1,7 +1,6 @@
 package config
 
 type configItem struct {
-	category     string
 	label        string
 	defaultValue string
 	description  string
@@ -20,7 +19,6 @@ var logLevelDescription = `The level is either a name or a numeric value.  The f
 
 var defaultConf = map[string]*configItem{
 	"bind": {
-		category:     "manual",
 		defaultValue: "127.0.0.1:8080",
 		label:        "<address>:<port>",
 		description: `
@@ -28,7 +26,6 @@ Specifies the address and the port number of a daemon in a form <code><var>addre
 `,
 	},
 	"pid": {
-		category:     "common",
 		defaultValue: "",
 		label:        "<file>",
 		description: `
@@ -36,7 +33,6 @@ Specifies a file where PID is written to.
 `,
 	},
 	"access_log": {
-		category:     "common",
 		defaultValue: "",
 		label:        "<file>",
 		description: `
@@ -46,7 +42,6 @@ Each line in the file is a JSON string corresponds to a single log item.
 `,
 	},
 	"access_log_tag": {
-		category:     "common",
 		defaultValue: "fireworq.access",
 		label:        "<tag>",
 		description: `
@@ -54,7 +49,6 @@ Specifies the value of ` + "`" + `tag` + "`" + ` field in a access log item.
 `,
 	},
 	"error_log": {
-		category:     "common",
 		defaultValue: "",
 		label:        "<file>",
 		description: `
@@ -64,7 +58,6 @@ If this value is specified, each line in the file is a JSON string corresponds t
 `,
 	},
 	"error_log_level": {
-		category:     "common",
 		defaultValue: "",
 		label:        "<level>",
 		description: `
@@ -73,7 +66,6 @@ If none of these values is specified, the level is determined by ` + "`" + `DEBU
 `,
 	},
 	"shutdown_timeout": {
-		category:     "manual",
 		defaultValue: "30",
 		label:        "<seconds>",
 		description: `
@@ -81,7 +73,6 @@ Specifies a timeout, in seconds, which the daemon waits on [gracefully shutting 
 `,
 	},
 	"keep_alive": {
-		category:     "common",
 		defaultValue: "false",
 		label:        "true|false",
 		description: `
@@ -89,7 +80,6 @@ Specifies whether connections should be reused.
 `,
 	},
 	"config_refresh_interval": {
-		category:     "manual",
 		defaultValue: "1000",
 		label:        "<milliseconds>",
 		description: `
@@ -97,7 +87,6 @@ Specifies an interval, in milliseconds, at which a Fireworq daemon checks if con
 `,
 	},
 	"driver": {
-		category:     "manual",
 		defaultValue: "mysql",
 		label:        "<driver>",
 		description: `
@@ -107,7 +96,6 @@ Note that ` + "`in-memory`" + ` driver is not for production use.  It is intende
 `,
 	},
 	"mysql_dsn": {
-		category:     "manual",
 		defaultValue: "tcp(localhost:3306)/fireworq",
 		label:        "<DSN>",
 		description: `
@@ -115,7 +103,6 @@ Specifies a data source name for the job queue and the repository database in a 
 `,
 	},
 	"repository_mysql_dsn": {
-		category:     "manual",
 		defaultValue: "",
 		label:        "<DSN>",
 		description: `
@@ -123,17 +110,15 @@ Specifies a data source name for the repository database in a form <code><var>us
 `,
 	},
 	"queue_default": {
-		category:     "common",
 		defaultValue: "",
 		label:        "<name>",
 		description: `
-Specifies the name of a default queue.  A job whose ` + "`" + `category` + "`" + ` is not defined via the [routing API][api-put-routing] will be delivered to this queue.  If no default queue name is specified, pushing a job with an unknown category will fail for a [manual setup][section-manual-setup].  A docker-composed instance uses ` + "`" + `default` + "`" + ` as a default value.
+Specifies the name of a default queue.  A job whose ` + "`" + `category` + "`" + ` is not defined via the [routing API][api-put-routing] will be delivered to this queue.  If no default queue name is specified, pushing a job with an unknown category will fail.
 
 If you already have a queue with the specified name in the job queue database, that one is used.  Or otherwise a new queue is created automatically.
 `,
 	},
 	"queue_default_polling_interval": {
-		category:     "common",
 		defaultValue: "200",
 		label:        "<milliseconds>",
 		description: `
@@ -141,7 +126,6 @@ Specifies the default interval, in milliseconds, at which Fireworq checks the ar
 `,
 	},
 	"queue_default_max_workers": {
-		category:     "common",
 		defaultValue: "20",
 		label:        "<number>",
 		description: `
@@ -149,7 +133,6 @@ Specifies the default maximum number of jobs that are processed simultaneously i
 `,
 	},
 	"queue_log": {
-		category:     "common",
 		defaultValue: "",
 		label:        "<file>",
 		description: `
@@ -159,7 +142,6 @@ Each line in the file is a JSON string corresponds to a single log item.
 `,
 	},
 	"queue_log_tag": {
-		category:     "common",
 		defaultValue: "fireworq.queue",
 		label:        "<tag>",
 		description: `
@@ -167,7 +149,6 @@ Specifies the value of ` + "`" + `tag` + "`" + ` field in a job queue log item J
 `,
 	},
 	"queue_log_level": {
-		category:     "common",
 		defaultValue: "",
 		label:        "<level>",
 		description: `
@@ -176,7 +157,6 @@ If none of these values is specified, the level is determined by ` + "`" + `DEBU
 `,
 	},
 	"queue_mysql_dsn": {
-		category:     "manual",
 		defaultValue: "",
 		label:        "<DSN>",
 		description: `
@@ -184,7 +164,6 @@ Specifies a data source name for the job queue database in a form <code><var>use
 `,
 	},
 	"dispatch_user_agent": {
-		category:     "common",
 		defaultValue: "",
 		label:        "<agent>",
 		description: `
@@ -192,14 +171,12 @@ Specifies the value of ` + "`" + `User-Agent` + "`" + ` header field used for an
 `,
 	},
 	"dispatch_keep_alive": {
-		category: "common",
-		label:    "true|false",
+		label: "true|false",
 		description: `
 Specifies whether a connection to a worker should be reused.  This overrides [the default keep-alive setting](#env-keep-alive).
 `,
 	},
 	"dispatch_max_conns_per_host": {
-		category:     "common",
 		defaultValue: "10",
 		label:        "<number>",
 		description: `
@@ -207,7 +184,6 @@ Specifies maximum idle connections to keep per-host. This value works only when 
 `,
 	},
 	"dispatch_idle_conn_timeout": {
-		category:     "common",
 		defaultValue: "0",
 		label:        "<seconds>",
 		description: `

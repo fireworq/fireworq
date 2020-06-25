@@ -26,51 +26,22 @@ Configuration
 =============
 
 You can configure Fireworq by providing environment variables on
-starting a daemon (for both docker-composed and manually-set-up
-instances) or by specifying command line arguments (for a manual
-setup).  Command line arguments precede the values of environment
-variables.
+starting a daemon or by specifying command line arguments.  Command
+line arguments precede the values of environment variables.
 
-The following variables/arguments are available.  Some of them are
-applicable only to a [manual setup][section-manual-setup].`)
+The following variables/arguments are available.`)
 	fmt.Println("")
 
-	categorized := make(map[string]configItems)
+	items := make(configItems, 0)
 	for _, d := range config.Descriptions() {
 		item := &configItem{d}
-		categorized[item.Category] = append(categorized[item.Category], item)
+		items = append(items, item)
 	}
 
-	fmt.Println(`- [Common Variables/Arguments][section-config-common]`)
-	categorized["common"].printTableOfContents()
-
-	fmt.Println(`- [Variables/Arguments only Applicable to Manual Setup][section-config-manual-setup]`)
-	categorized["manual"].printTableOfContents()
-
-	fmt.Println(`- [Variables only Applicable to a Docker-composed Instance][section-config-docker-compose]
-  - [` + "`" + `FIREWORQ_PORT` + "`" + `](#env-port)`)
-
-	fmt.Println(`
-## <a name="config-common">Common Variables/Arguments</a>`)
-	categorized["common"].printDescriptions()
-
-	fmt.Println(`
-## <a name="config-manual-setup">Variables/Arguments only Applicable to Manual Setup</a>`)
-	categorized["manual"].printDescriptions()
-
-	fmt.Println(`
-## <a name="config-docker-compose">Variables only Applicable to a Docker-composed Instance</a>
-
-### <a name="env-port">` + "`" + `FIREWORQ_PORT` + "`" + `</a>
-
-Default: ` + "`" + `8080` + "`" + `
-
-Specifies the port number of a daemon.`)
+	items.printTableOfContents()
+	items.printDescriptions()
 
 	fmt.Print(`
-[section-config-common]: #config-common
-[section-config-manual-setup]: #config-manual-setup
-[section-config-docker-compose]: #config-docker-compose
 [section-manual-setup]: ./production.md#manual-setup
 [section-graceful-restart]: ./production.md#graceful-restart
 
@@ -83,7 +54,7 @@ type configItems []*configItem
 
 func (items configItems) printTableOfContents() {
 	for _, item := range items {
-		fmt.Println("  - " + item.Link())
+		fmt.Println("- " + item.Link())
 	}
 }
 

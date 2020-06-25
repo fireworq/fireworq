@@ -1,7 +1,7 @@
 ![Fireworq][logo]
 =================
 
-[![Build Status](https://travis-ci.org/fireworq/fireworq.svg?branch=master)](https://travis-ci.org/fireworq/fireworq) [![Coverage Status](https://coveralls.io/repos/github/fireworq/fireworq/badge.svg?branch=master)](https://coveralls.io/github/fireworq/fireworq?branch=master)
+[![Build Status](https://travis-ci.org/fireworq/fireworq.svg?branch=master)](https://travis-ci.org/fireworq/fireworq) [![Coverage Status](https://coveralls.io/repos/github/fireworq/fireworq/badge.svg?branch=master)](https://coveralls.io/github/fireworq/fireworq?branch=master) [![Docker Hub](https://img.shields.io/badge/docker%20build-ready-blue)](https://hub.docker.com/r/fireworq/fireworq) [![Latest version of on Docker Hub](https://images.microbadger.com/badges/version/fireworq/fireworq.svg)](https://microbadger.com/images/fireworq/fireworq)
 
 Fireworq is a lightweight, high-performance job queue system with the
 following abilities.
@@ -59,35 +59,14 @@ all at once.  Make sure you have [Docker][] installed before running
 these commands.
 
 ```
-$ git clone https://github.com/fireworq/fireworq
-$ cd fireworq
-$ script/docker/compose up
-```
-
-When Fireworq gets ready, it will listen on `localhost:8080` (on the
-host machine).  Specify `FIREWORQ_PORT` environment variable if you
-want Fireworq to listen on a different port.
-
-```
-$ FIREWORQ_PORT=1234 script/docker/compose up
+$ docker run -p 8080:8080 fireworq/fireworq --driver=in-memory --queue-default=default
 ```
 
 Pressing `Ctrl+C` will gracefully shut it down.
 
-### Behind HTTP proxy
-
-If you are behind HTTP proxy, `script/docker/compose up` will fail.
-Add following configuration to `script/docker/docker-compose.yml`:
-
-```diff
- services:
-   fireworq:
-+    build:
-+      args:
-+        - http_proxy=http://.../
-+        - https_proxy=http://.../
-     environment:
-```
+Note that `in-memory` driver is not for production use.  It is
+intended to be used for just playing with Fireworq without a storage
+middleware.
 
 ## <a name="api">Using the API</a>
 
@@ -130,11 +109,10 @@ always ignored.
 
 Let's make the job asynchronous using Fireworq.  All you have to do is
 to make a `POST` request to Fireworq with a worker URL and a job
-payload.  If you have
-[a docker-composed Fireworq instance][section-start] and your docker
-host IP (from the container's point of view) is `172.17.0.1`, then
-requesting something like the following will enqueue exactly the same
-job in the previous example.
+payload.  If you have [a Fireworq docker instance][section-start] and
+your docker host IP (from the container's point of view) is
+`172.17.0.1`, then requesting something like the following will
+enqueue exactly the same job in the previous example.
 
 ```
 $ curl -XPOST -d '{"url":"http://172.17.0.1:3000/work","payload":{"id":12345}}' http://localhost:8080/job/foo
@@ -184,9 +162,7 @@ other variables.
   Specifies the name of a default queue.  A job whose `category` is
   not defined via the [routing API][api-put-routing] will be delivered
   to this queue.  If no default queue name is specified, pushing a job
-  with an unknown category will fail for a
-  [manual setup][section-manual-setup].  A docker-composed instance
-  uses `default` as a default value.
+  with an unknown category will fail.
 
   If you already have a queue with the specified name in the job queue
   database, that one is used.  Or otherwise a new queue is created
@@ -211,9 +187,6 @@ other variables.
   - [Routing Management][section-api-routing]
   - [Job Management][section-api-job]
 - [Full List of Configurations][page-configuration]
-  - [Common Variables/Arguments][section-config-common]
-  - [Variables/Arguments only Applicable to Manual Setup][section-config-manual-setup]
-  - [Variables only Applicable to a Docker-composed Instance][section-config-docker-compose]
 - [Make It Production-Ready][page-production-ready]
   - [Using a Release Build (Manual setup)][section-manual-setup]
   - [Preparing a Backup Instance][section-backup]
@@ -236,9 +209,6 @@ other variables.
 [section-license]: #license
 
 [page-configuration]: ./doc/config.md
-[section-config-common]: ./doc/config.md#config-common
-[section-config-manual-setup]: ./doc/config.md#config-manual-setup
-[section-config-docker-compose]: ./doc/config.md#config-docker
 [page-api]: ./doc/api.md
 [section-api-queue]: ./doc/api.md#api-queue
 [section-api-routing]: ./doc/api.md#api-routing

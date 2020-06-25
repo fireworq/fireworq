@@ -5,7 +5,24 @@ We appreciate your pull requests!
 
 ## Using docker
 
-The [Docker][] environment explained in [the first section][section-start] can also be used for developing.  Each time you run `script/docker/compose up`, a Fireworq instance with the latest code will come up.  Note that sometimes you need `script/docker/compose clean` for example when you add a new dependency.
+Run the following commands and you will get the whole system working
+all at once.  Make sure you have [Docker][] and [Docker Compose][]
+installed before running these commands.
+
+```
+$ git clone https://github.com/fireworq/fireworq
+$ cd fireworq
+$ script/docker/compose up
+```
+
+When Fireworq gets ready, it will listen on `localhost:8080` (on the
+host machine).  Specify `FIREWORQ_PORT` environment variable if you
+want Fireworq to listen on a different port.
+
+Each time you run `script/docker/compose up`, a Fireworq instance with
+the latest code will come up.  Note that sometimes you need
+`script/docker/compose clean` for example when you add a new
+dependency.
 
 To run automated tests, the following command does it for you.
 
@@ -13,7 +30,10 @@ To run automated tests, the following command does it for you.
 $ script/ci/test/docker-run
 ```
 
-This command always clean up all the docker images used for the tests.  If you are going to run the tests many times in your iteration, you should consider manual compilation and testing explained in the next section.
+This command always clean up all the docker images used for the tests.
+If you are going to run the tests many times in your iteration, you
+should consider manual compilation and testing explained in the next
+section.
 
 ## Manual compilation and testing
 
@@ -60,6 +80,7 @@ Now you can start developing with the following commands.
 [releases]: https://github.com/fireworq/fireworq/releases
 
 [Docker]: https://www.docker.com/
+[Docker Compose]: https://docs.docker.com/compose/
 [Golang]: https://golang.org/
 [MySQL]: https://www.mysql.com/
 [golint]: https://github.com/golang/lint
