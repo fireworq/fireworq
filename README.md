@@ -59,35 +59,14 @@ all at once.  Make sure you have [Docker][] installed before running
 these commands.
 
 ```
-$ git clone https://github.com/fireworq/fireworq
-$ cd fireworq
-$ script/docker/compose up
-```
-
-When Fireworq gets ready, it will listen on `localhost:8080` (on the
-host machine).  Specify `FIREWORQ_PORT` environment variable if you
-want Fireworq to listen on a different port.
-
-```
-$ FIREWORQ_PORT=1234 script/docker/compose up
+$ docker run -p 8080:8080 fireworq/fireworq --driver=in-memory --queue-default=default
 ```
 
 Pressing `Ctrl+C` will gracefully shut it down.
 
-### Behind HTTP proxy
-
-If you are behind HTTP proxy, `script/docker/compose up` will fail.
-Add following configuration to `script/docker/docker-compose.yml`:
-
-```diff
- services:
-   fireworq:
-+    build:
-+      args:
-+        - http_proxy=http://.../
-+        - https_proxy=http://.../
-     environment:
-```
+Note that `in-memory` driver is not for production use.  It is
+intended to be used for just playing with Fireworq without a storage
+middleware.
 
 ## <a name="api">Using the API</a>
 
@@ -130,11 +109,10 @@ always ignored.
 
 Let's make the job asynchronous using Fireworq.  All you have to do is
 to make a `POST` request to Fireworq with a worker URL and a job
-payload.  If you have
-[a docker-composed Fireworq instance][section-start] and your docker
-host IP (from the container's point of view) is `172.17.0.1`, then
-requesting something like the following will enqueue exactly the same
-job in the previous example.
+payload.  If you have [a Fireworq docker instance][section-start] and
+your docker host IP (from the container's point of view) is
+`172.17.0.1`, then requesting something like the following will
+enqueue exactly the same job in the previous example.
 
 ```
 $ curl -XPOST -d '{"url":"http://172.17.0.1:3000/work","payload":{"id":12345}}' http://localhost:8080/job/foo
