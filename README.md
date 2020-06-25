@@ -162,9 +162,7 @@ other variables.
   Specifies the name of a default queue.  A job whose `category` is
   not defined via the [routing API][api-put-routing] will be delivered
   to this queue.  If no default queue name is specified, pushing a job
-  with an unknown category will fail for a
-  [manual setup][section-manual-setup].  A docker-composed instance
-  uses `default` as a default value.
+  with an unknown category will fail.
 
   If you already have a queue with the specified name in the job queue
   database, that one is used.  Or otherwise a new queue is created
@@ -189,9 +187,6 @@ other variables.
   - [Routing Management][section-api-routing]
   - [Job Management][section-api-job]
 - [Full List of Configurations][page-configuration]
-  - [Common Variables/Arguments][section-config-common]
-  - [Variables/Arguments only Applicable to Manual Setup][section-config-manual-setup]
-  - [Variables only Applicable to a Docker-composed Instance][section-config-docker-compose]
 - [Make It Production-Ready][page-production-ready]
   - [Using a Release Build (Manual setup)][section-manual-setup]
   - [Preparing a Backup Instance][section-backup]
@@ -214,9 +209,6 @@ other variables.
 [section-license]: #license
 
 [page-configuration]: ./doc/config.md
-[section-config-common]: ./doc/config.md#config-common
-[section-config-manual-setup]: ./doc/config.md#config-manual-setup
-[section-config-docker-compose]: ./doc/config.md#config-docker
 [page-api]: ./doc/api.md
 [section-api-queue]: ./doc/api.md#api-queue
 [section-api-routing]: ./doc/api.md#api-routing
