@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/Songmu/gocredits v0.1.0
-	github.com/golang/mock v1.4.3
+	github.com/golang/mock v1.4.4
 	github.com/jessevdk/go-assets v0.0.0-20160921144138-4f4301a06e15 // indirect
 	github.com/jessevdk/go-assets-builder v0.0.0-20130903091706-b8483521738f
 	github.com/jessevdk/go-flags v1.4.0 // indirect
