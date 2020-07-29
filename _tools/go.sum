@@ -1,5 +1,5 @@
-github.com/Songmu/gocredits v0.1.0 h1:kvF4MYjGXpts+FhxlfmI15mHh0PApML9u7qQU91goYw=
-github.com/Songmu/gocredits v0.1.0/go.mod h1:5OhTh3YD/zUrdWAYuhMO2n3m7Ql+xRAnRLIGUEFABpQ=
+github.com/Songmu/gocredits v0.2.0 h1:AbvFKEbwP5/0qisF0cTlUwVuCtzbJG+ynsXuEUC98vI=
+github.com/Songmu/gocredits v0.2.0/go.mod h1:JBywHzwOmBMF9uidu1EgS3mwVNqZCKOPLPrFd1h7qQo=
 github.com/alecthomas/assert v0.0.0-20170929043011-405dbfeb8e38 h1:smF2tmSOzy2Mm+0dGI2AIUHY+w0BUc+4tn40djz7+6U=
 github.com/alecthomas/assert v0.0.0-20170929043011-405dbfeb8e38/go.mod h1:r7bzyVFMNntcxPZXK3/+KdruV1H5KSlyVY0gc+NgInI=
 github.com/alecthomas/colour v0.0.0-20160524082231-60882d9e2721 h1:JHZL0hZKJ1VENNfmXvHbgYlbUOvpzYzvy2aZU5gXVeo=
