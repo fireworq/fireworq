@@ -20,8 +20,8 @@ github.com/jessevdk/go-assets-builder v0.0.0-20130903091706-b8483521738f h1:K2zq
 github.com/jessevdk/go-assets-builder v0.0.0-20130903091706-b8483521738f/go.mod h1:GjkD6wGIxVEccQ4pa27Ebe00zAi1EEpAcL6rL0ADvwU=
 github.com/jessevdk/go-flags v1.4.0 h1:4IU2WS7AumrZ/40jfhf4QVDMsQwqA7VEHozFRrGARJA=
 github.com/jessevdk/go-flags v1.4.0/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJSGM75WSRxI=
-github.com/jpillora/go-tcp-proxy v1.0.0 h1:Fbly0gNobRy+dUSJ0CbYJSj/hPWEeIOxrlP35dl6Z7Y=
-github.com/jpillora/go-tcp-proxy v1.0.0/go.mod h1:dDLgFeNeCec5CsLCmJlat+bb/oNDHc3d90G+anWRcBQ=
+github.com/jpillora/go-tcp-proxy v1.0.2 h1:nJSZ+OZYzX7/xcHnjJwOPwEC6VUFeIsmJXX9lKESwAQ=
+github.com/jpillora/go-tcp-proxy v1.0.2/go.mod h1:dDLgFeNeCec5CsLCmJlat+bb/oNDHc3d90G+anWRcBQ=
 github.com/jstemmer/go-junit-report v0.9.1 h1:6QPYqodiu3GuPL+7mfx+NwDdp2eTkp9IfEUpgAwUN0o=
 github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
 github.com/kyoh86/scopelint v0.2.0 h1:suOCh1T05nIY8srcI266aqwf3RLtO8kniZOTaAnzRyg=
