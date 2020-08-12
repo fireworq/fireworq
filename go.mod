@@ -1,6 +1,6 @@
 module github.com/fireworq/fireworq
 
-go 1.14
+go 1.15
 
 require (
 	github.com/fukata/golang-stats-api-handler v1.0.0

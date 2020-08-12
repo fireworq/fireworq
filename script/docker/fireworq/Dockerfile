@@ -3,7 +3,7 @@
 # $ docker build -t fireworq .
 # $ docker run --rm fireworq
 
-FROM golang:1.14
+FROM golang:1.15
 
 ARG FIREWORQ_ROOT
 ENV FIREWORQ_ROOT=${FIREWORQ_ROOT}

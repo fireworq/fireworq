@@ -1,6 +1,6 @@
 module github.com/fireworq/fireworq/_tools
 
-go 1.14
+go 1.15
 
 require (
 	github.com/Songmu/gocredits v0.2.0
