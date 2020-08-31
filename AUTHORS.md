@@ -21,7 +21,7 @@ This is the official list of Fireworq authors for copyright purposes.
 |IKEDA Sho|<suicaicoca@gmail.com>|[@ikesyo](https://github.com/ikesyo)|2|
 |Thomas Broadley|<buriedunderbooks@hotmail.com>|[@tbroadley](https://github.com/tbroadley)|1|
 |Sai Warang|<cyprusad@gmail.com>||1|
-|Davor Kapsa|<davor.kapsa@gmail.com>||1|
+|Davor Kapsa|<davor.kapsa@gmail.com>|[@dvrkps](https://github.com/dvrkps)|1|
 |Edward Betts|<edward@4angle.com>|[@EdwardBetts](https://github.com/EdwardBetts)|1|
 |MURATA Satoshi|<rw.satoshi.murata@gmail.com>||1|
 |uchan-nos|<uchan0@gmail.com>|[@uchan-nos](https://github.com/uchan-nos)|1|
