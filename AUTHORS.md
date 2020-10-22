@@ -10,22 +10,22 @@ This is the official list of Fireworq authors for copyright purposes.
 |:----|:-------|:-----|-------:|
 |INA Lintaro|<tarao.gnn@gmail.com>|[@tarao](https://github.com/tarao)|669|
 |itchyny|<itchyny@hatena.ne.jp>||38|
-|SHIBAZAKI Yuki|<shibayu36@gmail.com>||31|
-|FUSHII Yohei|<hakobe@gmail.com>||28|
-|TSUBOUCHI Yuuki|<yuki.tsubo@gmail.com>||25|
+|SHIBAZAKI Yuki|<shibayu36@gmail.com>|[@shibayu36](https://github.com/shibayu36)|31|
+|FUSHII Yohei|<hakobe@gmail.com>|[@hakobe](https://github.com/hakobe)|28|
+|TSUBOUCHI Yuuki|<yuki.tsubo@gmail.com>|[@yuuki](https://github.com/yuuki)|25|
 |Tomohiro Nishimura|<tomohiro68@gmail.com>|[@Sixeight](https://github.com/Sixeight)|23|
 |yigarashi|<yigarashi@hatena.ne.jp>||19|
 |SHIBAHATA Tsugihito|<fly.me.to.the.moon1204@gmail.com>||17|
-|Fumihiro Itoh|<fmhrit@gmail.com>||5|
+|Fumihiro Itoh|<fmhrit@gmail.com>|[@f110](https://github.com/f110)|5|
 |kanozec|<kanozec@gmail.com>||2|
-|IKEDA Sho|<suicaicoca@gmail.com>||2|
-|Thomas Broadley|<buriedunderbooks@hotmail.com>||1|
+|IKEDA Sho|<suicaicoca@gmail.com>|[@ikesyo](https://github.com/ikesyo)|2|
+|Thomas Broadley|<buriedunderbooks@hotmail.com>|[@tbroadley](https://github.com/tbroadley)|1|
 |Sai Warang|<cyprusad@gmail.com>||1|
 |Davor Kapsa|<davor.kapsa@gmail.com>|[@dvrkps](https://github.com/dvrkps)|1|
-|Edward Betts|<edward@4angle.com>||1|
+|Edward Betts|<edward@4angle.com>|[@EdwardBetts](https://github.com/EdwardBetts)|1|
 |MURATA Satoshi|<rw.satoshi.murata@gmail.com>||1|
 |uchan-nos|<uchan0@gmail.com>|[@uchan-nos](https://github.com/uchan-nos)|1|
-|yuuji.yaginuma|<yuuji.yaginuma@gmail.com>||1|
+|yuuji.yaginuma|<yuuji.yaginuma@gmail.com>|[@y-yagi](https://github.com/y-yagi)|1|
 
 Items are automatically added by `git shortlog -sne`.  Please add rules to [`.mailmap`](.mailmap) to keep it canonical (see "MAPPING AUTHORS" section of `git help shortlog` for the notation of the rules).  E-mail field must match your public E-mail setting on your GitHub account if you wish to show your GitHub account name.
 
