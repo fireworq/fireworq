@@ -8,7 +8,7 @@ This is the official list of Fireworq authors for copyright purposes.
 
 |Name |E-mail  |GitHub|Commits |
 |:----|:-------|:-----|-------:|
-|INA Lintaro|<tarao.gnn@gmail.com>|[@tarao](https://github.com/tarao)|671|
+|INA Lintaro|<tarao.gnn@gmail.com>|[@tarao](https://github.com/tarao)|672|
 |itchyny|<itchyny@hatena.ne.jp>||38|
 |SHIBAZAKI Yuki|<shibayu36@gmail.com>|[@shibayu36](https://github.com/shibayu36)|31|
 |FUSHII Yohei|<hakobe@gmail.com>|[@hakobe](https://github.com/hakobe)|28|
@@ -23,6 +23,7 @@ This is the official list of Fireworq authors for copyright purposes.
 |Sai Warang|<cyprusad@gmail.com>||1|
 |Davor Kapsa|<davor.kapsa@gmail.com>|[@dvrkps](https://github.com/dvrkps)|1|
 |Edward Betts|<edward@4angle.com>|[@EdwardBetts](https://github.com/EdwardBetts)|1|
+|Elizabeth Paige Harper|<foxcapade@gmail.com>|[@Foxcapades](https://github.com/Foxcapades)|1|
 |MURATA Satoshi|<rw.satoshi.murata@gmail.com>||1|
 |uchan-nos|<uchan0@gmail.com>|[@uchan-nos](https://github.com/uchan-nos)|1|
 |yuuji.yaginuma|<yuuji.yaginuma@gmail.com>|[@y-yagi](https://github.com/y-yagi)|1|
