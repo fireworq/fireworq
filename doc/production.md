@@ -31,7 +31,7 @@ Before running Fireworq, make sure that you have
    and,
 1. some DB user <code><var>user</var></code> with some password
    <code><var>password</var></code>, who is granted `CREATE`,
-   `INSERT`, `DELETE` and `SELECT` rights on
+   `INSERT`, `DELETE`, `UPDATE` and `SELECT` rights on
    <code><var>database</var></code>.
 
 Then the following commands run Fireworq with the prepared MySQL database.
