@@ -92,7 +92,7 @@ func (worker *HTTPWorker) Work(job jobqueue.Job) *jobqueue.Result {
 	if userAgent == "" {
 		userAgent = defaultUserAgent
 	}
-	req.Header.Add("User-Agent", worker.UserAgent)
+	req.Header.Add("User-Agent", userAgent)
 
 	resp, err := client.Do(req)
 
