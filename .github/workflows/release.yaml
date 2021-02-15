@@ -1,30 +1,43 @@
-name: Release Docker Image
+name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
 
   release:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
 
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-    - name: Set variables
-      id: variables
-      run: |
-        git_tag_name="${{ github.event.release.tag_name }}"
-        git_tag_name="${git_tag_name#v}"
-        echo "::set-output name=release_tag_patch::${git_tag_name}"
-        echo "::set-output name=release_tag_minor::${git_tag_name%.*}"
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.x
 
-    - name: Build and Release
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-        repository: fireworq/fireworq
-        tags: latest, ${{ steps.variables.outputs.release_tag_patch }}, ${{ steps.variables.outputs.release_tag_minor }}
+      - name: Publish artifacts
+        run: script/ci/can-release && script/ci/release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set variables for Docker image
+        id: variables
+        run: |
+          git_tag_name="${{ github.event.release.tag_name }}"
+          git_tag_name="${git_tag_name#v}"
+          echo "::set-output name=release_tag_patch::${git_tag_name}"
+          echo "::set-output name=release_tag_minor::${git_tag_name%.*}"
+
+      - name: Build and release Docker image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: fireworq/fireworq
+          tags: latest, ${{ steps.variables.outputs.release_tag_patch }}, ${{ steps.variables.outputs.release_tag_minor }}
