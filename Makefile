@@ -3,7 +3,7 @@ SHELL=/bin/bash
 BUILD_OUTPUT=.
 TEST_OUTPUT=.
 GO=go
-GOINSTALL=cd _tools && env GO111MODULE=on GOOS= GOARCH= ${GO} install
+GOINSTALL=GOOS= GOARCH= ${GO} install
 PRERELEASE=SNAPSHOT
 BUILD=$$(git describe --always)
 TEST_ARGS=-parallel 1 -timeout 60s
@@ -35,7 +35,7 @@ release: clean credits generate
 .PHONY: credits
 credits:
 	GOOS= GOARCH= ${GO} run script/genauthors/genauthors.go > AUTHORS
-	${GOINSTALL} github.com/Songmu/gocredits/cmd/gocredits
+	${GOINSTALL} github.com/Songmu/gocredits/cmd/gocredits@v0.2.0
 	${GO} mod tidy # not `go get` to get all the dependencies regardress of OS, architecture and build tags
 	gocredits -w .
 
@@ -47,25 +47,25 @@ generate: generate_deps
 
 .PHONY: generate_deps
 generate_deps:
-	${GOINSTALL} github.com/jessevdk/go-assets-builder
-	${GOINSTALL} github.com/golang/mock/mockgen
+	${GOINSTALL} github.com/jessevdk/go-assets-builder@v0.0.0-20130903091706-b8483521738f
+	${GOINSTALL} github.com/golang/mock/mockgen@v1.4.4
 
 .PHONY: test_deps
 test_deps:
-	${GOINSTALL} github.com/jpillora/go-tcp-proxy/cmd/tcp-proxy
-	${GOINSTALL} github.com/jstemmer/go-junit-report
-	${GOINSTALL} golang.org/x/tools/cmd/cover
-	${GOINSTALL} github.com/wadey/gocovmerge
-	${GOINSTALL} github.com/t-yuki/gocover-cobertura
+	${GOINSTALL} github.com/jpillora/go-tcp-proxy/cmd/tcp-proxy@v1.0.2
+	${GOINSTALL} github.com/jstemmer/go-junit-report@v0.9.1
+	${GOINSTALL} golang.org/x/tools/cmd/cover@v0.0.0-20200831203904-5a2aa26beb65
+	${GOINSTALL} github.com/wadey/gocovmerge@v0.0.0-20160331181800-b5bfa59ec0ad
+	${GOINSTALL} github.com/t-yuki/gocover-cobertura@v0.0.0-20180217150009-aaee18c8195c
 
 .PHONY: lint
 lint: generate
-	${GOINSTALL} golang.org/x/lint/golint
+	${GOINSTALL} golang.org/x/lint/golint@v0.0.0-20200302205851-738671d3881b
 	${GO} vet ./...
 	for d in $$(${GO} list ./...); do \
 	  golint --set_exit_status "$$d" || exit $$? ; \
 	done
-	${GOINSTALL} github.com/kyoh86/scopelint
+	${GOINSTALL} github.com/kyoh86/scopelint@v0.2.0
 	scopelint --set-exit-status --no-test ./...
 	for f in $$(${GO} list -f '{{$$p := .}}{{range $$f := .GoFiles}}{{$$p.Dir}}/{{$$f}} {{end}} {{range $$f := .TestGoFiles}}{{$$p.Dir}}/{{$$f}} {{end}}' ./... | xargs); do \
 	  [ $$(basename "$$f") = 'assets.go' ] && continue ; \
