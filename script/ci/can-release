@@ -3,11 +3,13 @@
 DIR=$(cd $(dirname "$0")/../..; pwd)
 cd "$DIR"
 
-[ -n "$TRAVIS_TAG" ] || {
+TAG_NAME="${GITHUB_REF#refs/tags/}"
+
+[ -n "$TAG_NAME" ] || {
     echo 'No tag' >&2
     exit 1
 }
-case "$TRAVIS_TAG" in
+case "$TAG_NAME" in
 v0*|v1*|v2*|v3*|v4*|v5*|v6*|v7*|v8*|v9*) ;;
 *)
     echo 'Not a release tag' >&2
@@ -15,8 +17,8 @@ v0*|v1*|v2*|v3*|v4*|v5*|v6*|v7*|v8*|v9*) ;;
 esac
 
 type gobump >/dev/null || go get github.com/x-motemen/gobump/cmd/gobump
-[ "$TRAVIS_TAG" = "v$(gobump show -r)" ] || {
-    echo "Invalid tag: $TRAVIS_TAG != v$(gobump show -r)" >&2
+[ "$TAG_NAME" = "v$(gobump show -r)" ] || {
+    echo "Invalid tag: $TAG_NAME != v$(gobump show -r)" >&2
     exit 1
 }
 

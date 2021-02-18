@@ -3,10 +3,7 @@
 DIR=$(cd $(dirname "$0")/../..; pwd)
 cd "$DIR"
 
-set -x
-
-BRANCH="${GIT_BRANCH:-${TRAVIS_BRANCH}}"
-[ -z "$BRANCH" ] || git checkout "$BRANCH"
+set -ex
 
 type gobump >/dev/null || go get github.com/x-motemen/gobump/cmd/gobump
 type ghr >/dev/null    || go get github.com/tcnksm/ghr
@@ -28,5 +25,4 @@ mkdir -p "$DIST"
 build linux amd64
 build darwin amd64
 
-[ -n "$GH_TOKEN" ] && export GITHUB_TOKEN="$GH_TOKEN"
 ghr -u fireworq -r "$APPLICATION" -b "$(ghch --latest --format=markdown)" "v$VERSION" "$DIST"

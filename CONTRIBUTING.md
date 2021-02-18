@@ -68,7 +68,7 @@ Now you can start developing with the following commands.
    - <code>git tag v<var>X</var>.<var>Y</var>.<var>Z</var></code>
    - `git push --tags`
 
-3. Wait for [a new release published][releases] by [CI](https://github.com/fireworq/fireworq/blob/97dd254792ec36a648732c33c068d979772804e4/.travis.yml#L25).
+3. [A new release][releases] and [a new Docker image](https://hub.docker.com/r/fireworq/fireworq) are published by [Release workflow](https://github.com/fireworq/fireworq/actions?query=workflow%3ARelease).
 
 4. Increment the patch version to state that the current source tree is not released yet.
 
