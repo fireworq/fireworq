@@ -35,7 +35,7 @@ jobs:
           echo "::set-output name=release_tag_minor::${git_tag_name%.*}"
 
       - name: Build and release Docker image
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
