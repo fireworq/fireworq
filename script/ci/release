@@ -18,6 +18,10 @@ build() {
     arch="$2"
     GOOS="$os" GOARCH="$arch" script/docker/build
     filename="${APPLICATION}_${os}_${arch}.zip"
+    [ -f "$APPLICATION" ] || {
+        echo "File missing: $APPLICATION" >&2
+        exit 1
+    }
     zip "$DIST/$filename" "$APPLICATION" README.md doc/* doc/*/* AUTHORS.md AUTHORS LICENSE CREDITS
 }
 
