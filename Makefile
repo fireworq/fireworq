@@ -48,7 +48,7 @@ generate: generate_deps
 .PHONY: generate_deps
 generate_deps:
 	${GOINSTALL} github.com/jessevdk/go-assets-builder@v0.0.0-20130903091706-b8483521738f
-	${GOINSTALL} github.com/golang/mock/mockgen@v1.4.4
+	${GOINSTALL} github.com/golang/mock/mockgen@v1.5.0
 
 .PHONY: test_deps
 test_deps:
