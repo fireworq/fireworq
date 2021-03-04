@@ -2621,9 +2621,6 @@ func TestDeleteQueueFailedJob(t *testing.T) {
 		mockFailureLog.EXPECT().
 			Find(uint64(5)).
 			Return(nil, sql.ErrNoRows)
-		mockFailureLog.EXPECT().
-			Delete(uint64(5)).
-			Return(nil)
 
 		mockJobQueue := NewMockJobQueue(ctrl)
 		mockJobQueue.EXPECT().
