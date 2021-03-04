@@ -36,7 +36,7 @@ release: clean credits generate
 credits:
 	GOOS= GOARCH= ${GO} run script/genauthors/genauthors.go > AUTHORS
 	${GOINSTALL} github.com/Songmu/gocredits/cmd/gocredits@v0.2.0
-	${GO} mod tidy # not `go get` to get all the dependencies regardress of OS, architecture and build tags
+	${GO} mod download
 	gocredits -w .
 
 .PHONY: generate
