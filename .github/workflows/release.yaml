@@ -29,7 +29,7 @@ jobs:
       - name: Set variables for Docker image
         id: variables
         run: |
-          git_tag_name="${{ github.event.release.tag_name }}"
+          git_tag_name="${GITHUB_REF#refs/tags/}"
           git_tag_name="${git_tag_name#v}"
           echo "::set-output name=release_tag_patch::${git_tag_name}"
           echo "::set-output name=release_tag_minor::${git_tag_name%.*}"
