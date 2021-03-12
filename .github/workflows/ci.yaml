@@ -16,6 +16,10 @@ jobs:
       uses: actions/checkout@v2
     - name: Test
       run: script/ci/test/docker-run
+    - name: Setup Go for gcov2lcov
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.x
     - name: Convert coverage to lcov
       uses: jandelgado/gcov2lcov-action@v1.0.8
       with:
