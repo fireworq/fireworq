@@ -5,7 +5,7 @@ WORKDIR ${APP_DIR}
 COPY . .
 RUN make release PRERELEASE=
 
-FROM alpine:3.13.2
+FROM alpine:3.13.3
 ENV APP_DIR /go/src/github.com/fireworq/fireworq
 
 COPY --from=builder ${APP_DIR}/fireworq /usr/local/bin/
