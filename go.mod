@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/fukata/golang-stats-api-handler v1.0.0
-	github.com/go-sql-driver/mysql v1.5.0
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang/mock v1.5.0
 	github.com/gorilla/mux v1.8.0
 	github.com/jessevdk/go-assets v0.0.0-20160921144138-4f4301a06e15
