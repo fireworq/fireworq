@@ -11,5 +11,5 @@ require (
 	github.com/lestrrat-go/server-starter v0.0.0-20210101230921-50cd1900b5bc
 	github.com/paulbellamy/ratecounter v0.2.0
 	github.com/phayes/freeport v0.0.0-20180830031419-95f893ade6f2
-	github.com/rs/zerolog v1.21.0
+	github.com/rs/zerolog v1.22.0
 )
