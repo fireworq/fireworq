@@ -34,6 +34,9 @@ jobs:
           echo "::set-output name=release_tag_patch::${git_tag_name}"
           echo "::set-output name=release_tag_minor::${git_tag_name%.*}"
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -48,6 +51,7 @@ jobs:
         with:
           context: .
           push: true
+          platforms: linux/amd64, linux/arm64
           tags: |
             ${{ github.repository }}:latest
             ${{ github.repository }}:${{ steps.variables.outputs.release_tag_patch }}
