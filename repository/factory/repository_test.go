@@ -30,14 +30,47 @@ func TestQueue(t *testing.T) {
 	if err := repo.Queue.Add(&model.Queue{Name: "repo_queue_test_queue_2", MaxWorkers: 1000}); err != nil {
 		t.Error(err)
 	}
+	if err := repo.Queue.Add(&model.Queue{
+		Name:                   "repo_queue_test_queue_3",
+		PollingInterval:        300,
+		MaxWorkers:             10,
+		MaxDispatchesPerSecond: 2.5,
+		MaxBurstSize:           5,
+	}); err != nil {
+		t.Error(err)
+	}
 
 	{
 		qs, err := repo.Queue.FindAll()
 		if err != nil {
 			t.Error(err)
 		}
-		if len(qs) != 2 {
+		if len(qs) != 3 {
 			t.Error("There should be defined queues")
+		}
+
+		if qs[0].Name != "repo_queue_test_queue_1" {
+			t.Error("Defined queues can be retrieved in name order")
+		}
+		if q := qs[0]; q.PollingInterval != 0 || q.MaxWorkers != 0 ||
+			q.MaxDispatchesPerSecond != 0.0 || q.MaxBurstSize != 0 {
+			t.Errorf("Defined queues can be retrieved: %#v", q)
+		}
+
+		if qs[1].Name != "repo_queue_test_queue_2" {
+			t.Error("Defined queues can be retrieved in name order")
+		}
+		if q := qs[1]; q.PollingInterval != 0 || q.MaxWorkers != 1000 ||
+			q.MaxDispatchesPerSecond != 0.0 || q.MaxBurstSize != 0 {
+			t.Errorf("Defined queues can be retrieved: %#v", q)
+		}
+
+		if qs[2].Name != "repo_queue_test_queue_3" {
+			t.Error("Defined queues can be retrieved in name order")
+		}
+		if q := qs[2]; q.PollingInterval != 300 || q.MaxWorkers != 10 ||
+			q.MaxDispatchesPerSecond != 2.5 || q.MaxBurstSize != 5 {
+			t.Errorf("Defined queues can be retrieved: %#v", q)
 		}
 	}
 
@@ -49,8 +82,23 @@ func TestQueue(t *testing.T) {
 		if q.Name != "repo_queue_test_queue_2" {
 			t.Error("Defined queue can be retrieved by name")
 		}
-		if q.MaxWorkers != 1000 {
+		if q.PollingInterval != 0 || q.MaxWorkers != 1000 ||
+			q.MaxDispatchesPerSecond != 0.0 || q.MaxBurstSize != 0 {
+			t.Errorf("Defined queues can be retrieved by name: %#v", q)
+		}
+	}
+
+	{
+		q, err := repo.Queue.FindByName("repo_queue_test_queue_3")
+		if err != nil {
+			t.Error(err)
+		}
+		if q.Name != "repo_queue_test_queue_3" {
 			t.Error("Defined queue can be retrieved by name")
+		}
+		if q.PollingInterval != 300 || q.MaxWorkers != 10 ||
+			q.MaxDispatchesPerSecond != 2.5 || q.MaxBurstSize != 5 {
+			t.Errorf("Defined queues can be retrieved by name: %#v", q)
 		}
 	}
 
@@ -65,6 +113,45 @@ func TestQueue(t *testing.T) {
 		}
 		if q != nil {
 			t.Error("Deleted queue should not be found")
+		}
+	}
+
+	{
+		qs, err := repo.Queue.FindAll()
+		if err != nil {
+			t.Error(err)
+		}
+		if len(qs) != 2 {
+			t.Error("There should be defined queues")
+		}
+
+		if qs[0].Name != "repo_queue_test_queue_2" {
+			t.Error("Defined queues can be retrieved in name order")
+		}
+		if qs[1].Name != "repo_queue_test_queue_3" {
+			t.Error("Defined queues can be retrieved in name order")
+		}
+	}
+
+	if err := repo.Queue.DeleteByName("repo_queue_test_queue_1"); err != nil {
+		t.Errorf("Delete queue again should not fail: %s", err)
+	}
+
+	if err := repo.Queue.DeleteByName("repo_queue_test_queue_2"); err != nil {
+		t.Error(err)
+	}
+
+	if err := repo.Queue.DeleteByName("repo_queue_test_queue_3"); err != nil {
+		t.Error(err)
+	}
+
+	{
+		qs, err := repo.Queue.FindAll()
+		if err != nil {
+			t.Error(err)
+		}
+		if len(qs) != 0 {
+			t.Error("There should be no queues")
 		}
 	}
 
