@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"database/sql"
+	"strings"
 
 	"github.com/fireworq/fireworq/model"
 	"github.com/fireworq/fireworq/repository"
@@ -26,6 +27,18 @@ func (r *queueRepository) Add(q *model.Queue) error {
 			max_workers = VALUES(max_workers)
 	`
 	_, err := r.db.Exec(sql, q.Name, q.PollingInterval, q.MaxWorkers)
+	if err != nil {
+		return err
+	}
+
+	sql = `
+		INSERT INTO queue_throttle (name, max_dispatches_per_second, max_burst_size)
+		VALUES ( ?, ?, ? )
+		ON DUPLICATE KEY UPDATE
+			max_dispatches_per_second = VALUES(max_dispatches_per_second),
+			max_burst_size = VALUES(max_burst_size)
+	`
+	_, err = r.db.Exec(sql, q.Name, q.MaxDispatchesPerSecond, q.MaxBurstSize)
 	if err != nil {
 		return err
 	}
@@ -56,6 +69,22 @@ func (r *queueRepository) FindAll() ([]model.Queue, error) {
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
+
+	names := make([]string, len(results))
+	for i, q := range results {
+		names[i] = q.Name
+	}
+	throttles, err := r.findQueueThrottles(names)
+	if err != nil {
+		return nil, err
+	}
+	for i, q := range results {
+		if throttle, ok := throttles[q.Name]; ok {
+			results[i].MaxDispatchesPerSecond = throttle.maxDispatchesPerSecond
+			results[i].MaxBurstSize = throttle.maxBurstSize
+		}
+	}
+
 	return results, nil
 }
 
@@ -75,7 +104,63 @@ func (r *queueRepository) FindByName(name string) (*model.Queue, error) {
 		return nil, err
 	}
 
+	throttles, err := r.findQueueThrottles([]string{queue.Name})
+	if err != nil {
+		return nil, err
+	}
+	if throttle, ok := throttles[queue.Name]; ok {
+		queue.MaxDispatchesPerSecond = throttle.maxDispatchesPerSecond
+		queue.MaxBurstSize = throttle.maxBurstSize
+	}
+
 	return queue, nil
+}
+
+type queueThrottle struct {
+	maxDispatchesPerSecond float64
+	maxBurstSize           uint
+}
+
+func (r *queueRepository) findQueueThrottles(names []string) (map[string]queueThrottle, error) {
+	if len(names) == 0 {
+		return nil, nil
+	}
+
+	sql := `
+		SELECT name, max_dispatches_per_second, max_burst_size
+		FROM queue_throttle
+		WHERE name IN (` + strings.Repeat("?,", len(names)-1) + `?)
+	`
+
+	args := make([]interface{}, len(names))
+	for i, name := range names {
+		args[i] = name
+	}
+
+	rows, err := r.db.Query(sql, args...)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var (
+		name                   string
+		maxDispatchesPerSecond float64
+		maxBurstSize           uint
+		throttleByName         = make(map[string]queueThrottle, len(names))
+	)
+	for rows.Next() {
+		if err := rows.Scan(&name, &maxDispatchesPerSecond, &maxBurstSize); err != nil {
+			return nil, err
+		}
+		throttleByName[name] = queueThrottle{maxDispatchesPerSecond, maxBurstSize}
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return throttleByName, nil
 }
 
 func (r *queueRepository) DeleteByName(name string) error {
@@ -84,6 +169,15 @@ func (r *queueRepository) DeleteByName(name string) error {
 		WHERE name = ?
 	`
 	_, err := r.db.Exec(sql, name)
+	if err != nil {
+		return err
+	}
+
+	sql = `
+		DELETE FROM queue_throttle
+		WHERE name = ?
+	`
+	_, err = r.db.Exec(sql, name)
 	if err != nil {
 		return err
 	}
