@@ -18,6 +18,7 @@ var schema []string
 func init() {
 	schema = []string{
 		"/data/repository/mysql/schema/queue.sql",
+		"/data/repository/mysql/schema/queue_throttle.sql",
 		"/data/repository/mysql/schema/routing.sql",
 		"/data/repository/mysql/schema/config_revision.sql",
 	}
