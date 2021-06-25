@@ -49,6 +49,12 @@ HTTP/1.1 200 OK
    "name": "test_queue2",
    "polling_interval": 200,
    "max_workers": 20
+}, {
+   "name": "test_queue3",
+   "polling_interval": 100,
+   "max_workers": 10,
+   "max_dispatches_per_second": 2.5,
+   "max_burst_size": 5
 }]
 ```
 
@@ -163,11 +169,13 @@ HTTP/1.1 200 OK
 }
 ```
 
-|Parameters in the request|Meaning                              |Note          |
-|:------------------------|:------------------------------------|:-------------|
-|`queue_name`             |The name of the target queue.        |mandatory     |
-|`polling_interval`       |An interval, in milliseconds, at which Fireworq checks the arrival of new jobs in this queue.|optional, defaults to [`FIREWORQ_QUEUE_DEFAULT_POLLING_INTERVAL`][env-queue-default-polling-interval]|
-|`max_workers`            |The maximum number of jobs that are processed simultaneously for this queue.|optional, defaults to [`FIREWORQ_QUEUE_DEFAULT_MAX_WORKERS`][env-queue-default-max-workers]|
+|Parameters in the request  |Meaning                              |Note          |
+|:--------------------------|:------------------------------------|:-------------|
+|`queue_name`               |The name of the target queue.        |mandatory     |
+|`polling_interval`         |An interval, in milliseconds, at which Fireworq checks the arrival of new jobs in this queue.|optional, defaults to [`FIREWORQ_QUEUE_DEFAULT_POLLING_INTERVAL`][env-queue-default-polling-interval]|
+|`max_workers`              |The maximum number of jobs that are processed simultaneously for this queue.|optional, defaults to [`FIREWORQ_QUEUE_DEFAULT_MAX_WORKERS`][env-queue-default-max-workers]|
+|`max_dispatches_per_second`|The maximum floating-point number of dispatches allowed to be processed within a second for this queue.|optional, defaults to no throttling. When throttling is configured, `polling_interval` is fixed to `100` regardless of the default interval|
+|`max_burst_size`           |The maximum number of burst size of throttling configuration for this queue.|optional, cannot be set without `max_dispatches_per_second`|
 
 |Response code            |Meaning                              |
 |:------------------------|:------------------------------------|
