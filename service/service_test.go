@@ -43,7 +43,10 @@ func TestAddJobQueue(t *testing.T) {
 			PollingInterval: pollingInterval,
 			MaxWorkers:      maxWorkers,
 		}
-		svc.AddJobQueue(q)
+		err := svc.AddJobQueue(q)
+		if err != nil {
+			t.Error(err)
+		}
 
 		q1, ok := svc.GetJobQueue(queueName)
 		if q1 == nil || !ok {
@@ -60,7 +63,10 @@ func TestAddJobQueue(t *testing.T) {
 
 	func() {
 		q := &model.Queue{Name: queueName}
-		svc.AddJobQueue(q)
+		err := svc.AddJobQueue(q)
+		if err != nil {
+			t.Error(err)
+		}
 
 		q1, ok := svc.GetJobQueue(queueName)
 		if q1 == nil || !ok {
@@ -83,7 +89,10 @@ func TestAddJobQueue(t *testing.T) {
 			PollingInterval: pollingInterval,
 			MaxWorkers:      maxWorkers,
 		}
-		svc.AddJobQueue(q)
+		err := svc.AddJobQueue(q)
+		if err != nil {
+			t.Error(err)
+		}
 
 		q1, ok := svc.GetJobQueue(queueName)
 		if q1 == nil || !ok {
@@ -95,6 +104,61 @@ func TestAddJobQueue(t *testing.T) {
 		}
 		if q1.PollingInterval() != pollingInterval || q1.MaxWorkers() != maxWorkers {
 			t.Error("Defined queue should store the overridden values")
+		}
+	}()
+
+	func() {
+		var pollingInterval uint = 300
+		var maxWorkers uint = 10
+		var maxDispatchesPerSecond float64 = 2.5
+		var maxBurstSize uint = 5
+		q := &model.Queue{
+			Name:                   queueName,
+			PollingInterval:        pollingInterval,
+			MaxWorkers:             maxWorkers,
+			MaxDispatchesPerSecond: maxDispatchesPerSecond,
+			MaxBurstSize:           maxBurstSize,
+		}
+		err := svc.AddJobQueue(q)
+		if err != nil {
+			t.Error(err)
+		}
+
+		q1, ok := svc.GetJobQueue(queueName)
+		if q1 == nil || !ok {
+			t.Error("Defined queue should be retrieved")
+		}
+
+		if q1.Name() != queueName {
+			t.Error("Defined queue should store the defined value")
+		}
+		if q1.PollingInterval() != throttleQueuePollingInterval {
+			t.Error("Defined queue should store the fixed polling interval")
+		}
+		if q1.MaxWorkers() != maxWorkers {
+			t.Error("Defined queue should store the overridden values")
+		}
+	}()
+
+	func() {
+		q := &model.Queue{
+			Name:                   queueName,
+			MaxDispatchesPerSecond: -0.1,
+		}
+		err := svc.AddJobQueue(q)
+		if err == nil {
+			t.Error(err)
+		}
+	}()
+
+	func() {
+		q := &model.Queue{
+			Name:         queueName,
+			MaxBurstSize: 5,
+		}
+		err := svc.AddJobQueue(q)
+		if err == nil {
+			t.Error(err)
 		}
 	}()
 }
@@ -113,7 +177,10 @@ func TestDeleteJobQueue(t *testing.T) {
 			PollingInterval: pollingInterval,
 			MaxWorkers:      maxWorkers,
 		}
-		svc.AddJobQueue(q)
+		err := svc.AddJobQueue(q)
+		if err != nil {
+			t.Error(err)
+		}
 
 		q1, ok := svc.GetJobQueue(name)
 		if q1 == nil || !ok {
