@@ -88,6 +88,13 @@ func TestGetQueueList(t *testing.T) {
 				PollingInterval: 300,
 				MaxWorkers:      30,
 			},
+			{
+				Name:                   "queue4",
+				PollingInterval:        100,
+				MaxWorkers:             10,
+				MaxDispatchesPerSecond: 2.5,
+				MaxBurstSize:           5,
+			},
 		}
 		mockApp.QueueRepository.EXPECT().
 			FindAll().
@@ -114,7 +121,11 @@ func TestGetQueueList(t *testing.T) {
 			t.Error("GET /queues should return defined queues")
 		}
 		for i, q := range qs {
-			if q.Name != queues[i].Name || q.PollingInterval != queues[i].PollingInterval || q.MaxWorkers != queues[i].MaxWorkers {
+			if q.Name != queues[i].Name ||
+				q.PollingInterval != queues[i].PollingInterval ||
+				q.MaxWorkers != queues[i].MaxWorkers ||
+				q.MaxDispatchesPerSecond != queues[i].MaxDispatchesPerSecond ||
+				q.MaxBurstSize != queues[i].MaxBurstSize {
 				t.Error("GET /queues should return defined queues")
 			}
 		}
@@ -299,7 +310,13 @@ func TestGetQueueListStats(t *testing.T) {
 			t.Error("GET /queues/stats should return stats of defined queues")
 		}
 		for k, s := range m {
-			if s.TotalPushes != stats[k].TotalPushes || s.TotalPops != stats[k].TotalPops || s.TotalCompletes != stats[k].TotalCompletes || s.TotalFailures != stats[k].TotalFailures || s.TotalPermanentFailures != stats[k].TotalPermanentFailures || s.PushesPerSecond != stats[k].PushesPerSecond || s.PopsPerSecond != stats[k].PopsPerSecond {
+			if s.TotalPushes != stats[k].TotalPushes ||
+				s.TotalPops != stats[k].TotalPops ||
+				s.TotalCompletes != stats[k].TotalCompletes ||
+				s.TotalFailures != stats[k].TotalFailures ||
+				s.TotalPermanentFailures != stats[k].TotalPermanentFailures ||
+				s.PushesPerSecond != stats[k].PushesPerSecond ||
+				s.PopsPerSecond != stats[k].PopsPerSecond {
 				t.Error("GET /queues/stats should return stats of defined queues")
 			}
 		}
@@ -446,7 +463,9 @@ func TestPutQueue(t *testing.T) {
 		if err := json.Unmarshal(buf, &q); err != nil {
 			t.Error(err)
 		}
-		if q.Name != queue.Name || q.PollingInterval != queue.PollingInterval || q.MaxWorkers != queue.MaxWorkers {
+		if q.Name != queue.Name ||
+			q.PollingInterval != queue.PollingInterval ||
+			q.MaxWorkers != queue.MaxWorkers {
 			t.Error("PUT /queue/$name should return a defined queue")
 		}
 	}()
@@ -483,7 +502,9 @@ func TestPutQueue(t *testing.T) {
 		if err := json.Unmarshal(buf, &q); err != nil {
 			t.Error(err)
 		}
-		if q.Name != "test_queue5" || q.PollingInterval != queue.PollingInterval || q.MaxWorkers != queue.MaxWorkers {
+		if q.Name != "test_queue5" ||
+			q.PollingInterval != queue.PollingInterval ||
+			q.MaxWorkers != queue.MaxWorkers {
 			t.Error("PUT /queue/$name should return a defined queue")
 		}
 		if q.Name == queue.Name {
@@ -524,6 +545,96 @@ func TestPutQueue(t *testing.T) {
 		}
 		if q.PollingInterval != 0 || q.MaxWorkers != 0 {
 			t.Error("PUT /queue/$name should return a defined queue with default values")
+		}
+	}()
+
+	func() {
+		ctrl := gomock.NewController(t)
+		s, mockApp := newMockServer(ctrl)
+		defer s.Close()
+
+		queue := &model.Queue{
+			Name:                   "test_queue6",
+			MaxDispatchesPerSecond: 1.25,
+		}
+		def := &model.Queue{
+			MaxDispatchesPerSecond: queue.MaxDispatchesPerSecond,
+		}
+
+		mockApp.Service.EXPECT().
+			AddJobQueue(gomock.Any()).
+			Return(nil)
+
+		resp, err := putJSON(s.URL+"/queue/"+queue.Name, def)
+		if err != nil {
+			t.Error(err)
+		}
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			t.Error("PUT /queue/$name should accept a queue definition with throttle config")
+		}
+
+		var q model.Queue
+		buf, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			t.Error(err)
+		}
+		if err := json.Unmarshal(buf, &q); err != nil {
+			t.Error(err)
+		}
+		if q.Name != queue.Name || q.PollingInterval != 0 || q.MaxWorkers != 0 ||
+			q.MaxDispatchesPerSecond != queue.MaxDispatchesPerSecond ||
+			q.MaxBurstSize != queue.MaxBurstSize {
+			t.Error("PUT /queue/$name should return a defined queue")
+		}
+	}()
+
+	func() {
+		ctrl := gomock.NewController(t)
+		s, mockApp := newMockServer(ctrl)
+		defer s.Close()
+
+		queue := &model.Queue{
+			Name:                   "test_queue6",
+			PollingInterval:        500,
+			MaxWorkers:             50,
+			MaxDispatchesPerSecond: 2.5,
+			MaxBurstSize:           5,
+		}
+		def := &model.Queue{
+			PollingInterval:        queue.PollingInterval,
+			MaxWorkers:             queue.MaxWorkers,
+			MaxDispatchesPerSecond: queue.MaxDispatchesPerSecond,
+			MaxBurstSize:           queue.MaxBurstSize,
+		}
+
+		mockApp.Service.EXPECT().
+			AddJobQueue(gomock.Any()).
+			Return(nil)
+
+		resp, err := putJSON(s.URL+"/queue/"+queue.Name, def)
+		if err != nil {
+			t.Error(err)
+		}
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			t.Error("PUT /queue/$name should accept a queue definition with throttle config")
+		}
+
+		var q model.Queue
+		buf, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			t.Error(err)
+		}
+		if err := json.Unmarshal(buf, &q); err != nil {
+			t.Error(err)
+		}
+		if q.Name != queue.Name ||
+			q.PollingInterval != queue.PollingInterval ||
+			q.MaxWorkers != queue.MaxWorkers ||
+			q.MaxDispatchesPerSecond != queue.MaxDispatchesPerSecond ||
+			q.MaxBurstSize != queue.MaxBurstSize {
+			t.Error("PUT /queue/$name should return a defined queue")
 		}
 	}()
 }
@@ -790,7 +901,14 @@ func TestGetQueueStats(t *testing.T) {
 		if err := json.Unmarshal(buf, &result); err != nil {
 			t.Error("GET /queue/queue1/stats should return a stats")
 		}
-		if result.TotalPushes != stats.TotalPushes || result.TotalPops != stats.TotalPops || result.TotalCompletes != stats.TotalCompletes || result.TotalFailures != stats.TotalFailures || result.TotalPermanentFailures != stats.TotalPermanentFailures || result.PushesPerSecond != stats.PushesPerSecond || result.PopsPerSecond != stats.PopsPerSecond || result.ActiveNodes != 1 {
+		if result.TotalPushes != stats.TotalPushes ||
+			result.TotalPops != stats.TotalPops ||
+			result.TotalCompletes != stats.TotalCompletes ||
+			result.TotalFailures != stats.TotalFailures ||
+			result.TotalPermanentFailures != stats.TotalPermanentFailures ||
+			result.PushesPerSecond != stats.PushesPerSecond ||
+			result.PopsPerSecond != stats.PopsPerSecond ||
+			result.ActiveNodes != 1 {
 			t.Error("GET /queue/queue1/stats should return stats of the queue")
 		}
 	}()
