@@ -147,7 +147,7 @@ func TestAddJobQueue(t *testing.T) {
 		}
 		err := svc.AddJobQueue(q)
 		if err == nil {
-			t.Error(err)
+			t.Error("AddJobQueue should fail with negative MaxDispatchesPerSecond")
 		}
 	}()
 
@@ -158,7 +158,7 @@ func TestAddJobQueue(t *testing.T) {
 		}
 		err := svc.AddJobQueue(q)
 		if err == nil {
-			t.Error(err)
+			t.Error("AddJobQueue should fail with MaxBurstSize but without MaxDispatchesPerSecond")
 		}
 	}()
 }
