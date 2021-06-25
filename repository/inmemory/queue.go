@@ -2,6 +2,7 @@ package inmemory
 
 import (
 	"errors"
+	"sort"
 	"sync"
 
 	"github.com/fireworq/fireworq/model"
@@ -40,6 +41,10 @@ func (r *queueRepository) FindAll() ([]model.Queue, error) {
 	for _, q := range qs.m {
 		queues = append(queues, q)
 	}
+
+	sort.Slice(queues, func(i, j int) bool {
+		return queues[i].Name < queues[j].Name
+	})
 
 	return queues, nil
 }
