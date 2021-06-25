@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"sync"
@@ -142,7 +143,19 @@ func (s *Service) AddJobQueue(q *model.Queue) error {
 	return s.addJobQueue(q)
 }
 
+// When throttling is configured, we use the fixed polling interval.
+const throttleQueuePollingInterval = 100
+
 func (s *Service) addJobQueue(q *model.Queue) error {
+	switch {
+	case q.MaxDispatchesPerSecond > 0.0:
+		q.PollingInterval = throttleQueuePollingInterval
+	case q.MaxDispatchesPerSecond < 0.0:
+		return errors.New("MaxDispatchesPerSecond should be non-negative")
+	case q.MaxBurstSize != 0:
+		return errors.New("Cannot configure MaxBurstSize without MaxDispatchesPerSecond")
+	}
+
 	if q.PollingInterval == 0 {
 		q.PollingInterval = defaultPollingInterval()
 	}
