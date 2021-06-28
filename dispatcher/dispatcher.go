@@ -185,8 +185,8 @@ Loop:
 				defer func() { <-d.sem }()
 				err := d.limiter.Wait(ctx)
 				if err == nil {
-                    rslt := d.worker.Work(job)
-                    d.jobqueue.Complete(job, rslt)
+					rslt := d.worker.Work(job)
+					d.jobqueue.Complete(job, rslt)
 				}
 			}(job)
 		}
