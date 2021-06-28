@@ -16,7 +16,6 @@ import (
 )
 
 const defaultMinBufferSize = 1000
-const defaultMinPollingInterval = 100
 
 // Init initializes global parameters of dispatchers by configuration values.
 //
@@ -48,13 +47,9 @@ func (cfg Config) Start(q JobQueue, m *model.Queue) Dispatcher {
 		bufferSize = m.MaxWorkers
 	}
 
-	pollingInterval := m.PollingInterval
-	if m.MaxDispatchesPerSecond != 0 {
-		pollingInterval = defaultMinPollingInterval
-	}
 	kc := cfg.Kicker
 	if kc == nil {
-		kc = &kicker.PollingKicker{Interval: pollingInterval}
+		kc = &kicker.PollingKicker{Interval: m.PollingInterval}
 	}
 	k := kc.NewKicker()
 

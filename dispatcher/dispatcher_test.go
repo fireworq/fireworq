@@ -78,7 +78,7 @@ func TestStart(t *testing.T) {
 	}
 
 	{
-		pollingInterval := uint(500)
+		pollingInterval := uint(100)
 		maxWorkers := uint(5)
 		maxDispatchesPerSecond := float64(2.0)
 		maxBurstSize := uint(3)
@@ -90,7 +90,7 @@ func TestStart(t *testing.T) {
 		})
 		defer func() { <-d.Stop() }()
 
-		if d.PollingInterval() != defaultMinPollingInterval {
+		if d.PollingInterval() != pollingInterval {
 			t.Errorf("Wrong polling interval: %d", d.PollingInterval())
 		}
 
