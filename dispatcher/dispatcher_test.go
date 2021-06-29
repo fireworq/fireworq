@@ -14,6 +14,8 @@ import (
 	"github.com/fireworq/fireworq/jobqueue"
 	"github.com/fireworq/fireworq/jobqueue/logger"
 	"github.com/fireworq/fireworq/model"
+
+	"golang.org/x/time/rate"
 )
 
 func TestMain(m *testing.M) {
@@ -22,10 +24,9 @@ func TestMain(m *testing.M) {
 }
 
 func TestStart(t *testing.T) {
-	pollingInterval := uint(500)
-	maxWorkers := uint(5)
-
 	{
+		pollingInterval := uint(500)
+		maxWorkers := uint(5)
 		cfg := &Config{}
 		d := cfg.Start(&dummyJobQueue{}, &model.Queue{
 			PollingInterval: pollingInterval,
@@ -40,9 +41,19 @@ func TestStart(t *testing.T) {
 		if d.MaxWorkers() != maxWorkers {
 			t.Errorf("Wrong max workers: %d", d.MaxWorkers())
 		}
+
+		if d.MaxDispatchesPerSecond() != float64(rate.Inf) {
+			t.Errorf("Wrong max dispatches per second: %f", d.MaxDispatchesPerSecond())
+		}
+
+		if d.MaxBurstSize() != 0 {
+			t.Errorf("Wrong max burst size: %d", d.MaxBurstSize())
+		}
 	}
 
 	{
+		pollingInterval := uint(500)
+		maxWorkers := uint(5)
 		d := Start(&dummyJobQueue{}, &model.Queue{
 			PollingInterval: pollingInterval,
 			MaxWorkers:      maxWorkers,
@@ -55,6 +66,44 @@ func TestStart(t *testing.T) {
 
 		if d.MaxWorkers() != maxWorkers {
 			t.Errorf("Wrong max workers: %d", d.MaxWorkers())
+		}
+
+		if d.MaxDispatchesPerSecond() != float64(rate.Inf) {
+			t.Errorf("Wrong max dispatches per second: %f", d.MaxDispatchesPerSecond())
+		}
+
+		if d.MaxBurstSize() != 0 {
+			t.Errorf("Wrong max burst size: %d", d.MaxBurstSize())
+		}
+	}
+
+	{
+		pollingInterval := uint(100)
+		maxWorkers := uint(5)
+		maxDispatchesPerSecond := float64(2.0)
+		maxBurstSize := uint(3)
+		d := Start(&dummyJobQueue{}, &model.Queue{
+			PollingInterval:        pollingInterval,
+			MaxWorkers:             maxWorkers,
+			MaxDispatchesPerSecond: maxDispatchesPerSecond,
+			MaxBurstSize:           maxBurstSize,
+		})
+		defer func() { <-d.Stop() }()
+
+		if d.PollingInterval() != pollingInterval {
+			t.Errorf("Wrong polling interval: %d", d.PollingInterval())
+		}
+
+		if d.MaxWorkers() != maxWorkers {
+			t.Errorf("Wrong max workers: %d", d.MaxWorkers())
+		}
+
+		if d.MaxDispatchesPerSecond() != maxDispatchesPerSecond {
+			t.Errorf("Wrong max dispatches per second: %f", d.MaxDispatchesPerSecond())
+		}
+
+		if d.MaxBurstSize() != int(maxBurstSize) {
+			t.Errorf("Wrong max burst size: %d", d.MaxBurstSize())
 		}
 	}
 }
@@ -156,6 +205,48 @@ func TestWorkConcurrently(t *testing.T) {
 
 	if len(jq.completed) != 15 {
 		t.Error("Queue must be popped on kicking")
+	}
+}
+
+func TestThrottling(t *testing.T) {
+	kicker := &dummyKicker{}
+
+	jobs := make([]jobqueue.Job, 0)
+	for i := 0; i < 15; i++ {
+		jobs = append(jobs, &job{fmt.Sprintf("%d", i)})
+	}
+	jq := &dummyJobQueue{jobs: jobs}
+
+	cfg := Config{
+		MinBufferSize: 10,
+		Kicker:        &dummyKickerConfig{instance: kicker},
+		Worker:        &dummyWorker{},
+	}
+	d := cfg.Start(jq, &model.Queue{MaxWorkers: 20, MaxDispatchesPerSecond: 0.000001, MaxBurstSize: 1}).(*dispatcher)
+
+	if len(jq.completed) != 0 {
+		t.Error("Queue must not be popped without kicking")
+	}
+
+	d.Kick()
+	time.Sleep(300 * time.Millisecond)
+
+	jq.Lock()
+	if len(jq.completed) != 1 || len(jq.jobs) != 0 {
+		t.Error("Jobs must be throttled")
+	}
+	jq.Unlock()
+
+	<-d.Stop()
+	if kicker.stopped != 1 {
+		t.Error("Kicker must be stopped")
+	}
+
+	jq.Lock()
+	defer jq.Unlock()
+
+	if len(jq.completed) != 1 {
+		t.Error("Canceled jobs must not be completed")
 	}
 }
 

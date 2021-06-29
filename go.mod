@@ -12,4 +12,5 @@ require (
 	github.com/paulbellamy/ratecounter v0.2.0
 	github.com/phayes/freeport v0.0.0-20180830031419-95f893ade6f2
 	github.com/rs/zerolog v1.23.0
+	golang.org/x/time v0.0.0-20210611083556-38a9dc6acbc6 // indirect
 )

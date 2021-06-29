@@ -1,6 +1,7 @@
 package dispatcher
 
 import (
+	"context"
 	"sync"
 
 	"github.com/fireworq/fireworq/dispatcher/kicker"
@@ -10,6 +11,8 @@ import (
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+
+	"golang.org/x/time/rate"
 )
 
 const defaultMinBufferSize = 1000
@@ -56,6 +59,12 @@ func (cfg Config) Start(q JobQueue, m *model.Queue) Dispatcher {
 	}
 	w := wc.NewWorker()
 
+	dps := rate.Limit(m.MaxDispatchesPerSecond)
+	if dps == 0 {
+		dps = rate.Inf
+	}
+	limiter := rate.NewLimiter(dps, int(m.MaxBurstSize))
+
 	d := &dispatcher{
 		jobqueue:  q,
 		kicker:    k,
@@ -65,6 +74,7 @@ func (cfg Config) Start(q JobQueue, m *model.Queue) Dispatcher {
 		stopped:   make(chan struct{}),
 		jobBuffer: make(chan jobqueue.Job, bufferSize),
 		sem:       make(chan struct{}, m.MaxWorkers),
+		limiter:   limiter,
 		logger:    logger,
 	}
 	go d.loop()
@@ -78,6 +88,8 @@ type Dispatcher interface {
 	Stats() *Stats
 	PollingInterval() uint
 	MaxWorkers() uint
+	MaxDispatchesPerSecond() float64
+	MaxBurstSize() int
 	Ping()
 	Stop() <-chan struct{}
 }
@@ -97,6 +109,7 @@ type dispatcher struct {
 	stopped   chan struct{}
 	jobBuffer chan jobqueue.Job
 	sem       chan struct{}
+	limiter   *rate.Limiter
 	logger    zerolog.Logger
 }
 
@@ -126,6 +139,14 @@ func (d *dispatcher) MaxWorkers() uint {
 	return uint(cap(d.sem))
 }
 
+func (d *dispatcher) MaxDispatchesPerSecond() float64 {
+	return float64(d.limiter.Limit())
+}
+
+func (d *dispatcher) MaxBurstSize() int {
+	return d.limiter.Burst()
+}
+
 func (d *dispatcher) Stop() <-chan struct{} {
 	stopped := make(chan struct{})
 
@@ -141,12 +162,14 @@ func (d *dispatcher) Stop() <-chan struct{} {
 
 func (d *dispatcher) loop() {
 	var wg sync.WaitGroup
+	ctx, cancel := context.WithCancel(context.Background())
 Loop:
 	for {
 		select {
 		case <-d.kick:
 			d.popJobs()
 		case <-d.stop:
+			cancel()
 			wg.Wait()
 			break Loop
 		case job := <-d.jobBuffer:
@@ -155,8 +178,11 @@ Loop:
 			go func(job jobqueue.Job) {
 				defer wg.Done()
 				defer func() { <-d.sem }()
-				rslt := d.worker.Work(job)
-				d.jobqueue.Complete(job, rslt)
+				err := d.limiter.Wait(ctx)
+				if err == nil {
+					rslt := d.worker.Work(job)
+					d.jobqueue.Complete(job, rslt)
+				}
 			}(job)
 		}
 	}
