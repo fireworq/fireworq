@@ -26,13 +26,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set variables for Docker image
-        id: variables
-        run: |
-          git_tag_name="${GITHUB_REF#refs/tags/}"
-          git_tag_name="${git_tag_name#v}"
-          echo "::set-output name=release_tag_patch::${git_tag_name}"
-          echo "::set-output name=release_tag_minor::${git_tag_name%.*}"
+      - name: Docker metadata
+        uses: docker/metadata-action@v3
+        id: metadata
+        with:
+          images: |
+            ${{ github.repository }}
+            ghcr.io/${{ github.repository }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -46,13 +49,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and release Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           platforms: linux/amd64, linux/arm64
-          tags: |
-            ${{ github.repository }}:latest
-            ${{ github.repository }}:${{ steps.variables.outputs.release_tag_patch }}
-            ${{ github.repository }}:${{ steps.variables.outputs.release_tag_minor }}
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
