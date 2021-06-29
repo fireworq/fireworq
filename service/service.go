@@ -149,6 +149,9 @@ const throttleQueuePollingInterval = 100
 func (s *Service) addJobQueue(q *model.Queue) error {
 	switch {
 	case q.MaxDispatchesPerSecond > 0.0:
+		if q.MaxBurstSize == 0 {
+			return errors.New("Cannot configure MaxDispatchesPerSecond without MaxBurstSize")
+		}
 		q.PollingInterval = throttleQueuePollingInterval
 	case q.MaxDispatchesPerSecond < 0.0:
 		return errors.New("MaxDispatchesPerSecond should be non-negative")

@@ -161,6 +161,17 @@ func TestAddJobQueue(t *testing.T) {
 			t.Error("AddJobQueue should fail with MaxBurstSize but without MaxDispatchesPerSecond")
 		}
 	}()
+
+	func() {
+		q := &model.Queue{
+			Name:                   queueName,
+			MaxDispatchesPerSecond: 1.0,
+		}
+		err := svc.AddJobQueue(q)
+		if err == nil {
+			t.Error("AddJobQueue should fail with MaxDispatchesPerSecond but without MaxBurstSize")
+		}
+	}()
 }
 
 func TestDeleteJobQueue(t *testing.T) {
