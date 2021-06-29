@@ -11,8 +11,8 @@ This is the official list of Fireworq authors for copyright purposes.
 |INA Lintaro|<tarao.gnn@gmail.com>|[@tarao](https://github.com/tarao)|705|
 |itchyny|<itchyny@hatena.ne.jp>||71|
 |SHIBAZAKI Yuki|<shibayu36@gmail.com>|[@shibayu36](https://github.com/shibayu36)|31|
+|yigarashi|<yigarashi@hatena.ne.jp>||30|
 |FUSHII Yohei|<hakobe@gmail.com>|[@hakobe](https://github.com/hakobe)|28|
-|yigarashi|<yigarashi@hatena.ne.jp>||27|
 |TSUBOUCHI Yuuki|<yuki.tsubo@gmail.com>|[@yuuki](https://github.com/yuuki)|25|
 |Tomohiro Nishimura|<tomohiro68@gmail.com>|[@Sixeight](https://github.com/Sixeight)|23|
 |SHIBAHATA Tsugihito|<fly.me.to.the.moon1204@gmail.com>||17|
