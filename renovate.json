@@ -4,6 +4,7 @@
     "config:base"
   ],
   "postUpdateOptions": ["gomodTidy"],
+  "ignoreDeps": ["mysql"],
   "packageRules": [
     {
       "updateTypes": ["patch", "pin", "digest"],
