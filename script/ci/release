@@ -5,9 +5,9 @@ cd "$DIR"
 
 set -ex
 
-type gobump >/dev/null || go get github.com/x-motemen/gobump/cmd/gobump
-type ghr >/dev/null    || go get github.com/tcnksm/ghr
-type ghch >/dev/null   || go get github.com/Songmu/ghch/cmd/ghch
+type gobump >/dev/null || go install github.com/x-motemen/gobump/cmd/gobump@latest
+type ghr >/dev/null    || go install github.com/tcnksm/ghr@latest
+type ghch >/dev/null   || go install github.com/Songmu/ghch/cmd/ghch@latest
 
 APPLICATION='fireworq'
 VERSION=$(gobump show -r)
