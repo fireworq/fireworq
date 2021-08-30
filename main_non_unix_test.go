@@ -1,5 +1,4 @@
-// +build !linux
-// +build !darwin
+//go:build !linux && !darwin
 
 package main
 

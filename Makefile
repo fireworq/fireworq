@@ -7,7 +7,6 @@ GOINSTALL=GOOS= GOARCH= ${GO} install
 PRERELEASE=SNAPSHOT
 BUILD=$$(git describe --always)
 TEST_ARGS=-parallel 1 -timeout 60s
-export GO111MODULE=on
 
 .PHONY: all
 all: build

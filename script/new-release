@@ -3,8 +3,8 @@
 DIR=$(cd $(dirname "$0")/..; pwd)
 cd "$DIR"
 
-type gobump >/dev/null || go get github.com/x-motemen/gobump/cmd/gobump
-type ghch >/dev/null   || go get github.com/Songmu/ghch/cmd/ghch
+type gobump >/dev/null || go install github.com/x-motemen/gobump/cmd/gobump@latest
+type ghch >/dev/null   || go install github.com/Songmu/ghch/cmd/ghch@latest
 type jq >/dev/null || {
     echo 'You need `jq` command installed' >&2
     exit 1
