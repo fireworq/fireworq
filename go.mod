@@ -14,3 +14,5 @@ require (
 	github.com/rs/zerolog v1.24.0
 	golang.org/x/time v0.0.0-20210611083556-38a9dc6acbc6
 )
+
+require github.com/rs/xid v1.3.0 // indirect
