@@ -25,7 +25,7 @@ This is the official list of Fireworq authors for copyright purposes.
 |Edward Betts|<edward@4angle.com>|[@EdwardBetts](https://github.com/EdwardBetts)|1|
 |Elizabeth Paige Harper|<foxcapade@gmail.com>|[@Foxcapades](https://github.com/Foxcapades)|1|
 |MURATA Satoshi|<rw.satoshi.murata@gmail.com>||1|
-|uchan-nos|<uchan0@gmail.com>|[@uchan-nos](https://github.com/uchan-nos)|1|
+|uchan-nos|<uchan0@gmail.com>||1|
 |yuuji.yaginuma|<yuuji.yaginuma@gmail.com>|[@y-yagi](https://github.com/y-yagi)|1|
 
 Items are automatically added by `git shortlog -sne`.  Please add rules to [`.mailmap`](.mailmap) to keep it canonical (see "MAPPING AUTHORS" section of `git help shortlog` for the notation of the rules).  E-mail field must match your public E-mail setting on your GitHub account if you wish to show your GitHub account name.
