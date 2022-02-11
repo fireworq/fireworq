@@ -12,7 +12,7 @@ require (
 	github.com/paulbellamy/ratecounter v0.2.0
 	github.com/phayes/freeport v0.0.0-20220201140144-74d24b5ae9f5
 	github.com/rs/zerolog v1.26.1
-	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11
+	golang.org/x/time v0.0.0-20220210224613-90d013bbcef8
 )
 
 require github.com/rs/xid v1.3.0 // indirect
