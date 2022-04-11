@@ -41,7 +41,7 @@ func Start(definition *model.Queue, q Impl) JobQueue {
 		name:       definition.Name,
 		maxWorkers: definition.MaxWorkers,
 		impl:       q,
-		stats:      newStats(),
+		stats:      newStats(definition.Name),
 	}
 	q.Start()
 	return jq
