@@ -27,7 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker metadata
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         id: metadata
         with:
           images: |
