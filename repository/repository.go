@@ -13,7 +13,7 @@ type QueueRepository interface {
 
 // RoutingRepository is an interface of a routing repository.
 type RoutingRepository interface {
-	Add(jobCategory string, queueName string) error
+	Add(jobCategory string, queueName string) (bool, error)
 	FindAll() ([]model.Routing, error)
 	FindQueueNameByJobCategory(category string) string
 	DeleteByJobCategory(category string) error

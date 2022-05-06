@@ -2,6 +2,7 @@ package inmemory
 
 import (
 	"sync"
+	"sync/atomic"
 
 	"github.com/fireworq/fireworq/model"
 	"github.com/fireworq/fireworq/repository"
@@ -9,7 +10,8 @@ import (
 
 type routingStorage struct {
 	sync.RWMutex
-	m map[string]string
+	m        map[string]string
+	revision uint64
 }
 
 var rs = &routingStorage{m: make(map[string]string)}
@@ -22,12 +24,15 @@ func NewRoutingRepository() repository.RoutingRepository {
 	return &routingRepository{}
 }
 
-func (r *routingRepository) Add(jobCategory string, queueName string) error {
+func (r *routingRepository) Add(jobCategory string, queueName string) (bool, error) {
 	rs.Lock()
 	defer rs.Unlock()
 
-	rs.m[jobCategory] = queueName
-	return nil
+	if rs.m[jobCategory] != queueName {
+		rs.m[jobCategory] = queueName
+		return true, nil
+	}
+	return false, nil
 }
 
 func (r *routingRepository) FindAll() ([]model.Routing, error) {
@@ -60,8 +65,12 @@ func (r *routingRepository) DeleteByJobCategory(category string) error {
 	return nil
 }
 
+func (r *routingRepository) updateRevision() {
+	atomic.AddUint64(&rs.revision, 1)
+}
+
 func (r *routingRepository) Revision() (uint64, error) {
-	return 0, nil
+	return atomic.LoadUint64(&rs.revision), nil
 }
 
 func (r *routingRepository) Reload() error {
