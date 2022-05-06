@@ -166,11 +166,13 @@ func (s *Service) addJobQueue(q *model.Queue) error {
 		q.MaxWorkers = defaultMaxWorkers()
 	}
 
-	err := s.queue.Add(q)
+	updated, err := s.queue.Add(q)
 	if err != nil {
 		return err
 	}
-	s.putJobQueue(q)
+	if updated {
+		s.putJobQueue(q)
+	}
 
 	return nil
 }

@@ -649,6 +649,10 @@ func TestReloadingQueueDefinitions(t *testing.T) {
 }
 
 func TestFailureLogging(t *testing.T) {
+	if test.If("driver", "in-memory") { // not supported
+		return
+	}
+
 	jobCategory := "service_failure_log_test_job"
 	queueName := "service_failure_log_test_queue"
 
