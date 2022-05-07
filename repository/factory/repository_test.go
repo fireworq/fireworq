@@ -256,7 +256,7 @@ func TestRouting(t *testing.T) {
 		t.Errorf("updated = %v (should be true), error: %s", u, err)
 	}
 
-	revision2, err := repo.Queue.Revision()
+	revision2, err := repo.Routing.Revision()
 	if err != nil {
 		t.Error(err)
 	}

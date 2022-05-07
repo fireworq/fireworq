@@ -30,6 +30,7 @@ func (r *routingRepository) Add(jobCategory string, queueName string) (bool, err
 
 	if rs.m[jobCategory] != queueName {
 		rs.m[jobCategory] = queueName
+		r.updateRevision()
 		return true, nil
 	}
 	return false, nil
@@ -62,6 +63,7 @@ func (r *routingRepository) DeleteByJobCategory(category string) error {
 	defer rs.RUnlock()
 
 	delete(rs.m, category)
+	r.updateRevision()
 	return nil
 }
 
