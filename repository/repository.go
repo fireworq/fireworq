@@ -4,7 +4,7 @@ import "github.com/fireworq/fireworq/model"
 
 // QueueRepository is an interface of a queue repository.
 type QueueRepository interface {
-	Add(q *model.Queue) error
+	Add(q *model.Queue) (bool, error)
 	FindAll() ([]model.Queue, error)
 	FindByName(name string) (*model.Queue, error)
 	DeleteByName(name string) error
@@ -13,7 +13,7 @@ type QueueRepository interface {
 
 // RoutingRepository is an interface of a routing repository.
 type RoutingRepository interface {
-	Add(jobCategory string, queueName string) error
+	Add(jobCategory string, queueName string) (bool, error)
 	FindAll() ([]model.Routing, error)
 	FindQueueNameByJobCategory(category string) string
 	DeleteByJobCategory(category string) error

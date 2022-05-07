@@ -22,7 +22,9 @@ func NewRoutingRepository(db *sql.DB) repository.RoutingRepository {
 	return r
 }
 
-func (r *routingRepository) Add(jobCategory string, queueName string) error {
+func (r *routingRepository) Add(jobCategory string, queueName string) (bool, error) {
+	updated := false
+
 	selectSQL := `
 		 SELECT 1 FROM queue
 		 WHERE name = ?
@@ -32,7 +34,7 @@ func (r *routingRepository) Add(jobCategory string, queueName string) error {
 		&queueExists,
 	)
 	if err != nil {
-		return &repository.QueueNotFoundError{QueueName: queueName}
+		return updated, &repository.QueueNotFoundError{QueueName: queueName}
 	}
 
 	insertSQL := `
@@ -41,16 +43,23 @@ func (r *routingRepository) Add(jobCategory string, queueName string) error {
         ON DUPLICATE KEY UPDATE
 			queue_name = VALUES(queue_name)
 	`
-	_, err = r.db.Exec(insertSQL, jobCategory, queueName)
+	res, err := r.db.Exec(insertSQL, jobCategory, queueName)
 	if err != nil {
-		return err
+		return updated, err
+	}
+	i, err := res.RowsAffected()
+	if err == nil {
+		updated = updated || (i != 0)
 	}
 
-	r.Lock()
-	defer r.Unlock()
+	if updated {
+		r.Lock()
+		defer r.Unlock()
 
-	r.routings[jobCategory] = queueName
-	return r.updateRevision()
+		r.routings[jobCategory] = queueName
+		return updated, r.updateRevision()
+	}
+	return updated, nil
 }
 
 func (r *routingRepository) FindQueueNameByJobCategory(category string) string {

@@ -243,7 +243,7 @@ func TestBindFailure(t *testing.T) {
 	jobCategory := "service_bind_failure_test_job"
 	queueName := "service_bind_failure_test_queue"
 
-	if svc.routing.Add(jobCategory, queueName) == nil {
+	if _, err := svc.routing.Add(jobCategory, queueName); err == nil {
 		t.Error("Binding undefined queue to a job should fail")
 	}
 }
@@ -264,7 +264,7 @@ func TestPush(t *testing.T) {
 		}
 	}()
 
-	if err := svc.routing.Add(jobCategory, queueName); err != nil {
+	if _, err := svc.routing.Add(jobCategory, queueName); err != nil {
 		t.Error(err)
 	}
 
@@ -339,7 +339,7 @@ func TestFailingOver(t *testing.T) {
 		}
 	}()
 
-	if err := svc1.routing.Add(jobCategory, queueName); err != nil {
+	if _, err := svc1.routing.Add(jobCategory, queueName); err != nil {
 		t.Error(err)
 	}
 
@@ -428,7 +428,7 @@ func TestRoutingMishit(t *testing.T) {
 		t.Error("Pushed job should not be delivered if it has no routing")
 	}
 
-	if err := svc.routing.Add(jobCategory, queueName); err != nil {
+	if _, err := svc.routing.Add(jobCategory, queueName); err != nil {
 		t.Error(err)
 	}
 
@@ -470,7 +470,7 @@ func TestReloadingRoutings(t *testing.T) {
 			}
 		}()
 
-		if err := svc1.routing.Add(jobCategory, queueName); err != nil {
+		if _, err := svc1.routing.Add(jobCategory, queueName); err != nil {
 			t.Error(err)
 		}
 
@@ -594,7 +594,7 @@ func TestReloadingQueueDefinitions(t *testing.T) {
 		}
 		time.Sleep(100 * time.Millisecond) // wait for up
 
-		if err := svc1.routing.Add(jobCategory, queueName); err != nil {
+		if _, err := svc1.routing.Add(jobCategory, queueName); err != nil {
 			t.Error(err)
 		}
 
@@ -629,7 +629,7 @@ func TestReloadingQueueDefinitions(t *testing.T) {
 		}
 		time.Sleep(100 * time.Millisecond) // wait for up
 
-		if err := svc2.routing.Add(jobCategory, queueName); err != nil {
+		if _, err := svc2.routing.Add(jobCategory, queueName); err != nil {
 			t.Error(err)
 		}
 
@@ -649,6 +649,10 @@ func TestReloadingQueueDefinitions(t *testing.T) {
 }
 
 func TestFailureLogging(t *testing.T) {
+	if test.If("driver", "in-memory") { // not supported
+		return
+	}
+
 	jobCategory := "service_failure_log_test_job"
 	queueName := "service_failure_log_test_queue"
 
@@ -665,7 +669,7 @@ func TestFailureLogging(t *testing.T) {
 	}()
 
 	func() {
-		err := svc.routing.Add(jobCategory, queueName)
+		_, err := svc.routing.Add(jobCategory, queueName)
 		if err != nil {
 			t.Error(err)
 		}

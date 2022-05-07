@@ -18,7 +18,9 @@ func NewQueueRepository(db *sql.DB) repository.QueueRepository {
 	return &queueRepository{db: db}
 }
 
-func (r *queueRepository) Add(q *model.Queue) error {
+func (r *queueRepository) Add(q *model.Queue) (bool, error) {
+	updated := false
+
 	sql := `
 		INSERT INTO queue (name, polling_interval, max_workers)
 		VALUES ( ?, ?, ? )
@@ -26,9 +28,13 @@ func (r *queueRepository) Add(q *model.Queue) error {
 			polling_interval = VALUES(polling_interval),
 			max_workers = VALUES(max_workers)
 	`
-	_, err := r.db.Exec(sql, q.Name, q.PollingInterval, q.MaxWorkers)
+	res, err := r.db.Exec(sql, q.Name, q.PollingInterval, q.MaxWorkers)
 	if err != nil {
-		return err
+		return updated, err
+	}
+	i, err := res.RowsAffected()
+	if err == nil {
+		updated = updated || (i != 0)
 	}
 
 	sql = `
@@ -38,12 +44,19 @@ func (r *queueRepository) Add(q *model.Queue) error {
 			max_dispatches_per_second = VALUES(max_dispatches_per_second),
 			max_burst_size = VALUES(max_burst_size)
 	`
-	_, err = r.db.Exec(sql, q.Name, q.MaxDispatchesPerSecond, q.MaxBurstSize)
+	res, err = r.db.Exec(sql, q.Name, q.MaxDispatchesPerSecond, q.MaxBurstSize)
 	if err != nil {
-		return err
+		return updated, err
+	}
+	i, err = res.RowsAffected()
+	if err == nil {
+		updated = updated || (i != 0)
 	}
 
-	return r.updateRevision()
+	if updated {
+		return updated, r.updateRevision()
+	}
+	return updated, nil
 }
 
 func (r *queueRepository) FindAll() ([]model.Queue, error) {
