@@ -37,7 +37,7 @@ func (app *Application) serveRouting(w http.ResponseWriter, req *http.Request) e
 		}
 		definition.JobCategory = jobCategory
 
-		if err := app.RoutingRepository.Add(jobCategory, definition.QueueName); err != nil {
+		if _, err := app.RoutingRepository.Add(jobCategory, definition.QueueName); err != nil {
 			if _, ok := err.(*repository.QueueNotFoundError); ok {
 				return errNotFound.WithDetail(err.Error())
 			}

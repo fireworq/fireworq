@@ -24,20 +24,20 @@ func TestQueue(t *testing.T) {
 		}
 	}
 
-	if err := repo.Queue.Add(&model.Queue{Name: "repo_queue_test_queue_1"}); err != nil {
-		t.Error(err)
+	if u, err := repo.Queue.Add(&model.Queue{Name: "repo_queue_test_queue_1"}); !u || err != nil {
+		t.Errorf("updated = %v (should be true), error: %s", u, err)
 	}
-	if err := repo.Queue.Add(&model.Queue{Name: "repo_queue_test_queue_2", MaxWorkers: 1000}); err != nil {
-		t.Error(err)
+	if u, err := repo.Queue.Add(&model.Queue{Name: "repo_queue_test_queue_2", MaxWorkers: 1000}); !u || err != nil {
+		t.Errorf("updated = %v (should be true), error: %s", u, err)
 	}
-	if err := repo.Queue.Add(&model.Queue{
+	if u, err := repo.Queue.Add(&model.Queue{
 		Name:                   "repo_queue_test_queue_3",
 		PollingInterval:        300,
 		MaxWorkers:             10,
 		MaxDispatchesPerSecond: 2.5,
 		MaxBurstSize:           5,
-	}); err != nil {
-		t.Error(err)
+	}); !u || err != nil {
+		t.Errorf("updated = %v (should be true), error: %s", u, err)
 	}
 
 	{
@@ -102,6 +102,38 @@ func TestQueue(t *testing.T) {
 		}
 	}
 
+	revision, err := repo.Queue.Revision()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if u, err := repo.Queue.Add(&model.Queue{Name: "repo_queue_test_queue_1"}); u || err != nil {
+		t.Errorf("updated = %v (should be false), error: %s", u, err)
+	}
+	if u, err := repo.Queue.Add(&model.Queue{Name: "repo_queue_test_queue_2", MaxWorkers: 1000}); u || err != nil {
+		t.Errorf("updated = %v (should be false), error: %s", u, err)
+	}
+
+	revision1, err := repo.Queue.Revision()
+	if err != nil {
+		t.Error(err)
+	}
+	if revision1 != revision {
+		t.Errorf("Revision %d != %d", revision1, revision)
+	}
+
+	if u, err := repo.Queue.Add(&model.Queue{Name: "repo_queue_test_queue_2", MaxWorkers: 100}); !u || err != nil {
+		t.Errorf("updated = %v (should be true), error: %s", u, err)
+	}
+
+	revision2, err := repo.Queue.Revision()
+	if err != nil {
+		t.Error(err)
+	}
+	if revision2 <= revision {
+		t.Errorf("Revision !(%d > %d)", revision2, revision)
+	}
+
 	if err := repo.Queue.DeleteByName("repo_queue_test_queue_1"); err != nil {
 		t.Error(err)
 	}
@@ -154,11 +186,6 @@ func TestQueue(t *testing.T) {
 			t.Error("There should be no queues")
 		}
 	}
-
-	_, err := repo.Queue.Revision()
-	if err != nil {
-		t.Error(err)
-	}
 }
 
 func TestRouting(t *testing.T) {
@@ -174,21 +201,21 @@ func TestRouting(t *testing.T) {
 		}
 	}
 
-	if err := repo.Queue.Add(&model.Queue{Name: "repo_routing_test_queue_1"}); err != nil {
+	if _, err := repo.Queue.Add(&model.Queue{Name: "repo_routing_test_queue_1"}); err != nil {
 		t.Error(err)
 	}
-	if err := repo.Queue.Add(&model.Queue{Name: "repo_routing_test_queue_2"}); err != nil {
+	if _, err := repo.Queue.Add(&model.Queue{Name: "repo_routing_test_queue_2"}); err != nil {
 		t.Error(err)
 	}
 
-	if err := repo.Routing.Add("repo_routing_test_A", "repo_routing_test_queue_1"); err != nil {
-		t.Error(err)
+	if u, err := repo.Routing.Add("repo_routing_test_A", "repo_routing_test_queue_1"); !u || err != nil {
+		t.Errorf("updated = %v (should be true), error: %s", u, err)
 	}
-	if err := repo.Routing.Add("repo_routing_test_B", "repo_routing_test_queue_1"); err != nil {
-		t.Error(err)
+	if u, err := repo.Routing.Add("repo_routing_test_B", "repo_routing_test_queue_1"); !u || err != nil {
+		t.Errorf("updated = %v (should be true), error: %s", u, err)
 	}
-	if err := repo.Routing.Add("repo_routing_test_C", "repo_routing_test_queue_2"); err != nil {
-		t.Error(err)
+	if u, err := repo.Routing.Add("repo_routing_test_C", "repo_routing_test_queue_2"); !u || err != nil {
+		t.Errorf("updated = %v (should be true), error: %s", u, err)
 	}
 
 	{
@@ -208,6 +235,35 @@ func TestRouting(t *testing.T) {
 		}
 	}
 
+	revision, err := repo.Routing.Revision()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if u, err := repo.Routing.Add("repo_routing_test_A", "repo_routing_test_queue_1"); u || err != nil {
+		t.Errorf("updated = %v (should be false), error: %s", u, err)
+	}
+
+	revision1, err := repo.Routing.Revision()
+	if err != nil {
+		t.Error(err)
+	}
+	if revision1 != revision {
+		t.Errorf("Revision %d != %d", revision1, revision)
+	}
+
+	if u, err := repo.Routing.Add("repo_routing_test_A", "repo_routing_test_queue_2"); !u || err != nil {
+		t.Errorf("updated = %v (should be true), error: %s", u, err)
+	}
+
+	revision2, err := repo.Routing.Revision()
+	if err != nil {
+		t.Error(err)
+	}
+	if revision2 <= revision {
+		t.Errorf("Revision !(%d > %d)", revision2, revision)
+	}
+
 	if err := repo.Routing.DeleteByJobCategory("repo_routing_test_B"); err != nil {
 		t.Error(t)
 	}
@@ -220,11 +276,6 @@ func TestRouting(t *testing.T) {
 	}
 
 	if err := repo.Routing.Reload(); err != nil {
-		t.Error(err)
-	}
-
-	_, err := repo.Routing.Revision()
-	if err != nil {
 		t.Error(err)
 	}
 }

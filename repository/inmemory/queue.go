@@ -1,9 +1,11 @@
 package inmemory
 
 import (
+	"encoding/json"
 	"errors"
 	"sort"
 	"sync"
+	"sync/atomic"
 
 	"github.com/fireworq/fireworq/model"
 	"github.com/fireworq/fireworq/repository"
@@ -11,7 +13,8 @@ import (
 
 type queueStorage struct {
 	sync.RWMutex
-	m map[string]model.Queue
+	m        map[string]model.Queue
+	revision uint64
 }
 
 var qs = &queueStorage{m: make(map[string]model.Queue)}
@@ -24,13 +27,19 @@ func NewQueueRepository() repository.QueueRepository {
 	return &queueRepository{}
 }
 
-func (r *queueRepository) Add(q *model.Queue) error {
+func (r *queueRepository) Add(q *model.Queue) (bool, error) {
 	qs.Lock()
 	defer qs.Unlock()
 
-	qs.m[q.Name] = *q
+	j1, _ := json.Marshal(qs.m[q.Name])
+	j2, _ := json.Marshal(q)
+	if string(j1) != string(j2) {
+		qs.m[q.Name] = *q
+		r.updateRevision()
+		return true, nil
+	}
 
-	return nil
+	return false, nil
 }
 
 func (r *queueRepository) FindAll() ([]model.Queue, error) {
@@ -65,9 +74,14 @@ func (r *queueRepository) DeleteByName(name string) error {
 	defer qs.Unlock()
 
 	delete(qs.m, name)
+	r.updateRevision()
 	return nil
 }
 
+func (r *queueRepository) updateRevision() {
+	atomic.AddUint64(&qs.revision, 1)
+}
+
 func (r *queueRepository) Revision() (uint64, error) {
-	return 0, nil
+	return atomic.LoadUint64(&qs.revision), nil
 }

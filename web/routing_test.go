@@ -190,7 +190,7 @@ func TestPutRouting(t *testing.T) {
 
 		mockApp.RoutingRepository.EXPECT().
 			Add("job3", "queue3").
-			Return(&repository.QueueNotFoundError{QueueName: "queue3"})
+			Return(false, &repository.QueueNotFoundError{QueueName: "queue3"})
 
 		def := &model.Routing{QueueName: "queue3"}
 
@@ -211,7 +211,7 @@ func TestPutRouting(t *testing.T) {
 
 		mockApp.RoutingRepository.EXPECT().
 			Add("job3", "queue3").
-			Return(errors.New("Add() failure"))
+			Return(false, errors.New("Add() failure"))
 
 		def := &model.Routing{QueueName: "queue3"}
 
@@ -234,7 +234,7 @@ func TestPutRouting(t *testing.T) {
 
 		mockApp.RoutingRepository.EXPECT().
 			Add(def.JobCategory, def.QueueName).
-			Return(nil)
+			Return(true, nil)
 
 		resp, err := putJSON(s.URL+"/routing/job4", def)
 		if err != nil {
