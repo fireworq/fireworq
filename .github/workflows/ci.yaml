@@ -21,7 +21,7 @@ jobs:
       with:
         go-version: 1.x
     - name: Convert coverage to lcov
-      uses: jandelgado/gcov2lcov-action@v1.0.8
+      uses: jandelgado/gcov2lcov-action@v1.0.9
       with:
         infile: profile.cov
         outfile: coverage.lcov
