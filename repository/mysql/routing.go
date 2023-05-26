@@ -39,9 +39,9 @@ func (r *routingRepository) Add(jobCategory string, queueName string) (bool, err
 
 	insertSQL := `
 		INSERT INTO routing (job_category, queue_name)
-		VALUES ( ?, ? )
+		VALUES ( ?, ? ) AS new
         ON DUPLICATE KEY UPDATE
-			queue_name = VALUES(queue_name)
+			queue_name = new.queue_name
 	`
 	res, err := r.db.Exec(insertSQL, jobCategory, queueName)
 	if err != nil {

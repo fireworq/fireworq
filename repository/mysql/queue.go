@@ -23,10 +23,10 @@ func (r *queueRepository) Add(q *model.Queue) (bool, error) {
 
 	sql := `
 		INSERT INTO queue (name, polling_interval, max_workers)
-		VALUES ( ?, ?, ? )
+		VALUES ( ?, ?, ? ) AS new
 		ON DUPLICATE KEY UPDATE
-			polling_interval = VALUES(polling_interval),
-			max_workers = VALUES(max_workers)
+			polling_interval = new.polling_interval,
+			max_workers = new.max_workers
 	`
 	res, err := r.db.Exec(sql, q.Name, q.PollingInterval, q.MaxWorkers)
 	if err != nil {
@@ -39,10 +39,10 @@ func (r *queueRepository) Add(q *model.Queue) (bool, error) {
 
 	sql = `
 		INSERT INTO queue_throttle (name, max_dispatches_per_second, max_burst_size)
-		VALUES ( ?, ?, ? )
+		VALUES ( ?, ?, ? ) AS new
 		ON DUPLICATE KEY UPDATE
-			max_dispatches_per_second = VALUES(max_dispatches_per_second),
-			max_burst_size = VALUES(max_burst_size)
+			max_dispatches_per_second = new.max_dispatches_per_second,
+			max_burst_size = new.max_burst_size
 	`
 	res, err = r.db.Exec(sql, q.Name, q.MaxDispatchesPerSecond, q.MaxBurstSize)
 	if err != nil {
