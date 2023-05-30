@@ -4,6 +4,7 @@
 [![Build Status](https://github.com/fireworq/fireworq/workflows/CI/badge.svg)](https://github.com/fireworq/fireworq/actions)
 [![Coverage Status](https://coveralls.io/repos/github/fireworq/fireworq/badge.svg?branch=master)](https://coveralls.io/github/fireworq/fireworq?branch=master)
 [![Docker Hub](https://img.shields.io/badge/docker%20build-ready-blue)](https://hub.docker.com/r/fireworq/fireworq)
+[![MySQL Support](https://img.shields.io/badge/MySQL%20support-%3E%3D5.7-yellowgreen)](https://github.com/fireworq/fireworq/blob/master/script/docker/mysql/Dockerfile)
 
 Fireworq is a lightweight, high-performance job queue system with the
 following abilities.
