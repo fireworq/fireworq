@@ -12,6 +12,7 @@ import (
 	"github.com/fireworq/fireworq/service"
 
 	stats "github.com/fukata/golang-stats-api-handler"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/zerolog/log"
 )
 
@@ -40,6 +41,7 @@ func (app *Application) newServer() *server {
 	s.handle("/version", app.serveVersion)
 	s.handle("/settings", app.serveSettings)
 	s.mux.HandleFunc("/stats", stats.Handler)
+	s.mux.HandleFunc("/metrics", promhttp.Handler().ServeHTTP)
 	s.handle("/job/{category:.+}", app.serveJob)
 	s.handle("/queues", app.serveQueueList)
 	s.handle("/queues/stats", app.serveQueueListStats)
