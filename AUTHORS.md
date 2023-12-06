@@ -24,7 +24,7 @@ This is the official list of Fireworq authors for copyright purposes.
 |Sai Warang|<cyprusad@gmail.com>||1|
 |Davor Kapsa|<davor.kapsa@gmail.com>|[@dvrkps](https://github.com/dvrkps)|1|
 |Edward Betts|<edward@4angle.com>|[@EdwardBetts](https://github.com/EdwardBetts)|1|
-|Elizabeth Paige Harper|<foxcapade@gmail.com>|[@Foxcapades](https://github.com/Foxcapades)|1|
+|Elizabeth Paige Harper|<foxcapade@gmail.com>||1|
 |MURATA Satoshi|<rw.satoshi.murata@gmail.com>||1|
 |uchan-nos|<uchan0@gmail.com>||1|
 |yuuji.yaginuma|<yuuji.yaginuma@gmail.com>|[@y-yagi](https://github.com/y-yagi)|1|
