@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/fukata/golang-stats-api-handler v1.0.0
-	github.com/go-sql-driver/mysql v1.6.0
+	github.com/go-sql-driver/mysql v1.8.1
 	github.com/golang/mock v1.6.0
 	github.com/gorilla/mux v1.8.1
 	github.com/jessevdk/go-assets v0.0.0-20160921144138-4f4301a06e15
@@ -15,4 +15,7 @@ require (
 	golang.org/x/time v0.0.0-20220411224347-583f2d630306
 )
 
-require github.com/rs/xid v1.3.0 // indirect
+require (
+	filippo.io/edwards25519 v1.1.0 // indirect
+	github.com/rs/xid v1.3.0 // indirect
+)
