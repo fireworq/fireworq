@@ -1,6 +1,6 @@
 module github.com/fireworq/fireworq
 
-go 1.17
+go 1.23
 
 require (
 	github.com/fukata/golang-stats-api-handler v1.0.0
@@ -11,8 +11,13 @@ require (
 	github.com/lestrrat-go/server-starter v0.0.0-20210101230921-50cd1900b5bc
 	github.com/paulbellamy/ratecounter v0.2.0
 	github.com/phayes/freeport v0.0.0-20220201140144-74d24b5ae9f5
-	github.com/rs/zerolog v1.26.1
+	github.com/rs/zerolog v1.35.1
 	golang.org/x/time v0.0.0-20220411224347-583f2d630306
 )
 
-require github.com/rs/xid v1.3.0 // indirect
+require (
+	github.com/mattn/go-colorable v0.1.14 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/rs/xid v1.6.0 // indirect
+	golang.org/x/sys v0.29.0 // indirect
+)
